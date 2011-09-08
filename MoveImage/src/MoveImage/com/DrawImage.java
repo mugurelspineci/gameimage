@@ -19,7 +19,7 @@ public class DrawImage {
 	int[][] arrCoords;
 	int width = 80; // The width of the bitmap
 	int height = 80;// The height of the bitmap
-	
+
 	int nX; // The number of rows
 	int nY; // The number of columns
 
@@ -31,11 +31,11 @@ public class DrawImage {
 
 	int optImage; // opacity image
 	int arrRandNum[];
-	int nPos; //vi tri lay hình (tu mang arrBitmap)
-	int nImage; //so hinh trong ung dung
+	int nPos; // vi tri lay hình (tu mang arrBitmap)
+	int nImage; // so hinh trong ung dung
 	boolean bMove;
-	
-	Bitmap arrBitmap[]; //Luu cac hinh
+
+	Bitmap arrBitmap[]; // Luu cac hinh
 	Bitmap bitmap;
 	MainGamePanel gamepanel;
 
@@ -53,11 +53,11 @@ public class DrawImage {
 		clsImage clsImg;
 		int codeT;
 
-		//so hinh
+		// so hinh
 		nImage = 4;
-		
-		//duoc di chuyen
-		bMove =true;
+
+		// duoc di chuyen
+		bMove = true;
 		// int i;
 		try {
 
@@ -71,12 +71,13 @@ public class DrawImage {
 			// beginY = ImageActivity.scnHeight / 20;
 
 			// load bitmap
-			//bitmap = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img3);
-			
-			//random 0->4
-			nPos = randInt(nImage-1);
-			//Load random image
-			bitmap = loadImages(nPos);
+			// bitmap = BitmapFactory.decodeResource(gamepanel.getResources(),
+			// R.drawable.img3);
+
+			// random 0->4
+			nPos = randInt(nImage - 1);
+			// Load random image
+			bitmap = loadImage(nPos);
 
 			if (bitmap == null)
 				return;
@@ -84,13 +85,13 @@ public class DrawImage {
 			lstImgs = new ArrayList<clsImage>();
 			lstImgCtrl = new ArrayList<clsImageCtrl>();
 
-			//Luu 24 hinh da cat
+			// Luu 24 hinh da cat
 			arrBmp = splitImage(bitmap);
 			if (arrBmp == null) {
 				Log.i(TAG, "*****init() Khong the load hinh");
 				return;
 			}
-		
+
 			for (int r = 0; r < nY; r++) {
 				for (int c = 0; c < nX; c++) {
 					clsImg = new clsImage(l);
@@ -122,12 +123,13 @@ public class DrawImage {
 			Log.i(TAG, "***** init() called: " + ImageActivity.scnWidth + ", " + ImageActivity.scnHeight);
 			// Log.i(TAG, "***** init() called ");
 
-			//Luu day so ngau nhien tu 0->23
+			// Luu day so ngau nhien tu 0->23
 			arrRandNum = randCoord();
-			
+
 			// tạo hinh lộn xộn
 			mixImage();
-			//Tạo các hinh de dieu khien (xem hinh hien tai, trộn hinh, xem hinh ke)
+			// Tạo các hinh de dieu khien (xem hinh hien tai, trộn hinh, xem
+			// hinh ke)
 			loadImageCtrl();
 		} catch (Exception ex) {
 			Log.i(TAG, "*****init() Error: " + ex.getMessage());
@@ -136,9 +138,7 @@ public class DrawImage {
 
 	// Function: ve hinh goc va cac button image
 	public void drawImage(Bitmap picture) {
-		clsImage clsImg;
 		Canvas canvas = null;
-		Paint paint;
 		Bitmap bitmapT;
 		try {
 			canvas = this.surfaceHolder.lockCanvas();
@@ -150,7 +150,7 @@ public class DrawImage {
 			drawControl(canvas);
 
 		} catch (Exception ex) {
-			Log.i(TAG, "***** draw() Error: " + ex.getMessage());
+			Log.i(TAG, "***** drawImage() Error: " + ex.getMessage());
 		} finally {
 			if (canvas != null)
 				surfaceHolder.unlockCanvasAndPost(canvas);
@@ -159,7 +159,6 @@ public class DrawImage {
 
 	// Function: draw all image
 	public void drawAll() {
-		// clsImage clsImg;
 		clsImage clsImg;
 		Canvas canvas = null;
 		Paint paint;
@@ -169,15 +168,16 @@ public class DrawImage {
 			canvas.drawColor(Color.BLACK);
 			paint = new Paint();
 			paint.setAlpha(55);
-			for (int i = 0; i < lstImgs.size(); i++) {
-				clsImg = (clsImage) lstImgs.get(i);
-				if (clsImg.isShow() == true)
-					clsImg.draw(canvas, null);
-				else
-					clsImg.draw(canvas, paint);
-				// Log.i(TAG, "***** draw() : " + i);
+			if (bMove == true) {
+				for (int i = 0; i < lstImgs.size(); i++) {
+					clsImg = (clsImage) lstImgs.get(i);
+					if (clsImg.isShow() == true)
+						clsImg.draw(canvas, null);
+					else
+						clsImg.draw(canvas, paint);
+					// Log.i(TAG, "***** draw() : " + i);
+				}
 			}
-
 			// Ve duong ke
 			drawLine(canvas);
 			// ve button image
@@ -227,43 +227,49 @@ public class DrawImage {
 	// Function: draw control
 	public void drawControl(Canvas canvas) {
 		clsImageCtrl clsCtrl;
+		int i = 0;
 		try {
 			// canvas.drawColor(Color.BLACK);
-			for (int i = 0; i < lstImgCtrl.size(); i++) {
+			for (i = 0; i < lstImgCtrl.size(); i++) {
 				clsCtrl = (clsImageCtrl) lstImgCtrl.get(i);
+				// clsCtrl = (clsImageCtrl) lstImgCtrl.get(0);
 				clsCtrl.draw(canvas, null);
+				// Log.i(TAG, "***** drawControl(): " + i + ",xy: " +
+				// clsCtrl.getX() + "," + clsCtrl.getY());
 			}
 
 		} catch (Exception ex) {
-			Log.i(TAG, "***** drawControl() Error: " + ex.getMessage());
+			Log.i(TAG, "***** drawControl() Error: " + ex.getMessage() + ", " + i);
 		}
 	}
 
-	// Function: tao hinh de dieu khien (xem hinh hien tai, trộn hinh, xem hinh ke)
+	// Function: tao hinh de dieu khien (xem hinh hien tai, trộn hinh, xem hinh
+	// ke)
 	private void loadImageCtrl() {
 		clsImageCtrl clsCtrl;
 		int i = 0;
 		int x, y;
 		Bitmap bitmapT;
 		int widthCtrl, heightCtrl;
-		
-		widthCtrl = 30;
-		heightCtrl = 30;
-		
-		try{
+
+		widthCtrl = 10;
+		heightCtrl = 10;
+
+		try {
 			lstImgCtrl = new ArrayList<clsImageCtrl>();
 
-			//image View
-			x = 20;
-			y = 20;
+			// image View
+			x = 40;
+			y = 70;
 			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.view);
 			clsCtrl = new clsImageCtrl(i);
-			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true););
+			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
 			clsCtrl.setXY(x, ImageActivity.scnHeight - y);
+			// clsCtrl.setXY(x, y);
 			lstImgCtrl.add(clsCtrl);
 
-			//image mix
-			x += bitmapT.getWidth() + 5;
+			// image mix
+			x += bitmapT.getWidth() + 15;
 			i++;
 			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.mix);
 			clsCtrl = new clsImageCtrl(i);
@@ -271,7 +277,7 @@ public class DrawImage {
 			clsCtrl.setXY(x, ImageActivity.scnHeight - y);
 			lstImgCtrl.add(clsCtrl);
 
-			//image change
+			// image change
 			x += bitmapT.getWidth() + 5;
 			i++;
 			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.change);
@@ -279,15 +285,15 @@ public class DrawImage {
 			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
 			clsCtrl.setXY(x, ImageActivity.scnHeight - y);
 			lstImgCtrl.add(clsCtrl);
-			
-			//image Close
+
+			// image Close
 			i++;
 			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.close);
 			clsCtrl = new clsImageCtrl(i);
 			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
 			clsCtrl.setXY(scaleWidth, beginY);
 			lstImgCtrl.add(clsCtrl);
-			
+
 		} catch (Exception ex) {
 			Log.i(TAG, "***** loadImageCtrl() Error: " + ex.getMessage());
 		}
@@ -342,26 +348,31 @@ public class DrawImage {
 		}
 	}
 
-	//Function: load hinh
-	//Para: num: so hinh can load
-	//Return: bitmap
-	public Bitmap loadImage(int num){
-		Bitmap bitmapT;
-		try{
-			switch(num){
-				case 0:	bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img1);
-				case 1:	bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img2);
-				case 2:	bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img3);
-				case 3:	bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img4);	
-				default: return null;
+	// Function: load hinh
+	// Para: num: so hinh can load
+	// Return: bitmap
+	public Bitmap loadImage(int num) {
+		Bitmap bitmapT = null;
+		try {
+			switch (num) {
+			case 0:
+				bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img1);
+			case 1:
+				bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img2);
+			case 2:
+				bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img3);
+			case 3:
+				bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img4);
+				// default: return null;
 			}
 			return Bitmap.createScaledBitmap(bitmapT, scaleWidth, scaleHeight, true);
 		} catch (Exception ex) {
 			Log.i(TAG, "***** loadImages() Error: " + ex.getMessage());
 			return null;
 		}
+
 	}
-	
+
 	// Function: Tìm hình có tọa độ tương ứng
 	// para: truyen vao tọa độ x,y
 	// return: tra ve lớp hình có toa do gan đúng với tọa độ truyền vào
@@ -395,7 +406,7 @@ public class DrawImage {
 					return clsImgT;
 				}
 			}
-			Log.i(TAG, "***** searchCoordCtrl() called ");
+			// Log.i(TAG, "***** searchCoordCtrl() called ");
 		} catch (Exception ex) {
 			Log.i(TAG, "***** searchCoordCtrl() Error: " + ex.getMessage());
 		}
@@ -469,7 +480,7 @@ public class DrawImage {
 	public void mixImage() {
 		int l = nX * nY;
 		clsImage clsImgA, clsImgB;
-		try{
+		try {
 			for (int i = 0; i < l; i++) {
 				clsImgA = (clsImage) lstImgs.get(i);
 				clsImgB = (clsImage) lstImgs.get(arrRandNum[i]);
@@ -483,30 +494,30 @@ public class DrawImage {
 	// Function: tao mang đã trộn các hình
 	public int[] randCoord() {
 		int rnd;
-		int num=5;
-		//Random r = new Random();
+		int num = 5;
+		// Random r = new Random();
 
 		int[][] arr = new int[num][24];
-		arr[0] = new int[] { 18, 15, 10, 2, 5, 4, 14, 0, 23, 17, 9, 1, 21, 16, 19, 13, 8, 6, 22, 3, 11, 7, 12, 20 }; //ok
-		arr[1] = new int[] { 14, 4, 22, 17, 8, 21, 2, 20, 13, 9, 12, 7, 1, 10, 11, 6, 0, 15, 18, 19, 23, 3, 5, 16 }; //ok
+		arr[0] = new int[] { 18, 15, 10, 2, 5, 4, 14, 0, 23, 17, 9, 1, 21, 16, 19, 13, 8, 6, 22, 3, 11, 7, 12, 20 }; // ok
+		arr[1] = new int[] { 14, 4, 22, 17, 8, 21, 2, 20, 13, 9, 12, 7, 1, 10, 11, 6, 0, 15, 18, 19, 23, 3, 5, 16 }; // ok
 		arr[2] = new int[] { 7, 11, 16, 3, 22, 10, 23, 19, 9, 21, 20, 0, 6, 14, 2, 17, 5, 13, 18, 15, 12, 8, 1, 4 };
 		arr[3] = new int[] { 8, 13, 22, 15, 2, 20, 6, 9, 16, 0, 18, 4, 23, 11, 19, 5, 21, 1, 14, 17, 10, 12, 3, 7 };
 		arr[4] = new int[] { 2, 21, 12, 0, 11, 17, 7, 22, 5, 20, 13, 16, 8, 19, 4, 3, 15, 23, 9, 14, 18, 10, 6, 1 };
 
-		//rnd = randInt(num);
+		// rnd = randInt(num);
 		rnd = 1;
 		Log.i(TAG, "*****randCoord() rand=: " + rnd);
 		return arr[rnd];
 	}
-	
-	//Function:Random
-	//Para: pham vi phat sinh
-	//Return: tra va so ngau nhien
-	public int randInt(int num){
+
+	// Function:Random
+	// Para: pham vi phat sinh
+	// Return: tra va so ngau nhien
+	public int randInt(int num) {
 		Random r = new Random();
 		return r.nextInt(num);
 	}
-	
+
 	public void handleActionDown(int x, int y) {
 
 		clsImage clsT;
@@ -515,35 +526,35 @@ public class DrawImage {
 
 			clsCtrl = searchCoordCtrl(x, y);
 			if (clsCtrl != null) {
-				switch(clsCtrl.getCode()){
-					case 0:
-						//xem hinh goc
-						drawImage(bitmap);
-						//khong di chuyen
-						bMove=false;
-					case 1:
-						//trộn hình
-						mixImage();
-						//ve lai hinh sau khi trộn
-						drawAll();
-					case 2:
-						//xem hinh kế 
-						if(nPos >= nImage)
-							nPos = 0;
-						bitmap = loadImages(pos);
-						drawAll();
-					case 3:
-						//duoc di chuyen hinh
-						bMove =true;
-						drawAll();
+				switch (clsCtrl.getCode()) {
+				case 0:
+					// xem hinh goc
+					drawImage(bitmap);
+					// khong di chuyen
+					bMove = false;
+				case 1:
+					// trộn hình
+					mixImage();
+					// ve lai hinh sau khi trộn
+					drawAll();
+				case 2:
+					// xem hinh kế
+					if (nPos >= nImage)
+						nPos = 0;
+					bitmap = loadImage(nPos);
+					drawAll();
+				case 3:
+					// duoc di chuyen hinh
+					bMove = true;
+					drawAll();
 				}
 				return;
 			}
-			
-			//khong di chuyen hinh
-			if(bMove=false)
+
+			// khong di chuyen hinh
+			if (bMove = false)
 				return;
-				
+
 			clsT = searchCoord(x, y);
 			// search not found
 			if (clsT == null) {
