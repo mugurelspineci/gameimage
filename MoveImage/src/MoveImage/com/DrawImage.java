@@ -61,9 +61,11 @@ public class DrawImage {
 		// int i;
 		try {
 
+			//chieu rong cua hinh cat nhỏ
 			width = ImageActivity.scnWidth / 6;
 			height = width;
 
+			//chieu rong cua hinh lớn
 			scaleWidth = width * 4;
 			scaleHeight = height * 6;
 
@@ -71,8 +73,7 @@ public class DrawImage {
 			// beginY = ImageActivity.scnHeight / 20;
 
 			// load bitmap
-			// bitmap = BitmapFactory.decodeResource(gamepanel.getResources(),
-			// R.drawable.img3);
+			// bitmap = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img3);
 
 			// random 0->4
 			nPos = randInt(nImage - 1);
@@ -128,8 +129,7 @@ public class DrawImage {
 
 			// tạo hinh lộn xộn
 			mixImage();
-			// Tạo các hinh de dieu khien (xem hinh hien tai, trộn hinh, xem
-			// hinh ke)
+			// Tạo các hinh de dieu khien (xem hinh hien tai, trộn hinh, xem hinh ke)
 			loadImageCtrl();
 		} catch (Exception ex) {
 			Log.i(TAG, "*****init() Error: " + ex.getMessage());
@@ -169,14 +169,14 @@ public class DrawImage {
 			paint = new Paint();
 			paint.setAlpha(55);
 			if (bMove == true) {
+				Log.i(TAG, "***** drawAll() ");
 				for (int i = 0; i < lstImgs.size(); i++) {
 					clsImg = (clsImage) lstImgs.get(i);
 					if (clsImg.isShow() == true)
 						clsImg.draw(canvas, null);
 					else
 						clsImg.draw(canvas, paint);
-					// Log.i(TAG, "***** draw() : " + i);
-				}
+				}				 
 			}
 			// Ve duong ke
 			drawLine(canvas);
@@ -528,17 +528,20 @@ public class DrawImage {
 			if (clsCtrl != null) {
 				switch (clsCtrl.getCode()) {
 				case 0:
-					// xem hinh goc
+					// ve hinh goc
 					drawImage(bitmap);
-					// khong di chuyen
+					// khong ve hinh da cat
 					bMove = false;
 				case 1:
+					// khong ve hinh da cat
+					bMove = true
 					// trộn hình
 					mixImage();
 					// ve lai hinh sau khi trộn
 					drawAll();
 				case 2:
 					// xem hinh kế
+					nPos++;
 					if (nPos >= nImage)
 						nPos = 0;
 					bitmap = loadImage(nPos);
@@ -552,7 +555,7 @@ public class DrawImage {
 			}
 
 			// khong di chuyen hinh
-			if (bMove = false)
+			if (bMove == false)
 				return;
 
 			clsT = searchCoord(x, y);
