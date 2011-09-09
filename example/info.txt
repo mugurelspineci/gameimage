@@ -1,2 +1,6 @@
 http://eyes-free.googlecode.com/svn/tags
 http://eyes-free.googlecode.com/svn/!svn/bc/241/trunk/shell/
+
+
+//Sensor Fun: Location Based Services and GPS for Android
+http://www.hascode.com/2010/05/sensor-fun-location-based-services-and-gps-for-android/
