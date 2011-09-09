@@ -1,0 +1,2 @@
+http://eyes-free.googlecode.com/svn/tags
+http://eyes-free.googlecode.com/svn/!svn/bc/241/trunk/shell/
