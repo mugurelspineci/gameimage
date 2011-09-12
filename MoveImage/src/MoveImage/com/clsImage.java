@@ -8,6 +8,7 @@ import android.util.Log;
 public class clsImage {
 	private static final String TAG = clsImage.class.getSimpleName();
 	private int code;
+	private int num;
 	private Bitmap bitmap;
 	private int x; //x field to maintain the x coordinate to draw the image
 	private int y; //y field to maintain the y coordinate to draw the image
@@ -16,7 +17,11 @@ public class clsImage {
 	private int imgR;
 	private int imgT;
 	private int imgB;
+	
+	
+	public clsImage() {
 
+	}
 	//Function: Construct
 	//para:		code
 	public clsImage(int code) {
@@ -28,9 +33,17 @@ public class clsImage {
 		imgB = -1;
 	}
 
-	public clsImage() {
-
+	public clsImage(int code, int num) {
+		this.code = code;
+		this.num = num;
+		this.show = true;
+		imgL = -1;
+		imgR = -1;
+		imgT = -1;
+		imgB = -1;
 	}
+
+	
 	
 	
 	//Function: Draw the specified bitmap, set opacity of Bitmap image
@@ -52,6 +65,14 @@ public class clsImage {
 
 	public void setCode(int code) {
 		this.code = code;
+	}
+	
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
 	}
 
 	public Bitmap getBitmap() {
