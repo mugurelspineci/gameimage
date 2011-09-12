@@ -64,7 +64,7 @@ public class DrawImage {
 			scaleWidth = width * 4;
 			scaleHeight = height * 6;
 
-			beginX = width / 2 + 5;
+			beginX = width / 2 + 10;
 			// beginY = ImageActivity.scnHeight / 20;
 
 			// random 0->4
@@ -110,7 +110,8 @@ public class DrawImage {
 			for (int r = 0; r < nY; r++) {
 				for (int c = 0; c < nX; c++) {
 					// lay ma so ngau nhien trong mang
-					clsImg = new clsImage(l);
+					//clsImg = new clsImage(l);
+					clsImg = new clsImage(l,arrRandNum[l]);
 					// luu hinh ngau nhien
 					clsImg.setBitmap(arrBitmap[arrRandNum[l]]);
 					// luu toa do hien thi
@@ -482,16 +483,20 @@ public class DrawImage {
 	private boolean changeImage(clsImage clsA, clsImage clsB) {
 		Bitmap bitmap;
 		boolean show;
+		int num;
 		try {
 
 			bitmap = clsB.getBitmap();
 			show = clsB.isShow();
-
+			num = clsB.getNum();
+			
 			clsB.setBitmap(clsA.getBitmap());
 			clsB.setShow(clsA.isShow());
+			clsB.setNum(clsA.getNum());
 
 			clsA.setBitmap(bitmap);
 			clsA.setShow(show);
+			clsA.setNum(num);
 
 			lstImgs.set(clsA.getCode(), clsA);
 			lstImgs.set(clsB.getCode(), clsB);
@@ -500,6 +505,36 @@ public class DrawImage {
 		} catch (Exception ex) {
 			Log.i(TAG, "***** changeImage() Error: " + ex.getMessage());
 			return false;
+		}
+	}
+	
+	//Function: Kiem tra game da hoan thanh chua
+	private void checkFinish(){
+		clsImage clsImgT;
+		try {
+			for (int i = 0; i < lstImgs.size(); i++) {
+				clsImgT = (clsImage) lstImgs.get(i);
+				if(clsImgT.getNum()!=i)
+					return false;
+			}
+			
+			AlertDialog finish = new AlertDialog.Builder(this).create();
+			finish.setTitle("You Win!!!");
+			finish.setMessage("Congratulation!!!, Are you want to next game?");
+			finish.setButton("Yes", new OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int which) {               
+				//xem hinh ke
+				nextImage()
+				}
+			});
+			
+			finish.setButton2("No", null);
+			finish.show();
+			
+		} catch (Exception ex) {
+			Log.i(TAG, "***** checkFinish() Error: " + ex.getMessage());
+			return true;
 		}
 	}
 
@@ -529,6 +564,19 @@ public class DrawImage {
 		Random r = new Random();
 		return r.nextInt(num);
 	}
+	
+	//Function: Hien thi hinh ke
+	private void nextImage(){
+		nPos++;
+		if (nPos >= nImage)
+			nPos = 0;
+		bitmap = loadImage(nPos);
+		bMove = true;
+		//Luu hinh da tron
+		saveImage();
+		//ve lai hinh
+		drawAll();
+	}
 
 	public void handleActionDown(int x, int y) {
 
@@ -540,6 +588,7 @@ public class DrawImage {
 			if (clsCtrl != null) {
 				switch (clsCtrl.getCode()) {
 				case 0:
+					//0:xem hinh goc
 					if (bMove == true) {
 						// khong di chuyen
 						bMove = false;
@@ -553,6 +602,7 @@ public class DrawImage {
 					break;
 
 				case 1:
+					//1: tron hinh
 					// khong ve hinh da cat
 					bMove = true;
 					// trộn hình
@@ -563,17 +613,12 @@ public class DrawImage {
 					// Log.i(TAG, "***** handleActionDown() tron hinh");
 					break;
 				case 2:
-					// xem hinh kế
-					nPos++;
-					if (nPos >= nImage)
-						nPos = 0;
-					bitmap = loadImage(nPos);
-					bMove = true;
-					saveImage();
-					drawAll();
+					//2: xem hinh kế
+					nextImage();					
 					// Log.i(TAG, "***** handleActionDown() hinh ke " + nPos);
 					break;
 				case 3:
+					//3: chon hinh close
 					// duoc di chuyen hinh
 					bMove = true;
 					drawAll();
@@ -602,6 +647,10 @@ public class DrawImage {
 			}
 
 			drawAll();
+			
+			//Kiem tra hinh da sap dung thu tu chua
+			checkFinish();
+			
 			// Log.i(TAG, "***** handleActionDown() called ");
 		} catch (Exception ex) {
 			Log.i(TAG, "***** handleActionDown() Error: " + ex.getMessage());
