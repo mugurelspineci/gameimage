@@ -3,6 +3,8 @@ package MoveImage.com;
 import java.util.ArrayList;
 import java.util.Random;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -515,26 +517,27 @@ public class DrawImage {
 			for (int i = 0; i < lstImgs.size(); i++) {
 				clsImgT = (clsImage) lstImgs.get(i);
 				if(clsImgT.getNum()!=i)
-					return false;
+					return ;
 			}
 			
-			AlertDialog finish = new AlertDialog.Builder(this).create();
+			
+
+			AlertDialog.Builder finish = new AlertDialog.Builder(MainGamePanel.this).create();
 			finish.setTitle("You Win!!!");
 			finish.setMessage("Congratulation!!!, Are you want to next game?");
 			finish.setButton("Yes", new OnClickListener(){
 				@Override
 				public void onClick(DialogInterface dialog, int which) {               
 				//xem hinh ke
-				nextImage()
+				nextImage();
 				}
 			});
 			
-			finish.setButton2("No", null);
+			finish.setButton("No", null);
 			finish.show();
 			
 		} catch (Exception ex) {
 			Log.i(TAG, "***** checkFinish() Error: " + ex.getMessage());
-			return true;
 		}
 	}
 
