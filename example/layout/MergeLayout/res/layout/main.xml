@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:okCancelBar="http://schemas.android.com/apk/res/com.example.android.merge">
+
+	<ImageView  
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent" 
+	
+		android:scaleType="center"
+	    android:src="@drawable/golden_gate" />
+	
+	<com.example.android.merge.OkCancelBar
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:layout_gravity="bottom"
+
+		android:paddingTop="8dip"
+	    android:gravity="center_horizontal"
+	    
+	    android:background="#AA000000"
+	    
+	    okCancelBar:okLabel="Save"
+	    okCancelBar:cancelLabel="Don't save" />
+
+</merge>
