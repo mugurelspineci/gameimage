@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content">
+  
+    <view android:id="@+id/mv2"
+    class="com.google.android.maps.MapView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1" 
+    android:clickable="true"
+    android:apiKey="@string/apiKeyM81"
+    />
+    
+    <!-- Must replace apiKey above with appropriate version below -->
+   	<!-- for M33:  android:apiKey="07WVUg-srWUbhpkGj1mi0w56xD9nMEu0NhqJeYg" -->
+   	<!-- for M81:  android:apiKey="07WVUg-srWUY6iEC2qTEiuT1mKYkoo6EVPK74pA" --> 
+   	<!-- for Castor: android:apiKey="07WVUg-srWUbTcCW-uHqNQR4SdYngQOCgmJN60A" -->
+   	
+</LinearLayout>

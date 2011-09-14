@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <CheckBoxPreference
+  	android:key = "compass"
+  	android:title = "@string/compass_title"
+  	android:summary = "@string/compass_summary"
+  	android:defaultValue = "true" />
+  	
+  <ListPreference
+    android:title="@string/gpsPrefs_title"
+    android:summary="@string/gpsPrefs_summary"
+    android:key="gpsPref"
+    android:defaultValue="1"
+    android:entries="@array/updateOptions"
+    android:entryValues="@array/updateIndex" />
+    
+  <EditTextPreference
+    android:name="EditText Preference"
+    android:summary="This allows you to edit the name"
+    android:defaultValue=""
+    android:title="Edit the Name"
+    android:key="editTextPref" />
+
+</PreferenceScreen>
