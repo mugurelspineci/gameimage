@@ -9,37 +9,37 @@ public class mainspending extends Activity {
 	
 	public void onCreate()
 	{
-		ImageView imgPayMoney = (ImageView) findViewById(R.id.myImageId1);
-		imgPayMoney.setOnClickListener(new onClickListener(){
+		ImageView imgIncome = (ImageView) findViewById(R.id.imgIncome);
+		imgIncome.setOnClickListener(new onClickListener(){
 			public void onClick(View v){
-				Intent payMoney = new Intent(this, mainspending.class);
-				startActivity(payMoney);
+				Intent inIncome = new Intent(this, clsIncome.class);
+				startActivity(inIncome);
 			}		
 		});
 		
-		ImageView imgGetMoney = (ImageView) findViewById(R.id.myImageId2);
-		imgGetMoney.setOnClickListener(new onClickListener(){
+		ImageView imgPayment = (ImageView)findViewById(R.id.imgPayment);
+		imgPayment.setOnClickListener(new onClickListener(){
 			public void onClick(View v){
-				Intent getMoney = new Intent(this, GetMoney.class);
-				startActivity(getMoney);
-			}		
+				Intent inPayment = new Intent(this, clsPayment.class);
+				startActivity(inPayment);
+			}
 		});
 		
-		ImageView imgSearch = (ImageView) findViewById(R.id.myImageId2);
+		ImageView imgSearch = (ImageView)findViewById(R.id.imgSearch);
 		imgSearch.setOnClickListener(new onClickListener(){
 			public void onClick(View v){
-				Intent search = new Intent(this, Search.class);
-				startActivity(search);
-			}		
+				Intent inSearch = new Intent(this, clsSearch.class);
+				startActivity(inSearch);
+			}
 		});
 		
-		ImageView imgStatistics = (ImageView) findViewById(R.id.myImageId2);
+		ImageView imgStatistics = (ImageView)findViewById(R.id.imgStatistics);
 		imgStatistics.setOnClickListener(new onClickListener(){
 			public void onClick(View v){
 				Intent Statistics = new Intent(this, Statistics.class);
 				startActivity(Statistics);
-			}		
+			}
 		});
-		
+
 	}
 }
