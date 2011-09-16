@@ -7,16 +7,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.util.Log;
 
 public class clsIncome extends Activity{
 
-		EditText edtAmount ;
-		EditText edtDate;
-		Spinner spnReason;		
-		EditText edtOther ;
-		EditText edtComment;
-		Button btnSave;
-		Button btnCancel;
+	private static final String TAG = clsIncome.class.getSimpleName();
+	EditText edtAmount ;
+	EditText edtDate;
+	Spinner spnReason;		
+	EditText edtOther ;
+	EditText edtComment;
+	Button btnSave;
+	Button btnCancel;
 	
 	@Override
 	public void onCreate(Bundle saved){
@@ -62,13 +64,21 @@ public class clsIncome extends Activity{
 		if(edtDate.getText().length()==0){
 			return false;
 		}
-		if(spnReason.getText().length()==0){
+		if(spnReason.getSelectedItem().toString().length()==0){
 			return false;
 		}
 	}
 	
 	private void saveData(){
-	
+		SpendingDbAdapter db
+		try{
+			db = new SpendingDbAdapter();
+			db.open();
+			db.insert(edtAmount.getText(), edtDate.getText(), 1, spnReason.getSelectedItem().toString(), 
+					edtOther.getText(), edtComment.getText());
+		}catch(Exception ex){
+			Log.i(TAG, "***** saveData() Error: " + ex.getMessage());
+		}
 	}
 
 }
