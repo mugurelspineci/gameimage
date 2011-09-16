@@ -520,7 +520,7 @@ public class DrawImage extends Activity {
 				if (clsImgT.getNum() != i)
 					return;
 			}
-
+/*
 			AlertDialog.Builder alt_bld = new AlertDialog.Builder(this);
 			alt_bld.setMessage("Congratulation!!!, Are you want to next game?").setCancelable(false)
 					.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -542,6 +542,7 @@ public class DrawImage extends Activity {
 			// Icon for AlertDialog
 			alert.setIcon(R.drawable.icon);
 			alert.show();
+*/
 
 		} catch (Exception ex) {
 			Log.i(TAG, "***** checkFinish() Error: " + ex.getMessage());
