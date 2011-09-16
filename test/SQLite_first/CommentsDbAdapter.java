@@ -39,8 +39,7 @@
       
         public Cursor fetchAllComments() {  
             return database.query(DATABASE_TABLE, new String[] { KEY_ROWID,  
-                    KEY_COMMENT }, null, null, null,  
-                    null, null);  
+                    KEY_COMMENT }, null, null, null, null, null);  
         }  
           
     }  
