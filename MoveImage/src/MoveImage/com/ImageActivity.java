@@ -27,9 +27,9 @@ public class ImageActivity extends Activity {
 		setContentView(gamePanel);
     }
 	
-	public void dialogMsg(String dg){
+	public void dialogMsgImage(String dg){
 		AlertDialog.Builder alt_bld = new AlertDialog.Builder(this);
-		alt_bld.setMessage("Congratulation!!!, Are you want to next game?").setCancelable(false)
+		alt_bld.setMessage(dg).setCancelable(false)
 				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						// Action for 'Yes' Button

@@ -520,30 +520,13 @@ public class DrawImage extends Activity {
 				if (clsImgT.getNum() != i)
 					return;
 			}
-/*
-			AlertDialog.Builder alt_bld = new AlertDialog.Builder(this);
-			alt_bld.setMessage("Congratulation!!!, Are you want to next game?").setCancelable(false)
-					.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-							// Action for 'Yes' Button
-							//xem hinh ke
-							nextImage();
-							//dialog.cancel();
-						}
-					}).setNegativeButton("No", new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-							// Action for 'NO' Button
-							dialog.cancel();
-						}
-					});
-			AlertDialog alert = alt_bld.create();
-			// Title for AlertDialog
-			alert.setTitle("You win!!!");
-			// Icon for AlertDialog
-			alert.setIcon(R.drawable.icon);
-			alert.show();
-*/
+			//dialogMsgImage
+			gamepanel.dialogMsgImg("Congratulation!!!, Are you want to next game?");
+			
+			//gamepanel.nextImage();
+			//Log.i(TAG, "***** checkFinish(): Next game" );
 
+			
 		} catch (Exception ex) {
 			Log.i(TAG, "***** checkFinish() Error: " + ex.getMessage());
 		}
@@ -558,7 +541,7 @@ public class DrawImage extends Activity {
 		int[][] arr = new int[num][16];
 		arr[0] = new int[] { 18, 15, 10, 2, 5, 4, 14, 0, 17, 9, 1, 21, 16, 19, 13, 8, 6, 22, 3, 11, 7, 12, 20, 23 }; // ok
 		arr[1] = new int[] { 14, 4, 22, 17, 8, 21, 2, 20, 13, 9, 12, 7, 1, 10, 11, 6, 0, 15, 18, 19, 3, 5, 16, 23 }; // ok
-		arr[2] = new int[] { 7, 11, 16, 3, 22, 19, 10, 21, 20, 9, 0, 6, 14, 2, 17, 5, 13, 18, 15, 12, 8, 1, 4, 23 };
+		arr[2] = new int[] { 7, 11, 16, 3, 22, 19, 10, 21, 20, 9, 0, 6, 14, 2, 17, 5, 13, 18, 15, 12, 8, 1, 4, 23 }; // ok
 		arr[3] = new int[] { 8, 13, 22, 15, 2, 20, 6, 9, 16, 0, 18, 4, 11, 19, 5, 21, 1, 14, 17, 10, 12, 3, 7, 23 }; // ok
 		arr[4] = new int[] { 17, 21, 12, 0, 11, 2, 7, 22, 5, 20, 13, 16, 8, 19, 4, 3, 15, 9, 14, 18, 10, 6, 1, 23 }; // ok
 
@@ -577,7 +560,7 @@ public class DrawImage extends Activity {
 	}
 
 	// Function: Hien thi hinh ke
-	private void nextImage() {
+	public void nextImage() {
 		nPos++;
 		if (nPos >= nImage)
 			nPos = 0;
@@ -646,14 +629,14 @@ public class DrawImage extends Activity {
 			clsT = searchCoord(x, y);
 			// search not found
 			if (clsT == null) {
-				Log.i(TAG, "***** handleActionDown() khong co toa do: " + x + "," + y);
+				//Log.i(TAG, "***** handleActionDown() khong co toa do: " + x + "," + y);
 				return;
 			}
 
 			// di chuyen hinh
 			if (moveImage(clsT) == false) {
-				Log.i(TAG, "***** handleActionDown() khong co hinh: " + clsT.getCode() + "L" + clsT.getImgL() + ", R"
-						+ clsT.getImgR() + ", T" + clsT.getImgT() + ", B" + clsT.getImgB());
+				//Log.i(TAG, "***** handleActionDown() khong co hinh: " + clsT.getCode() + "L" + clsT.getImgL() + ", R"
+				//		+ clsT.getImgR() + ", T" + clsT.getImgT() + ", B" + clsT.getImgB());
 				return;
 			}
 

@@ -13,8 +13,12 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
 	private static final String TAG = MainGamePanel.class.getSimpleName();
 	private DrawImage drawImage;
+	private ImageActivity imgActivity ;
+
 	public MainGamePanel(Context context) {		
-		super(context);
+		super(context);		
+		//this.imgActivity = imgActivity;
+		imgActivity = (ImageActivity)context;
 		//Bitmap bitmap;
 		// TODO Auto-generated constructor stub
 		try{
@@ -78,6 +82,14 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 		}
 		
 		return true;
+	}
+	
+	public void dialogMsgImg(String dg){
+		imgActivity.dialogMsgImage(dg);
+	}
+
+	public void nextImage(){
+		drawImage.nextImage();
 	}
 
 }
