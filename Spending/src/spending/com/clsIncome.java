@@ -67,6 +67,7 @@ public class clsIncome extends Activity{
 		if(spnReason.getSelectedItem().toString().length()==0){
 			return false;
 		}
+		return false;
 	}
 	
 	private void saveData(){
