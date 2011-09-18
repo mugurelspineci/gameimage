@@ -1,7 +1,10 @@
 package spending.com;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 public class spendingActivity extends Activity {
     /** Called when the activity is first created. */
@@ -21,7 +24,7 @@ public class spendingActivity extends Activity {
 		});
 		
 		ImageView imgPayment = (ImageView) findViewById(R.id.payment);
-		imgInMoney.setOnClickListener(new onClickListener(){
+		imgPayment.setOnClickListener(new onClickListener(){
 			public void onClick(View v){
 				Intent inMoney = new Intent(this, InMoney.class);
 				startActivity(inMoney);
@@ -37,7 +40,7 @@ public class spendingActivity extends Activity {
 		});
 		
 		ImageView imgStatistics = (ImageView) findViewById(R.id.statistics);
-		imgstatistics.setOnClickListener(new onClickListener(){
+		imgStatistics.setOnClickListener(new onClickListener(){
 			public void onClick(View v){
 				Intent inStatistics = new Intent(this, Statistics.class);
 				startActivity(inStatistics);
