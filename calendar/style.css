@@ -1,0 +1,116 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+body{ margin: 0; padding: 0; text-align:center; font-family:Arial; font-size:12px; background:url(header_bg.jpg) left top repeat-x; }
+#body01{background:url(footer_bg.jpg) left bottom repeat-x; margin:0; padding:0;}
+#wrapper{width:775px; margin:0 auto; padding:0;}
+#header{
+	width:775px; 
+	height:90px; 
+	margin:0 0 27px 0; 
+	padding:0; 
+	background:url(header_bg.jpg) 0 0 repeat-x;
+}
+#header01{
+	float:left;
+	margin:0;
+	padding:0;
+}
+#header01 p.img01{margin:0; padding:7px 0 0 40px; line-height:1%;}
+#header02{
+	float:right;
+	margin:0;
+	padding:0;
+}
+#header02 p.img02{margin:0; padding:28px 40px 0 0; line-height:1%;}
+
+#content{
+	width:775px;
+	margin:0 0 20px 0;
+	padding:0;
+	text-align:left;
+	min-height: 410px;
+
+}
+* html #content{
+	height: 410px;
+}
+
+#footer{
+	width:775px;
+	height:30px;
+	margin:0;
+	padding:0;
+	background:url(footer_bg.jpg) 0 0 repeat-x;
+}
+#footer address{margin:0; padding:10px 0 0 0; line-height:1%;}
+.alpha01{float:center; margin:0; padding:0; width:775px;}
+.bg01{background:url(provide_img_02.jpg) 0 0 no-repeat; height:213px; margin:0; padding:10px 0 0 0;}
+.bg02{background:#464684 0 0 repeat; margin:0 0 22px 0; padding:10px; border:1px solid #56569e;}
+.bg03{background:#f7f5f7; margin:0; padding:5px; border:0px;}
+.titlemargintop{margin-top:7px;}
+
+#divisiondiv{
+	float:center;
+	width:423px;
+	height:38px;
+	margin:0 0 0 0;
+	padding:0;
+	text-align:center;
+
+}
+
+#calDiv{
+	float:center;
+	width:423px;
+	height:200px;
+	margin:0 0 0 0;
+	padding:0;
+	text-align:center;
+
+}
+
+#manual{
+	float:right;
+	margin-top:-15px;
+	padding-right:178px;
+}
+.img{margin:0; padding:0; line-height:1%;}
+.mar_b10{margin-bottom:10px;}
+.mar_b22{margin-bottom:22px;}
+.mar_l10{margin-left:23px; margin-right:23px;}
+.mar_top{margin-bottom:-2px; padding-top:2px; }
+
+table { border:1px solid #000; border-collapse:collapse;}
+table td { border:1px solid #000; border-collapse:collapse;}
+
+.clear { clear: both; }
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix { display: inline-block; }
+/* Hides from IE-mac \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* End hide from IE-mac */
+
+p{margin:0; padding:0;}
+
+
+/*css class for 2 tables loaded by csv file*/
+table .tableclass1 td{ border:1px solid #646464; padding-top:7px;padding-bottom:7px;}
+table .tableclass2 td{ border:1px solid #646464; padding-top:7px;padding-bottom:7px;}
+.tabletheader1{text-align:center; font-weight:bold; width: auto; background:#cebfe3;}
+.tabletheader2{text-align:center; font-weight:bold; width: auto; background:#c7c7e3;}
+.tablefirstcolumn1{text-align:center; font-weight:bold; width: auto; background:#FFFFFF;}
+.tablefirstcolumn2{text-align:center; font-weight:bold; width: auto; background:#FFFFFF;}
+.tablenormalcolumn1{text-align:right; padding-right:20px; width: auto; background:#FFFFFF;}
+.tablenormalcolumn2{text-align:right; padding-right:20px; width: auto; background:#FFFFFF;}
+
+#tables { clear:both;padding-top:15px;}
+
