@@ -1,0 +1,4 @@
+6
+\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\
+\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\
+\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\logHTML.log
