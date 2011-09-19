@@ -74,7 +74,7 @@ public class SpendingDbAdapter {
 	/**
 	 * Return a Cursor positioned at the defined Spending
 	 */
-	public Cursor fetch(long rowId) throws SQLException {
+	public Cursor fetchData(long rowId) throws SQLException {
 		Cursor mCursor = database.query(true, DATABASE_TABLE, new String[] {
 				KEY_ROWID, KEY_AMOUNT, KEY_DATE_PAY, KEY_PAY, KEY_REASON, KEY_OTHER, KEY_COMMENT },
 				KEY_ROWID + "=" + rowId, null, null, null, null, null);

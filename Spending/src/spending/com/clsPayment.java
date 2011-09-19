@@ -7,21 +7,22 @@ import android.widget.EditText;
 
 public class clsPayment extends Activity{
 
-		EditText edtAmount ;
-		EditText edtDate;
-		Spinner spnReason;		
-		EditText edtOther ;
-		EditText edtComment;
-		Button btnSave;
-		Button btnCancel;
+	private static final String TAG = clsPayment.class.getSimpleName();
+	EditText edtAmount ;
+	EditText edtDate;
+	Spinner spnReason;		
+	EditText edtOther ;
+	EditText edtComment;
+	Button btnSave;
+	Button btnCancel;
 	
 	@Override
 	public void onCreate(Bundle saved){
 		super.onCreate(saved);
-		setContentView(R.layout.main);
+		setContentView(R.layout.Payment);
 		
-		String arrReason = {"AA","BB","CC"};
-		ArrayAdapter adapter;
+		String arrReason[] = {"AA","BB","CC"};
+		ArrayAdapter<String> adapter;
 		
 		edtAmount = (EditText)findViewById(R.id.edtAmount);
 		edtDate = (EditText)findViewById(R.id.edtDate);
@@ -56,16 +57,25 @@ public class clsPayment extends Activity{
 		if(edtAmount.getText().length()==0){
 			return false;
 		}
-		if(editDate.getText().length()==0){
+		if(edtDate.getText().length()==0){
 			return false;
 		}
-		if(spnReason.getText().length()==0){
+		if(spnReason.getSelectedItem().toString().length()==0){
 			return false;
 		}
+		return true;
 	}
 	
 	private void saveData(){
-	
+		SpendingDbAdapter db
+		try{
+			db = new SpendingDbAdapter();
+			db.open();
+			db.insert(edtAmount.getText(), edtDate.getText(), 1, spnReason.getSelectedItem().toString(), 
+					edtOther.getText(), edtComment.getText());
+		}catch(Exception ex){
+			Log.i(TAG, "***** saveData() Error: " + ex.getMessage());
+		}
 	}
 
 }

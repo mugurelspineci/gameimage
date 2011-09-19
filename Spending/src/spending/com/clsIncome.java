@@ -23,7 +23,7 @@ public class clsIncome extends Activity{
 	@Override
 	public void onCreate(Bundle saved){
 		super.onCreate(saved);
-		setContentView(R.layout.main);
+		setContentView(R.layout.Income);
 		
 		String arrReason[] = {"AA","BB","CC"};
 		ArrayAdapter<String> adapter;
@@ -67,7 +67,7 @@ public class clsIncome extends Activity{
 		if(spnReason.getSelectedItem().toString().length()==0){
 			return false;
 		}
-		return false;
+		return true;
 	}
 	
 	private void saveData(){
