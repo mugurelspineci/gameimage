@@ -1,0 +1,283 @@
+a { color:#0606fa; text-decoration:underline;}
+a:hover { color:#0606fa; text-decoration:none;}
+
+html #calendarDiv{
+	position:relative;
+	width:425px;
+	max-width: 425px;
+	height: auto;
+	top:-1px;
+	background-color: #FFF;
+	font-family:arial;
+	font-size:12px;
+	visibility:hidden;
+	float:center;
+
+}
+
+#calendarDiv span,#calendarDiv img{
+	float:left;
+	margin-left: 5px;
+}
+#calendarDiv .selectBox,#calendarDiv .selectBoxOver{	
+	line-height:12px;
+	padding:1px;
+	cursor:pointer;
+	padding-left:2px;
+}
+
+#calendarDiv .selectBoxTime,#calendarDiv .selectBoxTimeOver{	
+	line-height:12px;
+	padding:1px;
+	cursor:pointer;
+	padding-left:2px;
+}
+
+#calendarDiv td{
+	padding:3px;
+	margin:0px;
+	font-size:18px;
+	height: 22px;
+	border: 1px solid #56569e;
+}
+
+
+
+#calendarDiv .selectBox{
+	border:1px solid #282854;		
+	color: Black;
+	position:relative;
+	background-color: #FFFFFF;
+	font-size: 13px;
+	height: 14px;
+}
+#calendarDiv .selectBoxOver{
+	border:1px solid #FFF;
+	background-color: #424279;
+	color: #FFF;
+	position:relative;
+}
+#calendarDiv .selectBoxTime{
+	border:1px solid #424279;		
+	color: #424279;
+	position:relative;
+}
+#calendarDiv .selectBoxTimeOver{
+	border:1px solid #216072;	
+	color: #216072;
+	position:relative;
+}
+
+#calendarDiv .topBar{
+	height:16px;
+	font-size: 12px;
+	padding-left:32%;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	background: #bdb9eb repeat-x;
+	border: 1px solid #56569e;
+	border-bottom: 0px;
+}
+#calendarDiv .topBarBottom{
+	height:21px;
+	padding-left:32%;
+	_padding-left:32%;
+	padding-top: 4px;
+	padding-bottom: 5px;
+	background-color: #FFFFFF;
+	border: 1px solid #56569e;
+	border-bottom: 0px;
+}
+#calendarDiv .activeDay{	/* Active day in the calendar */
+	/*color:#FF0000;*/
+	font-weight:bold;
+}
+#calendarDiv .todaysDate{
+	height:17px;
+	line-height:17px;
+	padding:2px;
+	background-color: #E2EBED;
+	text-align:center;
+	position:absolute;
+	bottom:0px;
+	width:497px;
+}
+#calendarDiv .todaysDate div{
+	float:left;
+}
+	
+#calendarDiv .timeBar{
+	height:17px;
+	line-height:17px;
+	background-color: #E2EBED;
+	width:72px;
+	color:#FFF;
+	position:absolute;
+	right:0px;
+}
+
+#calendarDiv .timeBar div{
+	float:left;
+	margin-right:1px;
+}
+
+
+#calendarDiv .monthYearPicker{
+	background-color: #dcdcfe;
+	border:1px solid #AAAAAA;
+	position:absolute;
+	color: Black;
+	left:250px;
+	top:15px;
+	z-index:1000;
+	display:none;
+
+}
+#calendarDiv #monthSelect{
+	width:40px;
+	/* height: 12px; */
+	margin-left: 20px;
+}
+#calendarDiv .monthYearPicker div{
+	float:none;
+	clear:both;	
+	padding:1px;
+	margin:1px;	
+	cursor:pointer;
+}
+#calendarDiv .monthYearActive{
+	background-color:#9a9ade;
+	padding-left:4px;
+	color: #E2EBED;
+}
+
+#calendarDiv td{
+	text-align: center;
+	/** cursor:pointer; */
+}
+
+#calendarDiv .topBar img{
+	cursor:pointer;
+	/* margin-bottom:-1px;
+	margin-right:-1px;
+	margin-top:-1px; */
+}
+#calendarDiv .topBarBottom img 
+{
+	cursor: pointer;
+}
+
+#calendarDiv .topBar div{
+	float:left;
+	margin-right:5px;
+}
+.dateName
+{
+	padding-right: 5px;
+	padding-left: 2px;
+	color: #0C0C0C;
+	font-weight: bold;
+	font-size: 14px;
+	padding-top: 2px;
+}
+.today
+{
+	border: 1px solid #99B944;
+	-moz-border-radius: 11px;
+	background-color: #99B944;
+	margin-left: 4px;
+	margin-right: 4px;
+	width: 50px;
+	text-align: center;
+	color: White;
+	cursor: default;
+	font-weight: bold;
+	height: 13px;
+}
+.boldCurrentDate
+{
+	font-weight: bold;
+	background-color: #91d6fa;
+}
+.boldCurrentMonthYear
+{
+	font-weight: bold;
+	background-color: #007f12;
+}
+
+.leftPanel
+{
+	float: left;
+	padding-top: 27px;
+	padding-left: 45px;
+	width: 46%;
+}
+.mierukaTitle
+{
+	font-size: 29px;
+	font-weight: bold;
+	color: #323273;
+	padding-bottom: 21px;
+	padding-left: 18px;
+	background: #FFFFFF url(bottomTitle.GIF) no-repeat scroll 0px 0px;
+}
+
+.listDivision
+{
+	background: url(listDivision.gif) repeat-x;
+	color: #fff;
+	font-size: 17px;
+	padding-left: 22px;
+	padding-bottom: 7px;
+	padding-top: 7px;
+	font-weight: bold;
+	border-bottom:1px solid #fff;
+	
+}
+
+.boundAll
+{
+	background-color: #dcdcfe;
+	padding-bottom: 27px;
+	border:1px solid #a5a5e4;
+}
+table td
+{
+	padding-left:14px;
+	padding-top: 11px;
+	font-size: 15px;
+}
+.calendar_week_row
+{
+	color: #FFFFFF;
+	background-color: #9891df;
+	font-weight: bold;	
+}
+.oweekendOtherMonthDay
+{
+	color: #000000;
+}
+.IsSun
+{
+	background-color: #cbcbed;
+	color: #000000;
+}
+.IsSat
+{
+	background-color: #e6e7fb;
+	color: #000000;
+}
+
+.hightLightWeekColor
+{
+	clear: both;
+	background-color: #FFFFC3;
+	
+}
+
+.mouseBeDown {
+	background: #FFFFFF url(b-left-over.jpg) no-repeat scroll 0px 34px;
+}
+.mouseBeUp {
+	background: #FFFFFF url(left.jpg) no-repeat scroll 0px 34px;
+}

@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'> 
+<HEAD>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache" />
+<META HTTP-EQUIV="expires" CONTENT="0" />
+<META http-equiv="Content-Language" content="ja" />
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<TITLE>PMeye Ver. 2.x</TITLE>
+<script src="calendar.js" language="javascript" type="text/javascript">
+</script>
+<script src="table.js" language="javascript" type="text/javascript">
+</script>
+<link type="text/css" rel="stylesheet" href="calendar.css" />
+<link type="text/css" rel="stylesheet" href="style.css" />
+
+<script type='text/javascript' language='javascript'>  
+
+var isOpen = false;
+var divisionDateArr = new Array();
+var divisionLinkArr = new Array();
+var divisionList = new Array();
+
+function selectDivision(division, divisionFile){
+
+	document.getElementById("tables").innerHTML ='';
+ if(isOpen) {
+ closeCalendar(); 
+ }
+
+calendarCaller(division, divisionFile);
+isOpen = true; 
+ 
+ 
+
+}  
+function empty(){
+	if(isOpen) 
+		closeCalendar();
+	isOpen = false;
+	document.getElementById("tables").innerHTML ='';
+}
+
+
+function selectdept(linkLoc) {
+	empty();
+	var flag=false;
+	for(var i=0; i<divisionList.length;i++){
+		if(linkLoc==divisionList[i]){
+			flag=true;
+			selectDivision(divisionDateArr[i], divisionLinkArr[i]); 
+			createCookie('Division', linkLoc,365); 
+			show2tables(linkLoc);
+			break;
+		}
+	}
+	if(flag==false){
+		deletecookie ('Division');
+	}
+}
+
+function DropDownSelected(dept){
+	for(i=0;i<document.all('Dept').length;i++)
+	{
+		if(document.all('Dept').options[i].value==dept)
+		{
+			document.all('Dept').selectedIndex=i;
+			break;
+		}
+	}
+}
+
+
+var tc = false;
+try {
+	tc = true;
+} catch(f) { }
+
+var objRequestError = 'XML HTTP Request: OK';
+
+
+function readcsv(pUrl) {
+
+	var objRequest = getRequestObject();
+
+	if (typeof(objRequest)=='object') {
+		if (objRequest.readyState>=0) {
+			objRequest.onreadystatechange = function() { insertArr(objRequest); };
+			objRequest.open('GET', pUrl, true);
+			objRequest.send(null);
+		}else{
+			objRequestError = 'XML HTTP Request Object Unavailable';
+			//document.getElementById(pElementId).innerHTML = objRequestError;
+			alert('file not found');
+			return false;
+		} 
+	}else{
+		objRequestError = 'XML HTTP Request Object Not Supported';
+		//document.getElementById(pElementId).innerHTML = objRequestError;
+		return false;
+	}
+}
+
+function insertArr(pObjRequest) {
+	if (pObjRequest.readyState==4) {
+		if (pObjRequest.status==200) {
+		var lineData=pObjRequest.responseText.split('\n');
+		var divTemp="";
+		var countDate=0;
+		var countDiv=0;
+			for (var i=lineData.length-1; i>=0; i--){
+			if(lineData[i]!=""){
+				var wCount = lineData[i].split(",");
+				if(wCount[0]!=divTemp){
+					divisionList.push(wCount[0]);
+					divTemp=wCount[0];
+					countDate=0;
+					divisionDateArr[countDiv] = new Array();
+					divisionLinkArr[countDiv] = new Array();
+					countDiv++;
+				}
+				divisionDateArr[countDiv-1].push(wCount[1]);
+				divisionLinkArr[countDiv-1].push(wCount[2]);
+				countDate++;
+			}
+			}
+			empty();
+			var ckie = readCookie('Division');
+			var temp;
+			var ddl = document.getElementById('Dept');
+			for(var j=0; j<divisionList.length;j++){
+				if(ckie==divisionList[j]){
+					selectDivision(divisionDateArr[j], divisionLinkArr[j]);
+					show2tables(ckie);
+				}
+				temp= document.createElement("option");
+				temp.text = divisionList[j];
+				temp.value = divisionList[j];
+				ddl.options.add(temp);
+			}
+			DropDownSelected(ckie);
+		}
+	}
+}
+
+function onload(){
+
+	readcsv('Core.csv?t=' + new Date().getTime());
+
+}
+
+function readCookie(c_name)
+{
+if (document.cookie.length>0)
+{
+	c_start=document.cookie.indexOf(c_name + "=");
+	if (c_start!=-1)
+	{ 
+		c_start=c_start + c_name.length+1; 
+		c_end=document.cookie.indexOf(";",c_start);
+		if (c_end==-1) c_end=document.cookie.length;
+		return unescape(document.cookie.substring(c_start,c_end));
+	} 
+ }
+return "";
+}
+
+function createCookie(c_name,value,expiredays)
+{
+var exdate=new Date();
+exdate.setDate(exdate.getDate()+expiredays);
+document.cookie=c_name+ "=" +escape(value)+
+((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+}
+
+
+function deletecookie ( cname )
+{
+  var cookie_date = new Date ( );  // current date & time
+  cookie_date.setTime ( cookie_date.getTime() - 1 );
+  document.cookie = cname += "=; expires=" + cookie_date.toGMTString();
+}
+
+
+
+
+
+</script>
+</HEAD>
+<BODY onLoad="javascript:onload()">
+
+<div id="body01">
+	<div id="wrapper">
+		<div id="header">
+			<div id="header01">
+				<p class="img01"><img src="Logo_64x64.gif" alt="PMeye" width="64" height="64"><font size=10>PMeye Ver. 2.0</font></p>
+			</div>
+		</div>
+		<div id="content" class="clearfix">
+			<div width="775" align="center" class="mar_b22">
+			  <div class="bg02" id="divisiondiv" onMouseOver="javascript:closeAllDropDown()">
+					<div class="titlemargintop">
+						<strong><FONT COLOR="#FFFFFF" size="4">事業部選択</FONT></strong>
+							<select id="Dept" name="DeptList" size="1" class="mar_l10" onChange="selectdept(DeptList.options[DeptList.selectedIndex].value)">
+								<option value="" >事業部選択してください</option>
+							</select>
+							
+					</div>
+			  </div>
+			  <div id="caldiv"></div>
+			</div>
+
+		<div id="manual">
+		<Strong><Big><a href="tool_manualV20.ppt" target="_blank">PMeyeマニュアル</a><BR></Big></Strong>
+		<a href="../0140/Provide.HTML">2011年1月以前のデータを見るには、こちらを参照願います。</a>
+		</div>
+		<div  id="tables">
+
+
+		 </div>
+		 
+		</div>
+		<div id="temp">
+		</div>
+		<img src="symbol_anim_03.gif"><img src="symbol_anim_01.gif"><img src="symbol_anim_02.gif"><img src="symbol_anim_04.gif">
+		<div id="footer">
+		</div>
+	</div>
+	
+	
+</div>
+</BODY>
+</HTML>
