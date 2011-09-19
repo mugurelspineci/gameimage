@@ -1,0 +1,7 @@
+1
+\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\
+\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\
+三事本
+\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\三事本\Filter Pattern.csv
+\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\三事本\Analyze Pattern.xls
+\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\三事本\1000_PJ監視ツール.csv|\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\三事本\イベント.csv|\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\三事本\フェーズ.csv|\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\三事本\受注審査.csv|\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\三事本\添付ファイル.csv|\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\三事本\本番稼働日.csv|\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\三事本\PJフォロー状況データファイル.csv|\\192.168.1.126\necsv\Projects\3.PMeye2Q\05. Data\三事本\アンケート.csv

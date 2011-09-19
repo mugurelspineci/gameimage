@@ -1,0 +1,242 @@
+
+Private Sub cmbCancel_Click()
+    Unload Me
+End Sub
+
+Private Sub cmbOK_Click()
+    Dim namesheet As String '新規のシート名を格納する。
+    Dim ws As Worksheet
+    Dim countCol As Integer
+    Dim countColT As Integer
+
+    Dim pos As Integer  'テーブルを作成する位置を格納する
+    Dim c As Integer
+    Dim i As Integer
+    Dim pvc As PivotCache
+    Dim source As String
+    Dim errMsg As String
+    Dim filename As String
+    Dim rng As Excel.Range
+    Dim arrData() As Variant
+    Dim lRows As Long
+    Dim lCols As Long
+    Dim ii As Long, jj As Long
+    
+    filename = "Pivot_error.log"
+    pos = 15
+    countCol = 0
+    errMsg = "処理 エラー"
+     On Error GoTo errMyErrorHandler
+     
+    
+    If refSelectCells.Text = "" Then
+     MsgBox "Pivotを作成する地域を選んでください。"
+     refSelectCells.SetFocus
+    Else
+    
+        'Range(refSelectCells.Text).Select
+        If CheckRange(refSelectCells.Text) = False Then
+          refSelectCells.SetFocus
+          Exit Sub
+        End If
+        
+        'シートで選択した行数を格納する。
+        lRows = Selection.Rows.Count
+        lCols = Selection.Columns.Count
+        
+        ReDim arrData(1 To lRows, 1 To lCols)
+        
+        Set rng = Selection
+        arrData = rng.Value
+        
+        For i = 1 To lCols
+            If arrData(1, i) <> "" Then Exit For
+        Next i
+        
+        If i > lCols Then
+            MsgBox "列のタイトルがない場合、Pivotが作成されない"
+            refSelectCells.SetFocus
+            Exit Sub
+        End If
+    
+        'Hide
+        'シート名を作成する｡
+        namesheet = CreateSheetName()
+          
+        If namesheet <> "" Then
+            '処理がシートで表示させない
+            Application.ScreenUpdating = False
+             
+            'シートを新規作成する。
+            Set ws = Sheets.Add
+            ws.name = namesheet
+            
+            countColT = lCols + pos - 1
+            Range(Cells(1, pos), Cells(lRows, countColT)).Select
+            Set rng = Selection
+            rng.Value = arrData
+            
+            'セルの値が ""の場合、該当の列を削除する。
+            c = pos
+            For i = pos To countColT Step 1
+                If Cells(1, c) = "" Then
+                    Columns(c).Delete
+                Else
+                    c = c + 1
+                End If
+            Next i
+             
+            '空白以外の値のあるセルの合計を格納する。
+            For i = pos To countColT Step 1
+                If Cells(1, i) = "" Then
+                   Exit For
+                Else
+                    countCol = countCol + 1
+                End If
+            Next i
+            
+            If countCol < 1 Then
+                If chkLog.Value = False Then
+                    MsgBox "列のタイトルがない場合、Pivotが作成されない。"
+                Else
+                    errMsg = "列のタイトルがない場合、Pivotが作成されない。"
+                    Call WriteError(errMsg, ThisWorkbook.Path, filename)
+                End If
+                Unload Me
+                Exit Sub
+            End If
+            
+            'テーブルを作成する位置を格納する。
+            source = namesheet & "!" & "R1C" & pos & ":R" & lRows & "C" & (countCol + pos - 1)
+        
+            'Check version
+            If Application.Version < 12 Then
+                'Office 2003
+                Set pvc = ActiveWorkbook.PivotCaches.Add(SourceType:=xlDatabase, SourceData:=source)
+            Else
+                'Office 2007
+                Set pvc = ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=source, Version:=xlPivotTableVersion10)
+            End If
+             
+             'ピボットテーブルを作成する。
+             pvc.CreatePivotTable TableDestination:=Worksheets(namesheet).Range(Cells(1, 1), Cells(1, 1)), _
+        TableName:=namesheet, DefaultVersion:=xlPivotTableVersion10
+             ActiveWorkbook.ShowPivotTableFieldList = True
+             
+             '作成したテーブルを削除する。
+             Range(Cells(1, pos), Cells(lRows, countCol + pos - 1)).Select
+             Selection.ClearContents
+             
+             Range(Cells(1, 1), Cells(1, 1)).Select
+             '表示更新の制御
+             Application.ScreenUpdating = True
+             
+             Set rng = Nothing
+             'ピボットテーブルフォームを閉じる。
+             Unload Me
+        Else
+            If chkLog.Value = False Then
+               MsgBox errMsg
+            Else
+               Call WriteError(errMsg, ThisWorkbook.Path, filename)
+            End If
+        End If
+       
+    End If
+ 
+ 
+    Exit Sub
+    
+errMyErrorHandler:
+    If chkLog.Value = True Then
+        Call WriteError(errMsg, ThisWorkbook.Path, filename)
+    End If
+    
+    MsgBox Err.Description, vbExclamation + vbOKCancel, "Error: " & CStr(Err.Number)
+    Err.Clear
+    Unload Me
+End Sub
+
+'*************************************************************************
+'Function:シート名を作成する｡
+'@Param　:　なし
+'@Return :シート名
+'*************************************************************************
+Function CreateSheetName() As String
+    Dim i As Integer
+    Dim wSheet As Worksheet
+    Dim name As String
+    Dim sh As Worksheet, flg As Boolean
+    
+    name = "ピボットテーブル"
+    name1 = name
+    CreateSheetName = ""
+     On Error Resume Next
+     For i = 1 To 100
+        For Each sh In Worksheets
+           If sh.name = name1 Then flg = True: Exit For
+        Next
+        If flg = True Then
+            name1 = name & i
+            flg = False
+        Else
+            CreateSheetName = name1
+        End If
+    Next
+End Function
+
+'*************************************************************************
+'Function: 地域の存在チェック
+'@Param  : strRange 指定した地域
+'@Return : 地域が存在する場合、True
+'          地域が存在しない場合､False
+'*************************************************************************
+Function CheckRange(strRange As String) As Boolean
+    On Error GoTo errMyErrorHandler
+    Range(strRange).Select
+    CheckRange = True
+    Exit Function
+errMyErrorHandler:
+    MsgBox "指定した地域は見つかりませんでした。"
+    CheckRange = False
+End Function
+
+
+
+Private Sub UserForm_Click()
+    
+End Sub
+
+Private Sub UserForm_Initialize()
+    refSelectCells.SetFocus
+    refSelectCells.Text = ActiveSheet.name & "!" & Selection.Address
+End Sub
+
+
+'*************************************************************************
+'Function:ログに書き込み
+'@Param  : message ログメッセージ
+'          folder ログフォルダ
+'          filename ログファイル名
+'@Return : なし
+'*************************************************************************
+Public Sub WriteError(message As String, folder As String, filename As String)
+        
+    Dim logFilePath As String
+    
+    logFilePath = folder & "\" & filename
+        
+    Open logFilePath For Append As #1
+        
+    Print #1, "----------------------------------------------------------------"
+    Print #1, " エラーの発生日              : " & Application.Text(Now(), "yyyy/MM/dd HH:mm:ss")
+    Print #1, " エラー番号                    : " & Err.Number
+    Print #1, " エラーに関連する説明文: " & Err.Description
+    Print #1, " エラーの発生元              : " & Err.source
+    Print #1, " エラーの内容                  : " & message
+
+    Print #1, "----------------------------------------------------------------" & vbNewLine
+    
+    Close #1
+
+End Sub
