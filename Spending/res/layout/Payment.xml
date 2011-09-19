@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout android:id="@+id/tableLayout1"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<TableRow android:id="@+id/tableRow1" android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+		<TextView android:id="@+id/textView3" android:text="Thu "
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:textSize="18dp" android:padding="18dip" />
+	</TableRow>
+
+	<TableRow android:id="@+id/tableRow2" android:layout_height="wrap_content"
+		android:layout_width="wrap_content">
+		<TextView android:id="@+id/tvwAmount" android:text="so tien"
+			android:width="60px" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+		<EditText android:id="@+id/edtAmount" android:layout_width="wrap_content"
+			android:width="100px" android:layout_height="wrap_content" />
+		<TextView android:id="@+id/tvwVND" android:text="VND"
+			android:width="100px" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+	</TableRow>
+
+	<TableRow android:id="@+id/tableRow12" android:layout_height="wrap_content"
+		android:layout_width="match_parent">
+		<TextView android:id="@+id/tvwDate" android:text="Ngay"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+		<EditText android:id="@+id/edtDate" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+	</TableRow>
+
+	<TableRow android:id="@+id/tableRow13" android:layout_height="wrap_content"
+		android:layout_width="match_parent">
+		<TextView android:id="@+id/tvwReason" android:text="Ly do"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+		<Spinner android:id="@+id/spnReason" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+	</TableRow>
+
+	<TableRow android:id="@+id/tableRow14" android:layout_height="wrap_content"
+		android:layout_width="match_parent">
+		<TextView android:id="@+id/tvwOther" android:text="Khac"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+		<EditText android:id="@+id/edtOther" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+	</TableRow>
+
+	<TableRow android:id="@+id/tableRow15" android:layout_height="wrap_content"
+		android:layout_width="match_parent">
+		<TextView android:id="@+id/tvwComment" android:text="Ghi chu"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+		<EditText android:id="@+id/edtComment" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+	</TableRow>
+
+	<TableRow android:id="@+id/tableRow16" android:layout_height="wrap_content"
+		android:layout_width="match_parent">
+		<Button android:id="@+id/btnSave" android:text="Luu"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" />
+		<Button android:id="@+id/btnCancel" android:text="Huy"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:typeface="serif" />
+	</TableRow>
+	
+</TableLayout>
