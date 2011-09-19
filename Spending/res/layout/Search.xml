@@ -4,39 +4,45 @@
     android:shrinkColumns="*"  android:stretchColumns="*" android:background="#ffffff">
     <!-- title-->
     <TableRow android:layout_height="wrap_content" android:layout_width="fill_parent" android:gravity="center_horizontal">
-		<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="18dp" android:text="Thu"  android:layout_span="3" android:padding="18dip"/>
+		<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="18dp" android:text="Tim"  android:layout_span="3" android:padding="18dip"/>
     </TableRow>
+	
+	  <!--  -->
+    <TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
+		<RadioGroup id="@+id/widget1" android:layout_width="wrap_content" android:layout_height="wrap_content" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical">
+			<RadioButton id="@+id/rdIncome" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Thu" android:checked="true" android:layout_gravity="left" android:layout_weight="0"/>
+			<RadioButton id="@+id/rdPayment" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chi" android:checked="false" android:layout_gravity="left" android:layout_weight="0"/>
+		</RadioGroup>		
+    </TableRow> 
  
     <!--  -->
     <TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
-        <TextView android:id="@+id/tvwAmount" android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-		<EditText android:id="@+id/edtAmount" android:layout_width="wrap_content" android:layout_height="wrap_content"/>		
-		<TextView android:id="@+id/tvwVND" android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    </TableRow> 
+        <TextView android:id="@+id/tvwDate" android:text="Ngay" android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+		<EditText android:id="@+id/edtDateFrom" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+		<TextView android:id="@+id/tvwt" android:text=" - " android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+		<EditText android:id="@+id/edtDateTo" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    </TableRow>
  
 	<TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
-        <TextView android:id="@+id/tvwDate" android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-		<EditText android:id="@+id/edtDate" android:layout_width="wrap_content" android:layout_height="wrap_content"/>		
+        <TextView android:id="@+id/tvwAmount" android:text="So tien" android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+		<EditText android:id="@+id/edtAmountFrom" android:layout_width="wrap_content" android:layout_height="wrap_content"/>		
+		<TextView android:id="@+id/tvwT" android:text=" - " android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+		<EditText android:id="@+id/edtAmountTo" android:layout_width="wrap_content" android:layout_height="wrap_content"/>		
     </TableRow> 
 
 	<TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
-        <TextView android:id="@+id/tvwReason" android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView android:id="@+id/tvwReason" android:text="Ly do: " android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 		<Spinner  android:id="@+id/spnReason" android:layout_width="wrap_content" android:layout_height="wrap_content"/>		
     </TableRow> 
 
 	<TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
-        <TextView android:id="@+id/tvwOther" android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView android:id="@+id/tvwOther" android:text="Khac: " android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 		<EditText android:id="@+id/edtOther" android:layout_width="wrap_content" android:layout_height="wrap_content"/>		
     </TableRow> 
 
 	<TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
-        <TextView android:id="@+id/tvwComment" android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-		<EditText android:id="@+id/edtComment" android:layout_width="wrap_content" android:layout_height="wrap_content"/>		
-    </TableRow> 
-	
-	<TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
-        <Button id ="@+id/btnSave" android:text="Label" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
-		<Button id ="@+id/btnCancel" android:text="Label" android:layout_width="fill_parent" android:layout_height="fill_parent" android:typeface="serif"/>
+        <Button id ="@+id/btnSearch" android:text="Tim" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
+		<Button id ="@+id/btnCancel" android:text="Huy" android:layout_width="fill_parent" android:layout_height="fill_parent" android:typeface="serif"/>
     </TableRow> 
 
 </TableLayout>
