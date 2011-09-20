@@ -12,7 +12,20 @@
 		<RadioGroup id="@+id/widget1" android:layout_width="wrap_content" android:layout_height="wrap_content" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical">
 			<RadioButton id="@+id/rdIncome" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Thu" android:checked="true" android:layout_gravity="left" android:layout_weight="0"/>
 			<RadioButton id="@+id/rdPayment" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chi" android:checked="false" android:layout_gravity="left" android:layout_weight="0"/>
-		</RadioGroup>		
+<TableLayout android:id="@+id/tableLayout1"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<TableRow android:id="@+id/tableRow1" android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+		<TextView android:id="@+id/tvwAmount" android:width="100px"
+			android:text="So tien:" android:layout_width="60px"
+			android:layout_height="wrap_content" />
+		<EditText android:id="@+id/edtAmount" android:layout_width="60px"
+			android:layout_height="wrap_content" />
+		<TextView android:id="@+id/tvwVND" android:width="100px"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+	</TableRow>
+<<<<<<< .mine=======		</RadioGroup>		
     </TableRow> 
  
     <!--  -->
@@ -29,20 +42,54 @@
 		<TextView android:id="@+id/tvwT" android:text=" - " android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 		<EditText android:id="@+id/edtAmountTo" android:layout_width="wrap_content" android:layout_height="wrap_content"/>		
     </TableRow> 
-
-	<TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
+>>>>>>> .theirs
+<<<<<<< .mine	<TableRow android:id="@+id/tableRow13" android:layout_height="wrap_content"
+		android:layout_width="match_parent">
+		<TextView android:id="@+id/tvwDate" android:text="Ngay:"
+			android:width="20px" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+		<EditText android:id="@+id/edtDateFrom" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+		<EditText android:text="EditText" android:id="@+id/editText1" android:layout_height="wrap_content"></EditText>
+		<EditText android:id="@+id/edtDateTo" android:width="60px"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+	</TableRow>
+=======	<TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
         <TextView android:id="@+id/tvwReason" android:text="Ly do: " android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 		<Spinner  android:id="@+id/spnReason" android:layout_width="wrap_content" android:layout_height="wrap_content"/>		
     </TableRow> 
-
-	<TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
+>>>>>>> .theirs
+<<<<<<< .mine	<TableRow android:id="@+id/tableRow14" android:layout_height="wrap_content"
+		android:layout_width="match_parent">
+		<TextView android:id="@+id/tvwReason" android:text="Ly do: "
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+		<Spinner android:id="@+id/spnReason" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+	</TableRow>
+=======	<TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
         <TextView android:id="@+id/tvwOther" android:text="Khac: " android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 		<EditText android:id="@+id/edtOther" android:layout_width="wrap_content" android:layout_height="wrap_content"/>		
     </TableRow> 
-
-	<TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
+>>>>>>> .theirs
+<<<<<<< .mine	<TableRow android:id="@+id/tableRow15" android:layout_height="wrap_content"
+		android:layout_width="match_parent">
+		<TextView android:id="@+id/tvwOther" android:text="Khac: "
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+		<EditText android:id="@+id/edtOther" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+	</TableRow>
+=======	<TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
         <Button id ="@+id/btnSearch" android:text="Tim" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
 		<Button id ="@+id/btnCancel" android:text="Huy" android:layout_width="fill_parent" android:layout_height="fill_parent" android:typeface="serif"/>
     </TableRow> 
+>>>>>>> .theirs
+	<TableRow android:id="@+id/tableRow17" android:layout_height="wrap_content"
+		android:layout_width="match_parent">
+		<Button android:id="@+id/btnSave" android:text="Luu"
+			android:layout_width="fill_parent" android:layout_height="fill_parent" />
+		<Button android:id="@+id/btnCancel" android:text="Huy"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:typeface="serif" />
+	</TableRow>
 
 </TableLayout>
