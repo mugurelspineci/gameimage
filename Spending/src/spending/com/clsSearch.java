@@ -1,13 +1,17 @@
 package spending.com;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.util.Log;
+import android.content.Intent;
 import android.database.Cursor;
 
 public class clsSearch extends Activity{
@@ -29,7 +33,7 @@ public class clsSearch extends Activity{
 	@Override
 	public void onCreate(Bundle saved){
 		super.onCreate(saved);
-		setContentView(R.layout.Search);
+		setContentView(R.layout.search);
 		
 		mDbHelper = new SpendingDbAdapter(this);
 		mDbHelper.open();
@@ -37,56 +41,56 @@ public class clsSearch extends Activity{
 	
 	private void searchData() {
 		String cond;
-		List<String[]> list;
+		ArrayList<String[]> arrList;
 		cond = getCondition();
 		
 		SpendingDbAdapter dba = new SpendingDbAdapter(this);
 		
-		list = dba.SelectData(cond);
-		if(list == null) 
+		arrList = dba.SelectData(cond);
+		if(arrList == null) 
 			return;
 			
 		Intent i = new Intent(this, clsShow.class);
-		i.putExtra("SPENDING", list);
+		i.putExtra("SPENDING", arrList);
 		startActivity(i);
 
 	}
 	
 	private String getCondition(){
 		String cond = " WHERE 1=1 ";
-		if(edtDateFrom.getText().toString().trim().length !=0 
-			&& edtDateTo.getText().toString().trim().length != 0){
+		if(edtDateFrom.getText().toString().trim().length() !=0 
+			&& edtDateTo.getText().toString().trim().length() != 0){
 			cond += " AND " + clsContant.KEY_DATE_PAY + ">" + edtDateFrom.getText().toString().trim() 
 					+ " AND " + clsContant.KEY_DATE_PAY + "<" + edtDateTo.getText().toString().trim();
 		}
-		else if(edtDateFrom.getText().toString().trim().length !=0 
-			&& edtDateTo.getText().toString().trim().length == 0){
+		else if(edtDateFrom.getText().toString().trim().length() !=0 
+			&& edtDateTo.getText().toString().trim().length() == 0){
 			cond += " AND " + clsContant.KEY_DATE_PAY + ">" + edtDateFrom.getText().toString().trim();					
 		}
-		else if(edtDateFrom.getText().toString().trim().length ==0
-			&& edtDateTo.getText().toString().trim().length != 0){
+		else if(edtDateFrom.getText().toString().trim().length() ==0
+			&& edtDateTo.getText().toString().trim().length() != 0){
 			cond += " AND " + clsContant.KEY_DATE_PAY + "<" + edtDateTo.getText().toString().trim();					
 		}
 		
-		if(edtAmountFrom.getText().toString().trim().length !=0 
-			&& edtAmountTo.getText().toString().trim().length != 0){
+		if(edtAmountFrom.getText().toString().trim().length() !=0 
+			&& edtAmountTo.getText().toString().trim().length() != 0){
 			cond += " AND " + clsContant.KEY_AMOUNT + ">" + edtAmountFrom.getText().toString().trim() 
 					+ " AND " + clsContant.KEY_AMOUNT + "<" + edtAmountTo.getText().toString().trim();
 		}
-		else if(edtAmountFrom.getText().toString().trim().length !=0 
-			&& edtAmountTo.getText().toString().trim().length == 0){
+		else if(edtAmountFrom.getText().toString().trim().length() !=0 
+			&& edtAmountTo.getText().toString().trim().length() == 0){
 			cond += " AND " + clsContant.KEY_AMOUNT + ">" + edtAmountFrom.getText().toString().trim();					
 		}
-		else if(edtAmountFrom.getText().toString().trim().length ==0
-			&& edtAmountTo.getText().toString().trim().length != 0){
+		else if(edtAmountFrom.getText().toString().trim().length() ==0
+			&& edtAmountTo.getText().toString().trim().length() != 0){
 			cond += " AND " + clsContant.KEY_AMOUNT + "<" + edtAmountTo.getText().toString().trim();					
 		}
 		
-		if(spnReason.getSelectedItem().toString().length==0){
+		if(spnReason.getSelectedItem().toString().length()==0){
 			cond += " AND " + clsContant.KEY_REASON + " like %" + spnReason.getSelectedItem().toString() + "%";					
 		}
 		
-		if(edtOther.getText().toString().length==0){
+		if(edtOther.getText().toString().length()==0){
 			cond += " AND " + clsContant.KEY_OTHER + " like %" + edtOther.getText().toString() + "%";					
 		}
 		

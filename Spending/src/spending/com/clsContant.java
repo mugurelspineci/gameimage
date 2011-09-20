@@ -1,7 +1,8 @@
+package spending.com;
 	
 public class clsContant{
-	private static final String DATABASE_TABLE = "DB_SPENDING";
-	private static final String TBL_SPENDING = "DB_SPENDING";
+	public static final String DATABASE_TABLE = "DB_SPENDING";
+	public static final String TBL_SPENDING = "DB_SPENDING";
 	// Database fields
 	public static final String KEY_ROWID = "_id";
 	public static final String KEY_AMOUNT = "amount";

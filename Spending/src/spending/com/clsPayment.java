@@ -2,8 +2,12 @@ package spending.com;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 public class clsPayment extends Activity{
 
@@ -19,7 +23,7 @@ public class clsPayment extends Activity{
 	@Override
 	public void onCreate(Bundle saved){
 		super.onCreate(saved);
-		setContentView(R.layout.Payment);
+		setContentView(R.layout.payment);
 		
 		String arrReason[] = {"AA","BB","CC"};
 		ArrayAdapter<String> adapter;
@@ -32,19 +36,18 @@ public class clsPayment extends Activity{
 		btnSave = (Button)findViewById(R.id.btnSave);
 		btnCancel = (Button)findViewById(R.id.btnCancel);
 	
+		//xem lai
 		adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
 		spnReason.setAdapter(adapter);
 		
-		btnSave.setOnClickListener(new View.onClickListener(){
-			@Override
+		btnSave.setOnClickListener(new View.OnClickListener(){
 			public void onClick(View view){
 				if(checkValid()==true)
 					saveData();
 			}
 		});
 		
-		btnCancel.setOnClickListener(new View.onClickListener(){
-			@Override
+		btnCancel.setOnClickListener(new View.OnClickListener(){
 			public void onClick(View view){
 				//Intent intent = new Intent();
                 //setResult(RESULT_OK, intent);
@@ -67,12 +70,12 @@ public class clsPayment extends Activity{
 	}
 	
 	private void saveData(){
-		SpendingDbAdapter db
+		SpendingDbAdapter db;
 		try{
-			db = new SpendingDbAdapter();
+			db = new SpendingDbAdapter(this);
 			db.open();
-			db.insert(edtAmount.getText(), edtDate.getText(), 1, spnReason.getSelectedItem().toString(), 
-					edtOther.getText(), edtComment.getText());
+			db.insert(Integer.parseInt(edtAmount.getText().toString()), edtDate.getText().toString(), 1, spnReason.getSelectedItem().toString(), 
+					edtOther.getText().toString(), edtComment.getText().toString());
 		}catch(Exception ex){
 			Log.i(TAG, "***** saveData() Error: " + ex.getMessage());
 		}
