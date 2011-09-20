@@ -18,6 +18,7 @@ public class SpendingDbAdapter {
 	public static final String KEY_REASON = "reason";
 	public static final String KEY_OTHER = "other";
 	public static final String KEY_COMMENT = "comment";
+	private String [] column_name = new String[]{KEY_ROWID, KEY_AMOUNT, KEY_DATE_PAY, KEY_PAY, KEY_REASON, KEY_OTHER, KEY_COMMENT};
 	
 	private Context context;
 	private SQLiteDatabase database;
@@ -95,5 +96,55 @@ public class SpendingDbAdapter {
 		return values;
 	}
 	
+	public List<String[]> SelectAll()
+	{		
+		List<String[]> list = new ArrayList<String[]>();
+		//query (table, String[] columns, selection, String[] selectionArgs, groupBy,  having,  orderBy)
+		Cursor cursor = database.query(TABLE, new String[]{KEY_ROWID, KEY_AMOUNT, KEY_DATE_PAY, KEY_PAY, KEY_REASON, KEY_OTHER, KEY_COMMENT}, null, null, null, null, KEY_ROWID);
+                if(cursor.moveToFirst()){
+                     do{
+                         list.add(new String[]{cursor.getString(0), cursor.getString(1), cursor.getString(2)});
+                     }while(cursor.moveToNext());
+                     if(cursor!=null && !cursor.isClosed()){
+                         cursor.close();
+                    }
+                }
+		return list;
+	}
 	
+	public List<String[]> SelectData(String [] selectionArgs){
+		String selection;
+		String colum_data[];
+		List<String[]> list = new ArrayList<String[]>();
+		selection = KEY_AMOUNT + "=? AND " + KEY_PAY + "=?" ;		
+		//query (table_name, String[] columns, selection, String[] selectionArgs, groupBy,  having,  orderBy)
+		Cursor cursor = database.query(TABLE, column_name, selection, selectionArgs, null, null, KEY_DATE_PAY);
+
+		if(cursor.moveToFirst()){
+			 do{
+				 //list.add(new String[]{cursor.getString(0), cursor.getString(1), cursor.getString(2)});				 
+				 list.add(new String[]{cursor.getColumnIndex(KEY_AMOUNT), 
+										cursor.getColumnIndex(KEY_REASON), 
+										cursor.getColumnIndex(KEY_DATE_PAY)});
+			 }while(cursor.moveToNext());
+			 if(cursor!=null && !cursor.isClosed()){
+				 cursor.close();
+			}
+		}
+		return list;
+	}
+	
+	public List<String[]> SelectData(String cond){
+		String sql;		
+		List<String[]> list = new ArrayList<String[]>();
+		
+		sql = "SELECT " + KEY_AMOUNT + ", " + KEY_DATE_PAY + ", " + KEY_REASON + ", " + KEY_OTHER + " FROM " + clsContant.TBL_SPENDING + " " + cond;
+		Cursor cursor=db.rawQuery(sql, null);
+		while(cursor.moveToNext()){
+			 list.add(new String[]{cursor.getColumnIndex(KEY_AMOUNT), 
+									cursor.getColumnIndex(KEY_REASON), 
+									cursor.getColumnIndex(KEY_DATE_PAY)});
+		}
+		return list;
+	}
 }

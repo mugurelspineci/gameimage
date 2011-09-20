@@ -14,6 +14,8 @@ public class clsSearch extends Activity{
 
 	private static final String TAG = clsSearch.class.getSimpleName();
 
+	RadioButton rb1;
+	RadioButton rb2;
 	EditText edtDateFrom;
 	EditText edtDateTo;
 	EditText edtAmountFrom;
@@ -22,7 +24,7 @@ public class clsSearch extends Activity{
 	EditText edtOther;
 	Button btnSearch;
 	Button btnCancel;
-	SpendingDbAdapter  mDbHelper;
+	SpendingDbAdapter mDbHelper;
 	
 	@Override
 	public void onCreate(Bundle saved){
@@ -34,24 +36,67 @@ public class clsSearch extends Activity{
 	}
 	
 	private void searchData() {
-		// if (mRowId != null) {
-			// Cursor todo = mDbHelper.fetchData(mRowId);
-			// startManagingCursor(todo);
-			// String category = todo.getString(todo
-					// .getColumnIndexOrThrow(TodoDbAdapter.KEY_CATEGORY));
+		String cond;
+		List<String[]> list;
+		cond = getCondition();
+		
+		SpendingDbAdapter dba = new SpendingDbAdapter(this);
+		
+		list = dba.SelectData(cond);
+		if(list == null) 
+			return;
 			
-			// for (int i=0; i<mCategory.getCount();i++){
-				
-				// String s = (String) mCategory.getItemAtPosition(i); 
-				// Log.e(null, s +" " + category);
-				// if (s.equalsIgnoreCase(category)){
-					// mCategory.setSelection(i);
-				// }
-			// }
-			
-			// mTitleText.setText(todo.getString(todo.getColumnIndexOrThrow(TodoDbAdapter.KEY_SUMMARY)));
-			// mBodyText.setText(todo.getString(todo.getColumnIndexOrThrow(TodoDbAdapter.KEY_DESCRIPTION)));
-		// } 
+		Intent i = new Intent(this, clsShow.class);
+		i.putExtra("SPENDING", list);
+		startActivity(i);
+
+	}
+	
+	private String getCondition(){
+		String cond = " WHERE 1=1 ";
+		if(edtDateFrom.getText().toString().trim().length !=0 
+			&& edtDateTo.getText().toString().trim().length != 0){
+			cond += " AND " + clsContant.KEY_DATE_PAY + ">" + edtDateFrom.getText().toString().trim() 
+					+ " AND " + clsContant.KEY_DATE_PAY + "<" + edtDateTo.getText().toString().trim();
+		}
+		else if(edtDateFrom.getText().toString().trim().length !=0 
+			&& edtDateTo.getText().toString().trim().length == 0){
+			cond += " AND " + clsContant.KEY_DATE_PAY + ">" + edtDateFrom.getText().toString().trim();					
+		}
+		else if(edtDateFrom.getText().toString().trim().length ==0
+			&& edtDateTo.getText().toString().trim().length != 0){
+			cond += " AND " + clsContant.KEY_DATE_PAY + "<" + edtDateTo.getText().toString().trim();					
+		}
+		
+		if(edtAmountFrom.getText().toString().trim().length !=0 
+			&& edtAmountTo.getText().toString().trim().length != 0){
+			cond += " AND " + clsContant.KEY_AMOUNT + ">" + edtAmountFrom.getText().toString().trim() 
+					+ " AND " + clsContant.KEY_AMOUNT + "<" + edtAmountTo.getText().toString().trim();
+		}
+		else if(edtAmountFrom.getText().toString().trim().length !=0 
+			&& edtAmountTo.getText().toString().trim().length == 0){
+			cond += " AND " + clsContant.KEY_AMOUNT + ">" + edtAmountFrom.getText().toString().trim();					
+		}
+		else if(edtAmountFrom.getText().toString().trim().length ==0
+			&& edtAmountTo.getText().toString().trim().length != 0){
+			cond += " AND " + clsContant.KEY_AMOUNT + "<" + edtAmountTo.getText().toString().trim();					
+		}
+		
+		if(spnReason.getSelectedItem().toString().length==0){
+			cond += " AND " + clsContant.KEY_REASON + " like %" + spnReason.getSelectedItem().toString() + "%";					
+		}
+		
+		if(edtOther.getText().toString().length==0){
+			cond += " AND " + clsContant.KEY_OTHER + " like %" + edtOther.getText().toString() + "%";					
+		}
+		
+		if(rb1.isChecked() == true){
+			cond += " AND " + clsContant.KEY_PAY + "=1 ";
+		}
+		else{
+			cond += " AND " + clsContant.KEY_PAY + "=0";
+		}
+		return cond;
 	}
 	
 }

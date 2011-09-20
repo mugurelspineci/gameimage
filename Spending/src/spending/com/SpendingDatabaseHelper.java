@@ -26,7 +26,7 @@ public class SpendingDatabaseHelper extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
 
 	// Database creation sql statement
-	private static final String DATABASE_CREATE = "CREATE TABLE spending ( " 
+	private static final String DATABASE_CREATE = "CREATE TABLE SPENDING ( " 
 			+ " _id INTEGER PRIMARY KEY autoincrement, amount NUMERIC not null, date_pay TEXT not null, pay integer not null"
 			+ ", reason TEXT, other TEXT, comment TEXT);";
 
