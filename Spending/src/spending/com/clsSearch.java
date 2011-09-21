@@ -17,7 +17,6 @@ import android.database.Cursor;
 public class clsSearch extends Activity{
 
 	private static final String TAG = clsSearch.class.getSimpleName();
-
 	RadioButton rb1;
 	RadioButton rb2;
 	EditText edtDateFrom;
@@ -39,6 +38,17 @@ public class clsSearch extends Activity{
 		mDbHelper.open();
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		String tmp;
+		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+			tmp = data.getExtras().getString("close")
+				if(tmp = "home")
+					finish();
+			
+		}
+	}
+
 	private void searchData() {
 		String cond;
 		ArrayList<String[]> arrList;
@@ -49,10 +59,11 @@ public class clsSearch extends Activity{
 		arrList = dba.SelectData(cond);
 		if(arrList == null) 
 			return;
-			
+		
 		Intent i = new Intent(this, clsShow.class);
 		i.putExtra("SPENDING", arrList);
-		startActivity(i);
+		startActivityForResult(i, REQUEST_CODE);
+		//startActivity(i);
 
 	}
 	

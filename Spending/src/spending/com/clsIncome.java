@@ -28,32 +28,33 @@ public class clsIncome extends Activity{
 		
 		String arrReason[] = {"AA","BB","CC"};
 		ArrayAdapter<String> adapter;
+		try{
+			edtAmount = (EditText)findViewById(R.id.edtAmount);
+			edtDate = (EditText)findViewById(R.id.edtDate);
+			spnReason = (Spinner)findViewById(R.id.spnReason);
+			edtOther = (EditText)findViewById(R.id.edtOther);
+			edtComment = (EditText)findViewById(R.id.edtComment);
+			btnSave = (Button)findViewById(R.id.btnSave);
+			btnCancel = (Button)findViewById(R.id.btnCancel);
 		
-		edtAmount = (EditText)findViewById(R.id.edtAmount);
-		edtDate = (EditText)findViewById(R.id.edtDate);
-		spnReason = (Spinner)findViewById(R.id.spnReason);
-		edtOther = (EditText)findViewById(R.id.edtOther);
-		edtComment = (EditText)findViewById(R.id.edtComment);
-		btnSave = (Button)findViewById(R.id.btnSave);
-		btnCancel = (Button)findViewById(R.id.btnCancel);
-	
-		adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
-		spnReason.setAdapter(adapter);
-		
-		btnSave.setOnClickListener(new View.OnClickListener(){
-			public void onClick(View view){
-				if(checkValid()==true)
-					saveData();
-			}
-		});
-		
-		btnCancel.setOnClickListener(new View.OnClickListener(){
-			public void onClick(View view){
-				//Intent intent = new Intent();
-                //setResult(RESULT_OK, intent);
-                finish();
-			}
-		});
+			adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
+			spnReason.setAdapter(adapter);
+			
+			btnSave.setOnClickListener(new View.OnClickListener(){
+				public void onClick(View view){
+					if(checkValid()==true)
+						saveData();
+				}
+			});
+			
+			btnCancel.setOnClickListener(new View.OnClickListener(){
+				public void onClick(View view){
+					finish();
+				}
+			});
+		}catch(Exception ex){
+			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
+		}
 	}
 	
 	private boolean checkValid(){
