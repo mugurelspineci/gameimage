@@ -80,9 +80,9 @@
 	</TableRow>
 	<TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content"
 		android:layout_width="match_parent" android:layout_weight="1">
-		<Button android:id="@+id/btnSearch" android:text="Tim"
+		<Button android:id="@+id/btnBack" android:text="Tim"
 			android:layout_width="fill_parent" android:layout_height="fill_parent" />
-		<Button android:id="@+id/btnCancel" android:text="Huy"
+		<Button android:id="@+id/btnHome" android:text="Huy"
 			android:layout_width="fill_parent" android:layout_height="fill_parent"
 			android:typeface="serif" />
 	</TableRow>
