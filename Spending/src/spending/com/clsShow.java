@@ -1,9 +1,13 @@
 package spending.com;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class clsShow extends Activity{
 
@@ -18,7 +22,7 @@ public class clsShow extends Activity{
 		setContentView(R.layout.search);
 		try{	
 			Bundle nBundle  = getIntent().getExtras();
-			ArrayList<String[]> myArray = nBundle.getStringArrayList("SPENDING");
+			ArrayList<String> myArray = nBundle.getStringArrayList("SPENDING");
 			if(myArray == null){
 				Log.i(TAG, "***** Khong co du lieu");
 				return;
@@ -29,14 +33,14 @@ public class clsShow extends Activity{
 			
 			btnBack.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View view){
-					setResult(RESULT_OK, data);
+					setResult(RESULT_OK);
 					finish();
 				}
 			});
 			
 			btnHome.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View view){
-					setResult(RESULT_OK, data);
+					setResult(RESULT_OK);
 					finish();
 				}
 			});

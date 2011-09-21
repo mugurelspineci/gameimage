@@ -41,12 +41,12 @@ public class clsSearch extends Activity{
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		String tmp;
-		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-			tmp = data.getExtras().getString("close")
-				if(tmp = "home")
-					finish();
-			
-		}
+//		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+//			tmp = data.getExtras().getString("close");
+//				if(tmp == "home")
+//					finish();
+//			
+//		}
 	}
 
 	private void searchData() {
@@ -56,13 +56,13 @@ public class clsSearch extends Activity{
 		
 		SpendingDbAdapter dba = new SpendingDbAdapter(this);
 		
-		arrList = dba.SelectData(cond);
-		if(arrList == null) 
-			return;
+//		arrList = dba.SelectData(cond);
+//		if(arrList == null) 
+//			return;
 		
-		Intent i = new Intent(this, clsShow.class);
-		i.putExtra("SPENDING", arrList);
-		startActivityForResult(i, REQUEST_CODE);
+//		Intent i = new Intent(this, clsShow.class);
+//		i.putExtra("SPENDING", arrList);
+		//startActivityForResult(i, REQUEST_CODE);
 		//startActivity(i);
 
 	}
