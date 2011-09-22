@@ -112,23 +112,25 @@ public class SpendingDbAdapter {
 		}
 	}
 
-	public ArrayList<String[]> SelectData(String[] selectionArgs) {
-		String selection;
-		String[] column_name;
-		ArrayList<String[]> arrList = new ArrayList<String[]>();
-		try{
-			column_name = new String[] { clsContant.KEY_AMOUNT, clsContant.KEY_DATE_PAY, clsContant.KEY_REASON,
-					clsContant.KEY_OTHER };
+	public ArrayList<clsData> SelectData(String cond) {
 
-			selection = clsContant.KEY_AMOUNT + "=? AND " + clsContant.KEY_PAY + "=?";
+		String[] column_name;		
+		clsData data;		
+		ArrayList<clsData> arrList = new ArrayList<clsData>();
+		try{
+			column_name = new String[] {clsContant.KEY_PAY, clsContant.KEY_AMOUNT, clsContant.KEY_DATE_PAY, clsContant.KEY_REASON };
+
+			//selection = clsContant.KEY_AMOUNT + "=? AND " + clsContant.KEY_PAY + "=?";
 			// query (table_name, String[] columns, selection, String[] selectionArgs, groupBy, having, orderBy)
-			Cursor cursor = database.query(clsContant.TBL_SPENDING, column_name, selection, selectionArgs, null, null,
+			Cursor cursor = database.query(clsContant.TBL_SPENDING, column_name, cond, null, null, null,
 					clsContant.KEY_DATE_PAY);
 
 			if (cursor.moveToFirst()) {
 				do {
+
+					data = new clsData(cursor.getInt(0), cursor.getString(1),cursor.getString(2), cursor.getString(3));
 					// list.add(new String[]{cursor.getString(0), cursor.getString(1), cursor.getString(2)});
-					arrList.add(new String[] { cursor.getString(0), cursor.getString(1), cursor.getString(2) });
+					arrList.add(data);
 				} while (cursor.moveToNext());
 				if (cursor != null && !cursor.isClosed()) {
 					cursor.close();
@@ -141,27 +143,32 @@ public class SpendingDbAdapter {
 		}
 	}
 	
-	public ArrayList<String[]> SelectData(String cond) {
-		String sql;		
-		String[] column_name;
-		ArrayList<String[]> arrList = new ArrayList<String[]>();
-		try{
-			sql = "SELECT * FROM " + clsContant.TBL_SPENDING + " " + cond;
-			Cursor cursor = database.query(sql, null);
-			
-			if (cursor.moveToFirst()) {
-				do {
-					// list.add(new String[]{cursor.getString(0), cursor.getString(1), cursor.getString(2)});
-					arrList.add(new String[] { cursor.getString(0), cursor.getString(1), cursor.getString(2) });
-				} while (cursor.moveToNext());
-				if (cursor != null && !cursor.isClosed()) {
-					cursor.close();
-				}
-			}
-			return arrList;
-		}catch(Exception ex){
-			Log.i(TAG, "***** SelectData() Error: " + ex.getMessage());
-			return null;
-		}
-	}
+//	public ArrayList<String[]> SelectData(String cond) {
+//		String[] column_name;
+//		ArrayList<String[]> arrList = new ArrayList<String[]>();
+//		try{
+//			column_name = new String[] { clsContant.KEY_AMOUNT, clsContant.KEY_DATE_PAY, clsContant.KEY_REASON,
+//					clsContant.KEY_OTHER };
+//
+//			//selection = clsContant.KEY_AMOUNT + "=? AND " + clsContant.KEY_PAY + "=?";
+//			// query (table_name, String[] columns, selection, String[] selectionArgs, groupBy, having, orderBy)
+//			Cursor cursor = database.query(clsContant.TBL_SPENDING, column_name, cond, null, null, null,
+//					clsContant.KEY_DATE_PAY);
+//
+//			if (cursor.moveToFirst()) {
+//				do {
+//					// list.add(new String[]{cursor.getString(0), cursor.getString(1), cursor.getString(2)});
+//					arrList.add(new String[] { cursor.getString(0), cursor.getString(1), cursor.getString(2) });
+//				} while (cursor.moveToNext());
+//				if (cursor != null && !cursor.isClosed()) {
+//					cursor.close();
+//				}
+//			}
+//			return arrList;
+//		}catch(Exception ex){
+//			Log.i(TAG, "***** SelectData() Error: " + ex.getMessage());
+//			return null;
+//		}
+//	}
+
 }

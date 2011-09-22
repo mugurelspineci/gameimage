@@ -41,7 +41,8 @@ public class clsSearch extends Activity{
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		//super.onActivityResult(requestCode, resultCode, data);
-		//TODO handle here. 
+		//TODO handle here.
+		String tmp;
 		  if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
               tmp = data.getExtras().getString("BACK");
@@ -57,7 +58,7 @@ public class clsSearch extends Activity{
 
 	private void searchData() {
 		String cond;
-		ArrayList<String[]> arrList;
+		ArrayList<clsData> arrList;
 		ArrayList<clsData> arrListData;
 		cond = getCondition();
 		
@@ -76,7 +77,7 @@ public class clsSearch extends Activity{
 		Intent intent = new Intent().setClass(this, clsSearch.class);
 		arrListData = new ArrayList <clsData>();
 		for (int i = 0; i < arrList.size(); i++)
-			arrListData.add (arrList.get(i));
+			arrListData.add(arrList.get(i));
 		intent.putParcelableArrayListExtra ("DATA", arrListData);
 		startActivity(intent);
 

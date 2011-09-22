@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 public class clsShow extends Activity{
 
@@ -22,16 +23,15 @@ public class clsShow extends Activity{
 		setContentView(R.layout.search);
 		try{	
 			Bundle nBundle  = getIntent().getExtras();
-			ArrayList<clsData> myArray = nBundle.getStringArrayList("SPENDING");
+			ArrayList<clsData> myArray = nBundle.getParcelableArrayList("SPENDING");
 			if(myArray == null){
 				Log.i(TAG, "***** Khong co du lieu ");
 				return;
 			}
 			
 			final ListView lv1 = (ListView) findViewById(R.id.ListView01);
-			lv1.setAdapter(new MyCustomBaseAdapter(this, myArray));
+			lv1.setAdapter(new clsCustomBaseAdapter(this, myArray));
 
-			
 			// btnBack = (Button)findViewById(R.id.btnBack);
 			// btnHome = (Button)findViewById(R.id.btnHome);
 			

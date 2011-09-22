@@ -1,10 +1,19 @@
 package spending.com;
 
-public class MyCustomBaseAdapter extends BaseAdapter {
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+public class clsCustomBaseAdapter extends BaseAdapter {
 	private static ArrayList<clsData> searchArrayList;
 	private LayoutInflater mInflater;
 
-	public MyCustomBaseAdapter(Context context, ArrayList<clsData> results) {
+	public clsCustomBaseAdapter(Context context, ArrayList<clsData> results) {
 		searchArrayList = results;
 		mInflater = LayoutInflater.from(context);
 	}
@@ -27,11 +36,10 @@ public class MyCustomBaseAdapter extends BaseAdapter {
 		TextView txtReason;
 	}
 		
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.custom_row_view, null);
+			convertView = mInflater.inflate(R.layout.list_result, null);
 			holder = new ViewHolder();
 			holder.txtAmount = (TextView) convertView.findViewById(R.id.txtAmount);
 			holder.txtDate = (TextView) convertView.findViewById(R.id.txtDate);
@@ -41,9 +49,9 @@ public class MyCustomBaseAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		holder.txtAmount.setText(searchArrayList.get(position).getName());
-		holder.txtDate.setText(searchArrayList.get(position).getCityState());
-		holder.txtReason.setText(searchArrayList.get(position).getPhone());
+		holder.txtAmount.setText(searchArrayList.get(position).getAmount());
+		holder.txtDate.setText(searchArrayList.get(position).getDatePay());
+		holder.txtReason.setText(searchArrayList.get(position).getReason());
 
 		return convertView;
 	}
