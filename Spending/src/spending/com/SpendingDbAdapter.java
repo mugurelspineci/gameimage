@@ -140,4 +140,28 @@ public class SpendingDbAdapter {
 			return null;
 		}
 	}
+	
+	public ArrayList<String[]> SelectData(String cond) {
+		String sql;		
+		String[] column_name;
+		ArrayList<String[]> arrList = new ArrayList<String[]>();
+		try{
+			sql = "SELECT * FROM " + clsContant.TBL_SPENDING + " " + cond;
+			Cursor cursor = database.query(sql, null);
+			
+			if (cursor.moveToFirst()) {
+				do {
+					// list.add(new String[]{cursor.getString(0), cursor.getString(1), cursor.getString(2)});
+					arrList.add(new String[] { cursor.getString(0), cursor.getString(1), cursor.getString(2) });
+				} while (cursor.moveToNext());
+				if (cursor != null && !cursor.isClosed()) {
+					cursor.close();
+				}
+			}
+			return arrList;
+		}catch(Exception ex){
+			Log.i(TAG, "***** SelectData() Error: " + ex.getMessage());
+			return null;
+		}
+	}
 }

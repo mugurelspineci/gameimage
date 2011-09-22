@@ -40,30 +40,45 @@ public class clsSearch extends Activity{
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		String tmp;
-//		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-//			tmp = data.getExtras().getString("close");
-//				if(tmp == "home")
-//					finish();
-//			
-//		}
+		//super.onActivityResult(requestCode, resultCode, data);
+		//TODO handle here. 
+		  if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+              tmp = data.getExtras().getString("BACK");
+				if(tmp == "home")
+					finish();
+            } else if (resultCode == RESULT_CANCELED) {
+                // Handle cancel
+            }
+        }
+
 	}
+
 
 	private void searchData() {
 		String cond;
 		ArrayList<String[]> arrList;
+		ArrayList<clsData> arrListData;
 		cond = getCondition();
 		
 		SpendingDbAdapter dba = new SpendingDbAdapter(this);
 		
-//		arrList = dba.SelectData(cond);
-//		if(arrList == null) 
-//			return;
+		arrList = dba.SelectData(cond);
+		if(arrList == null) 
+			return;
 		
-//		Intent i = new Intent(this, clsShow.class);
-//		i.putExtra("SPENDING", arrList);
-		//startActivityForResult(i, REQUEST_CODE);
-		//startActivity(i);
+		// Intent i = new Intent(this, clsShow.class);
+		// i.putExtra("SPENDING", arrList);
+		// startActivityForResult(i, REQUEST_CODE);
+		// startActivity(i);
+		// startActivityForResult(i, 0);
+
+		Intent intent = new Intent().setClass(this, clsSearch.class);
+		arrListData = new ArrayList <clsData>();
+		for (int i = 0; i < arrList.size(); i++)
+			arrListData.add (arrList.get(i));
+		intent.putParcelableArrayListExtra ("DATA", arrListData);
+		startActivity(intent);
 
 	}
 	
