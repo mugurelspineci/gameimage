@@ -35,8 +35,8 @@
     </TableRow> 
 	
 	<TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
-        <Button id="@+id/btnSave" android:text="Luu"  android:layout_column="1" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
-		<Button id="@+id/btnCancel" android:text="Huy" android:layout_width="fill_parent" android:layout_height="fill_parent" android:typeface="serif"/>
+        <Button android:id="@+id/btnSave" android:text="Luu"  android:layout_column="1" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
+		<Button android:id="@+id/btnCancel" android:text="Huy" android:layout_width="fill_parent" android:layout_height="fill_parent" android:typeface="serif"/>
     </TableRow> 
 
 </TableLayout>
