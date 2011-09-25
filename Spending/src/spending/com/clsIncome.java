@@ -9,77 +9,82 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.util.Log;
 
-public class clsIncome extends Activity{
+public class clsIncome extends Activity {
 
 	private static final String TAG = clsIncome.class.getSimpleName();
-	EditText edtAmount ;
+	EditText edtAmount;
 	EditText edtDate;
-	Spinner spnReason;		
-	EditText edtOther ;
+	Spinner spnReason;
+	EditText edtOther;
 	EditText edtComment;
 	Button btnSave;
 	Button btnCancel;
-	
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void onCreate(Bundle saved){
+	public void onCreate(Bundle saved) {
 		super.onCreate(saved);
 		setContentView(R.layout.income);
-		
-		String arrReason[] = {"AA","BB","CC"};
+
+		String arrReason[] = { "AA", "BB", "CC" };
 		ArrayAdapter<String> adapter;
-		try{
-			edtAmount = (EditText)findViewById(R.id.edtAmount);
-			edtDate = (EditText)findViewById(R.id.edtDate);
-			spnReason = (Spinner)findViewById(R.id.spnReason);
-			edtOther = (EditText)findViewById(R.id.edtOther);
-			edtComment = (EditText)findViewById(R.id.edtComment);
-			btnSave = (Button)findViewById(R.id.btnSave);
-			btnCancel = (Button)findViewById(R.id.btnCancel);
-		
+		try {
+			edtAmount = (EditText) findViewById(R.id.edtAmount);
+			edtDate = (EditText) findViewById(R.id.edtDate);
+			spnReason = (Spinner) findViewById(R.id.spnReason);
+			edtOther = (EditText) findViewById(R.id.edtOther);
+			edtComment = (EditText) findViewById(R.id.edtComment);
+			btnSave = (Button) findViewById(R.id.btnSave);
+			btnCancel = (Button) findViewById(R.id.btnCancel);
+
 			adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
 			spnReason.setAdapter(adapter);
-			
-			btnSave.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View view){
-					if(checkValid()==true)
+
+			btnSave.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View view) {
+					if (checkValid() == true)
 						saveData();
 				}
 			});
-			
-			btnCancel.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View view){
+
+			btnCancel.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View view) {
 					finish();
 				}
 			});
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
 	}
-	
-	private boolean checkValid(){
-		if(edtAmount.getText().length()==0){
+
+	private boolean checkValid() {
+		if (edtAmount.getText().length() == 0) {
 			return false;
 		}
-		if(edtDate.getText().length()==0){
+		if (edtDate.getText().length() == 0) {
 			return false;
 		}
-		if(spnReason.getSelectedItem().toString().length()==0){
+		if (spnReason.getSelectedItem().toString().length() == 0) {
 			return false;
 		}
 		return true;
 	}
-	
-	private void saveData(){
+
+	private void saveData() {
 		SpendingDbAdapter db;
-		try{
+		String reason;
+		try {
+			if (edtOther.getText().toString().length() != 0)
+				reason = edtOther.getText().toString();
+			else
+				reason = spnReason.getSelectedItem().toString();
 			db = new SpendingDbAdapter(this);
 			db.open();
-			db.insert(Integer.parseInt(edtAmount.getText().toString()), edtDate.getText().toString(), 1, spnReason.getSelectedItem().toString(), 
-					edtOther.getText().toString(), edtComment.getText().toString());
-		}catch(Exception ex){
+			db.insert(Integer.parseInt(edtAmount.getText().toString()), edtDate.getText().toString(), 1, reason,
+					edtComment.getText().toString());
+		} catch (Exception ex) {
 			Log.i(TAG, "***** saveData() Error: " + ex.getMessage());
 		}
 	}
 
 }
-

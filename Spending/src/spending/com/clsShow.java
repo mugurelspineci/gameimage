@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -56,9 +55,5 @@ public class clsShow extends Activity{
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
 	}
-	
-	private void setData(){
-	
-	}
-	
+
 }

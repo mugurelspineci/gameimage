@@ -20,6 +20,7 @@ public class clsPayment extends Activity{
 	Button btnSave;
 	Button btnCancel;
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void onCreate(Bundle saved){
 		super.onCreate(saved);
@@ -71,11 +72,16 @@ public class clsPayment extends Activity{
 	
 	private void saveData(){
 		SpendingDbAdapter db;
+		String reason;
 		try{
+			if (edtOther.getText().toString().length() != 0)
+				reason = edtOther.getText().toString();
+			else
+				reason = spnReason.getSelectedItem().toString();
+			
 			db = new SpendingDbAdapter(this);
 			db.open();
-			db.insert(Integer.parseInt(edtAmount.getText().toString()), edtDate.getText().toString(), 1, spnReason.getSelectedItem().toString(), 
-					edtOther.getText().toString(), edtComment.getText().toString());
+			db.insert(Integer.parseInt(edtAmount.getText().toString()), edtDate.getText().toString(), 1, reason, edtComment.getText().toString());
 		}catch(Exception ex){
 			Log.i(TAG, "***** saveData() Error: " + ex.getMessage());
 		}

@@ -9,6 +9,5 @@ public class clsContant{
 	public static final String KEY_DATE_PAY = "date_pay";
 	public static final String KEY_PAY = "pay";
 	public static final String KEY_REASON = "reason";
-	public static final String KEY_OTHER = "other";
 	public static final String KEY_COMMENT = "comment";
 }
