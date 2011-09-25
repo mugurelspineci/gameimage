@@ -4,35 +4,35 @@
     android:shrinkColumns="*"  android:stretchColumns="*" android:background="#ffffff">
     <!-- title-->
     <TableRow android:layout_height="wrap_content" android:layout_width="fill_parent" android:gravity="center_horizontal">
-		<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="18dp" android:text="Chuong trinh quan ly thu chi"  android:layout_span="3" android:padding="18dip"/>
+		<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="10dp" android:text="Chuong trinh quan ly thu chi"  android:layout_span="3" android:padding="18dip"/>
     </TableRow>
  
     <!--  -->
     <TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
         <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="horizontal">
-			<ImageView android:id="@+id/imgIncome" android:src="@drawable/income" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+			<ImageView android:id="@+id/imgIncome" android:src="@drawable/income" android:layout_width="wrap_content" android:layout_height="wrap_content" />
 			<TextView android:id="@+id/tvwIncome" android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/imgIncome"/>
 		</RelativeLayout>
 	   <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="horizontal">
-			<ImageView android:id="@+id/imgPayment" android:src="@drawable/income" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+			<ImageView android:id="@+id/imgPayment" android:src="@drawable/payment" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 			<TextView android:id="@+id/tvwPayment" android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/imgPayment"/>
 		</RelativeLayout>		
     </TableRow> 
  
      <TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
-        <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="horizontal">
-			<ImageView android:id="@+id/imgSearch" android:src="@drawable/income" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <RelativeLayout android:layout_height="fill_parent" android:orientation="horizontal" android:layout_width="10dip">
+			<ImageView android:id="@+id/imgSearch" android:src="@drawable/search" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 			<TextView android:id="@+id/tvwSearch" android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/imgSearch"/>
 		</RelativeLayout>
 	   <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="horizontal">
-			<ImageView android:id="@+id/imgStatistics" android:src="@drawable/income" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+			<ImageView android:id="@+id/imgStatistics" android:src="@drawable/statistics" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 			<TextView android:id="@+id/tvwStatistics" android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/imgStatistics"/>
 		</RelativeLayout>
     </TableRow>
 
     <TableRow android:id="@+id/tableRow1" android:layout_height="wrap_content" android:layout_width="match_parent">
         <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="horizontal">
-			<ImageView android:id="@+id/imgSetting" android:src="@drawable/income" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+			<ImageView android:id="@+id/imgSetting" android:src="@drawable/setting" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 			<TextView android:id="@+id/tvwSetting" android:width="100px" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/imgSetting"/>
 		</RelativeLayout>
     </TableRow>	
