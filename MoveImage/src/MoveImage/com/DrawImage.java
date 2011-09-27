@@ -44,7 +44,7 @@ public class DrawImage extends Activity {
 	public DrawImage(SurfaceHolder surfaceHolder, MainGamePanel gamepanel) {
 		this.surfaceHolder = surfaceHolder;
 		this.gamepanel = gamepanel;
-		//init();	
+		init();	
 	
 	}
 
