@@ -1,7 +1,9 @@
 package MoveImage.com;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -27,6 +29,13 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 			//bitmap =  BitmapFactory.decodeResource(getResources(),R.drawable.droid_1);
 			drawImage = new DrawImage(getHolder(), this);
 			
+			///TEST
+			Resources resources = getResources();
+			float dipValue = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75, resources.getDisplayMetrics());
+			
+			Log.i(TAG, "*****  w,h: " + ImageActivity.scnWidth + ", " + ImageActivity.scnHeight);
+			Log.i(TAG, "*****  dipValue 75: " + dipValue);
+			//return;
 			//Log.d(TAG, "Contructor created");
 		}catch(Exception e){
 			Log.d(TAG, "Contructor Error");
@@ -41,7 +50,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
-		drawImage.drawAll();
+		//drawImage.drawAll();
 		//drawImage.drawAlpha(20);
 		//drawImage.draw(0);
 		//drawImage.draw(4);

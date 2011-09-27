@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.ExifInterface;
 import android.view.SurfaceHolder;
 import android.util.Log;
+import android.util.TypedValue;
 
 public class DrawImage extends Activity {
 
@@ -34,7 +35,7 @@ public class DrawImage extends Activity {
 
 	int optImage; // opacity image
 	int nPos; // vi tri lay hình (tu mang arrBitmap)
-	int nImage; // so hinh trong ung dung
+	int nImage=0; // so hinh trong ung dung
 	boolean bMove;
 
 	Bitmap arrBitmap[]; // Luu cac hinh
@@ -46,10 +47,12 @@ public class DrawImage extends Activity {
 	public DrawImage(SurfaceHolder surfaceHolder, MainGamePanel gamepanel) {
 		this.surfaceHolder = surfaceHolder;
 		this.gamepanel = gamepanel;
-		init();
+		//init();	
+	
 	}
 
 	public void init() {
+
 		// so hinh
 		nImage = 4;
 
@@ -229,7 +232,10 @@ public class DrawImage extends Activity {
 			x = beginX;
 			// ve duong ngang
 			for (int i = 0; i <= 6; i++) {
-				canvas.drawLine(x, y, (width * 5) - 5, y, paint);
+				//sua 2011/09/27
+				canvas.drawLine(x, y, (width * 5) - 5, y, paint); //
+				//canvas.drawLine(x, y, scaleWidth, y, paint);  // do phan giai 1028x1024
+				//end 2011/09/27
 				y += height;
 			}
 
