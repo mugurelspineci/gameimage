@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.media.ExifInterface;
 import android.view.SurfaceHolder;
 import android.util.Log;
-import android.util.TypedValue;
 
 public class DrawImage extends Activity {
 
