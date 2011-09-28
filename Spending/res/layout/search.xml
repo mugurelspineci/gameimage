@@ -5,6 +5,10 @@
 	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:stretchColumns="4">
+		<TableRow android:gravity="center_horizontal">
+			<TextView android:text="Tìm kiếm" android:layout_height="40dip" android:layout_span="4"
+				android:gravity="center" android:textSize="22px"/>
+		</TableRow>
 		<TableRow>
 			<TextView layout_column="1" android:text="Ngay:" />
 			<EditText android:id="@+id/edtDateFrom" android:paddingLeft="50dp"
@@ -43,12 +47,13 @@
 			<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 				android:layout_span="4" android:layout_width="wrap_content"
 				android:gravity="right" android:layout_height="wrap_content">
-				<Button android:id="@+id/btnSearch" android:text="Tim" 
+				<Button android:id="@+id/btnSearch" android:text="Tim"
 					android:paddingRight="40dp" android:gravity="center"
 					android:layout_width="wrap_content" android:layout_height="wrap_content" />
-				<Button android:id="@+id/btnd" android:text="Huy" android:layout_centerVertical="true"
-					android:paddingRight="40dp" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:layout_toRightOf="@+id/btnSearch" />
+				<Button android:id="@+id/btnCancel" android:text="Huy"
+					android:layout_centerVertical="true" android:paddingRight="40dp"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/btnSearch" />
 			</RelativeLayout>
 		</TableRow>
 	</TableLayout>
