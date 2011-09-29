@@ -21,7 +21,7 @@ public class SpendingDbAdapter {
 
 	public SpendingDbAdapter open() throws SQLException {
 		dbHelper = new SpendingDatabaseHelper(context);
-		database = dbHelper.getWritableDatabase();
+		// database = dbHelper.getWritableDatabase();
 		return this;
 	}
 
@@ -34,8 +34,9 @@ public class SpendingDbAdapter {
 	 * return a -1 to indicate failure.
 	 */
 	public long insert(int amount, String date_pay, int pay, String reason, String comment) {
+		database = dbHelper.getWritableDatabase();
 		ContentValues initialValues = createContentValues(amount, date_pay, pay, reason, comment);
-		return database.insert(clsContant.DATABASE_TABLE, null, initialValues);
+		return database.insert(clsContant.TBL_SPENDING, null, initialValues);
 	}
 
 	/**
@@ -43,14 +44,14 @@ public class SpendingDbAdapter {
 	 */
 	public boolean update(long rowId, int amount, String date_pay, int pay, String reason, String other, String comment) {
 		ContentValues updateValues = createContentValues(amount, date_pay, pay, reason, comment);
-		return database.update(clsContant.DATABASE_TABLE, updateValues, clsContant.KEY_ROWID + "=" + rowId, null) > 0;
+		return database.update(clsContant.TBL_SPENDING, updateValues, clsContant.KEY_ROWID + "=" + rowId, null) > 0;
 	}
 
 	/**
 	 * Deletes
 	 */
 	public boolean delete(long rowId) {
-		return database.delete(clsContant.DATABASE_TABLE, clsContant.KEY_ROWID + "=" + rowId, null) > 0;
+		return database.delete(clsContant.TBL_SPENDING, clsContant.KEY_ROWID + "=" + rowId, null) > 0;
 	}
 
 	/**
@@ -59,7 +60,7 @@ public class SpendingDbAdapter {
 	 * @return Cursor over all notes
 	 */
 	public Cursor fetchAll() {
-		return database.query(clsContant.DATABASE_TABLE, new String[] { clsContant.KEY_ROWID, clsContant.KEY_AMOUNT,
+		return database.query(clsContant.TBL_SPENDING, new String[] { clsContant.KEY_ROWID, clsContant.KEY_AMOUNT,
 				clsContant.KEY_DATE_PAY, clsContant.KEY_PAY, clsContant.KEY_REASON, clsContant.KEY_COMMENT }, null,
 				null, null, null, null);
 	}
@@ -68,7 +69,7 @@ public class SpendingDbAdapter {
 	 * Return a Cursor positioned at the defined Spending
 	 */
 	public Cursor fetchData(long rowId) throws SQLException {
-		Cursor mCursor = database.query(true, clsContant.DATABASE_TABLE, new String[] { clsContant.KEY_ROWID,
+		Cursor mCursor = database.query(true, clsContant.TBL_SPENDING, new String[] { clsContant.KEY_ROWID,
 				clsContant.KEY_AMOUNT, clsContant.KEY_DATE_PAY, clsContant.KEY_PAY, clsContant.KEY_REASON,
 				clsContant.KEY_COMMENT }, clsContant.KEY_ROWID + "=" + rowId, null, null, null, null, null);
 		if (mCursor != null) {
@@ -87,21 +88,29 @@ public class SpendingDbAdapter {
 		return values;
 	}
 
-	public ArrayList<String[]> SelectAll() {
-		ArrayList<String[]> arrList = new ArrayList<String[]>();
+	public ArrayList<clsData> SelectAll() {
+		ArrayList<clsData> arrList = new ArrayList<clsData>();
+		clsData data;
 		try {
+			database = dbHelper.getReadableDatabase();
 			// query (table, String[] columns, selection, String[] selectionArgs, groupBy, having, orderBy)
 			Cursor cursor = database.query(clsContant.TBL_SPENDING, new String[] { clsContant.KEY_ROWID,
 					clsContant.KEY_AMOUNT, clsContant.KEY_DATE_PAY, clsContant.KEY_PAY, clsContant.KEY_REASON,
 					clsContant.KEY_COMMENT }, null, null, null, null, clsContant.KEY_ROWID);
-			if (cursor.moveToFirst()) {
-				do {
-					arrList.add(new String[] { cursor.getString(0), cursor.getString(1), cursor.getString(2) });
-				} while (cursor.moveToNext());
-				if (cursor != null && !cursor.isClosed()) {
-					cursor.close();
-				}
+
+			while (cursor.moveToNext()) {
+				data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+				arrList.add(data);
 			}
+			// if (cursor.moveToFirst()) {
+			// do {
+			// data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+			// arrList.add(data);
+			// } while (cursor.moveToNext());
+			// if (cursor != null && !cursor.isClosed()) {
+			// cursor.close();
+			// }
+			// }
 			return arrList;
 		} catch (Exception ex) {
 			Log.i(TAG, "***** SelectAll() Error: " + ex.getMessage());
@@ -123,17 +132,19 @@ public class SpendingDbAdapter {
 			Cursor cursor = database.query(clsContant.TBL_SPENDING, column_name, cond, null, null, null,
 					clsContant.KEY_DATE_PAY);
 
-			if (cursor.moveToFirst()) {
-				do {
-
-					data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
-					// list.add(new String[]{cursor.getString(0), cursor.getString(1), cursor.getString(2)});
-					arrList.add(data);
-				} while (cursor.moveToNext());
-				if (cursor != null && !cursor.isClosed()) {
-					cursor.close();
-				}
+			while (cursor.moveToNext()) {
+				data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+				arrList.add(data);
 			}
+			// if (cursor.moveToFirst()) {
+			// do {
+			// data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+			// arrList.add(data);
+			// } while (cursor.moveToNext());
+			// if (cursor != null && !cursor.isClosed()) {
+			// cursor.close();
+			// }
+			// }
 			return arrList;
 		} catch (Exception ex) {
 			Log.i(TAG, "***** SelectData() Error: " + ex.getMessage());

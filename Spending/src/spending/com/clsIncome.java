@@ -20,15 +20,21 @@ public class clsIncome extends Activity {
 	Button btnSave;
 	Button btnCancel;
 
+	SpendingDbAdapter mDbHelper;
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void onCreate(Bundle saved) {
 		super.onCreate(saved);
 		setContentView(R.layout.income);
-
+		
 		String arrReason[] = { "AA", "BB", "CC" };
 		ArrayAdapter<String> adapter;
 		try {
+			
+			mDbHelper = new SpendingDbAdapter(this);
+			mDbHelper.open();
+			
 			edtAmount = (EditText) findViewById(R.id.edtAmount);
 			edtDate = (EditText) findViewById(R.id.edtDate);
 			spnReason = (Spinner) findViewById(R.id.spnReason);
@@ -71,19 +77,33 @@ public class clsIncome extends Activity {
 	}
 
 	private void saveData() {
-		SpendingDbAdapter db;
+		//SpendingDbAdapter db;
 		String reason;
+		long insert;
 		try {
 			if (edtOther.getText().toString().length() != 0)
 				reason = edtOther.getText().toString();
 			else
 				reason = spnReason.getSelectedItem().toString();
-			db = new SpendingDbAdapter(this);
-			db.open();
-			db.insert(Integer.parseInt(edtAmount.getText().toString()), edtDate.getText().toString(), 1, reason,
+			//db = new SpendingDbAdapter(this);
+			//db.open();
+			insert = mDbHelper.insert(Integer.parseInt(edtAmount.getText().toString()), edtDate.getText().toString(), 1, reason,
 					edtComment.getText().toString());
+			//db.close();
+			Log.i(TAG, "***** saveData() Da luu xuong db, id=" + insert);
 		} catch (Exception ex) {
 			Log.i(TAG, "***** saveData() Error: " + ex.getMessage());
+		}
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		try {
+			if (mDbHelper != null)
+				mDbHelper.close();
+		} catch (Exception ex) {
+			Log.i(TAG, "***** onDestroy() Error: " + ex.getMessage());
 		}
 	}
 

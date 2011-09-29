@@ -16,8 +16,8 @@ import android.content.Intent;
 public class clsSearch extends Activity {
 
 	private static final String TAG = clsSearch.class.getSimpleName();
-	RadioButton rb1;
-	RadioButton rb2;
+	RadioButton rdIncome;
+	RadioButton rdPayment;
 	EditText edtDateFrom;
 	EditText edtDateTo;
 	EditText edtAmountFrom;
@@ -38,15 +38,17 @@ public class clsSearch extends Activity {
 			ArrayAdapter<String> adapter;
 
 			mDbHelper = new SpendingDbAdapter(this);
-			mDbHelper.open();
 
 			edtAmountFrom = (EditText) findViewById(R.id.edtAmountFrom);
 			edtAmountTo = (EditText) findViewById(R.id.edtAmountTo);
 			edtDateFrom = (EditText) findViewById(R.id.edtDateFrom);
+			edtDateTo = (EditText) findViewById(R.id.edtDateTo);
 			spnReason = (Spinner) findViewById(R.id.spnReason);
 			edtOther = (EditText) findViewById(R.id.edtOther);
 			btnSearch = (Button) findViewById(R.id.btnSearch);
 			btnCancel = (Button) findViewById(R.id.btnCancel);
+			rdIncome = (RadioButton) findViewById(R.id.rdIncome);
+			rdPayment = (RadioButton) findViewById(R.id.rdPayment);
 
 			adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
 			spnReason.setAdapter(adapter);
@@ -91,15 +93,17 @@ public class clsSearch extends Activity {
 	private void searchData() {
 		String cond;
 		ArrayList<clsData> arrList;
-		ArrayList<clsData> arrListData;
+		// ArrayList<clsData> arrListData;
 		try {
 			cond = getCondition();
 
-			SpendingDbAdapter dba = new SpendingDbAdapter(this);
-
-			arrList = dba.SelectData(cond);
+			mDbHelper.open();
+			// arrList = dba.SelectData(cond);
+			arrList = mDbHelper.SelectAll();
 			if (arrList == null)
 				return;
+
+			//Log.i(TAG, "***** searchData() loaded data ");
 
 			// Intent i = new Intent(this, clsShow.class);
 			// i.putExtra("SPENDING", arrList);
@@ -107,11 +111,8 @@ public class clsSearch extends Activity {
 			// startActivity(i);
 			// startActivityForResult(i, 0);
 
-			Intent intent = new Intent().setClass(this, clsSearch.class);
-			arrListData = new ArrayList<clsData>();
-			for (int i = 0; i < arrList.size(); i++)
-				arrListData.add(arrList.get(i));
-			intent.putParcelableArrayListExtra("DATA", arrListData);
+			Intent intent = new Intent().setClass(this, clsShow.class);
+			intent.putParcelableArrayListExtra("DATA", arrList);
 			startActivity(intent);
 		} catch (Exception ex) {
 			Log.i(TAG, "***** searchData() Error: " + ex.getMessage());
@@ -121,11 +122,13 @@ public class clsSearch extends Activity {
 	private String getCondition() {
 		String cond = " WHERE 1=1 ";
 		if (edtDateFrom.getText().toString().trim().length() != 0
-				&& edtDateTo.getText().toString().trim().length() != 0) {
+
+		&& edtDateTo.getText().toString().trim().length() != 0) {
 			cond += " AND " + clsContant.KEY_DATE_PAY + ">" + edtDateFrom.getText().toString().trim() + " AND "
 					+ clsContant.KEY_DATE_PAY + "<" + edtDateTo.getText().toString().trim();
 		} else if (edtDateFrom.getText().toString().trim().length() != 0
-				&& edtDateTo.getText().toString().trim().length() == 0) {
+
+		&& edtDateTo.getText().toString().trim().length() == 0) {
 			cond += " AND " + clsContant.KEY_DATE_PAY + ">" + edtDateFrom.getText().toString().trim();
 		} else if (edtDateFrom.getText().toString().trim().length() == 0
 				&& edtDateTo.getText().toString().trim().length() != 0) {
@@ -148,16 +151,28 @@ public class clsSearch extends Activity {
 			cond += " AND " + clsContant.KEY_REASON + " like %" + spnReason.getSelectedItem().toString() + "%";
 		}
 
-		if (edtOther.getText().toString().length() != 0) {
+		if (edtOther.getText() != null && edtOther.getText().toString().length() != 0) {
 			cond += " AND " + clsContant.KEY_REASON + " like %" + edtOther.getText().toString() + "%";
 		}
 
-		if (rb1.isChecked() == true) {
+		if (rdIncome.isChecked() == true) {
 			cond += " AND " + clsContant.KEY_PAY + "=1 ";
-		} else {
+		} else if (rdPayment.isChecked() == true) {
 			cond += " AND " + clsContant.KEY_PAY + "=0";
+		} else {
+			cond += " AND " + clsContant.KEY_PAY + "=0 AND " + clsContant.KEY_PAY + "=1";
 		}
 		return cond;
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		try {
+			if (mDbHelper != null)
+				mDbHelper.close();
+		} catch (Exception ex) {
+			Log.i(TAG, "***** onDestroy() Error: " + ex.getMessage());
+		}
+	}
 }
