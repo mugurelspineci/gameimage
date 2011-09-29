@@ -6,8 +6,16 @@
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:stretchColumns="4">
 		<TableRow android:gravity="center_horizontal">
-			<TextView android:text="Tìm kiếm" android:layout_height="40dip" android:layout_span="4"
-				android:gravity="center" android:textSize="22px"/>
+			<TextView android:text="Tìm kiếm" android:layout_height="40dip"
+				android:layout_span="4" android:gravity="center" android:textSize="22px" />
+		</TableRow>
+		<TableRow>			
+			<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="center_horizontal"
+				android:orientation="horizontal" android:layout_span="5" >
+				<RadioButton android:id="@+id/rdIncome" android:text="Thu" android:paddingRight="5dip" />
+				<RadioButton android:id="@+id/rdPayment" android:text="Chi" android:paddingRight="5dip"/>
+				<RadioButton android:id="@+id/rdAll" android:text="Tat ca"/>
+			</RadioGroup>
 		</TableRow>
 		<TableRow>
 			<TextView layout_column="1" android:text="Ngay:" />
