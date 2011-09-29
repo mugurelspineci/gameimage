@@ -19,12 +19,12 @@ public class clsShow extends Activity{
 	@Override
 	public void onCreate(Bundle saved){
 		super.onCreate(saved);
-		setContentView(R.layout.search);
+		setContentView(R.layout.show);
 		try{	
 			Bundle nBundle  = getIntent().getExtras();
-			ArrayList<clsData> myArray = nBundle.getParcelableArrayList("SPENDING");
+			ArrayList<clsData> myArray = nBundle.getParcelableArrayList("DATA");
 			if(myArray == null){
-				Log.i(TAG, "***** Khong co du lieu ");
+				Log.i(TAG, "***** onCreate() Khong co du lieu ");
 				return;
 			}
 			
@@ -51,6 +51,7 @@ public class clsShow extends Activity{
 					// finish();
 				// }
 			// });
+			Log.i(TAG, "***** onCreate() Called");
 		}catch(Exception ex){
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
