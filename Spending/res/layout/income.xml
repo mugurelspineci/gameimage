@@ -7,31 +7,32 @@
 		android:layout_width="fill_parent" android:gravity="center_horizontal">
 		<TextView android:layout_width="match_parent"
 			android:layout_height="wrap_content" android:textSize="18dp"
-			android:text="So tien nhan duoc" android:layout_span="3"
-			android:padding="18dip" android:gravity="center_horizontal" />
+			android:text="Số tiền nhận được" android:layout_span="3"
+			android:padding="12dip" android:gravity="center_horizontal" />
 	</TableRow>
 	<TableRow>
-		<TextView android:id="@+id/tvwAmount" android:text="So tien:"
-			android:width="5dip" />
+		<TextView android:id="@+id/tvwAmount" android:text="Số tiền:" 
+			android:width="15dip" android:paddingLeft="10dip" />
 		<EditText android:id="@+id/edtAmount" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" />
-		<TextView android:id="@+id/tvwVND" android:text="VND" />
+			android:layout_height="wrap_content" android:layout_span="2"/>
+		<TextView android:id="@+id/tvwVND" android:text="VND" android:paddingLeft="5dip" />
+		<TextView android:paddingLeft="20px"/>
 	</TableRow>
 	<TableRow>
-		<TextView android:id="@+id/tvwDate" android:text="Ngay:" />
-		<EditText android:id="@+id/edtDate" />
+		<TextView android:id="@+id/tvwDate" android:text="Ngay:" android:paddingLeft="10dip" />
+		<EditText android:id="@+id/edtDate" android:layout_span="2"/>
 	</TableRow>
 	<TableRow>
-		<TextView android:id="@+id/tvwReason" android:text="Ly do:" />
-		<Spinner android:id="@+id/spnReason" android:layout_span="2" />
+		<TextView android:id="@+id/tvwReason" android:text="Ly do:" android:paddingLeft="10dip" />
+		<Spinner android:id="@+id/spnReason" android:layout_span="3" />
 	</TableRow>
 	<TableRow>
-		<TextView android:id="@+id/tvwOther" android:text="Khac:" />
-		<EditText android:id="@+id/edtOther" />
+		<TextView android:id="@+id/tvwOther" android:text="Khac:" android:paddingLeft="10dip" />
+		<EditText android:id="@+id/edtOther" android:layout_span="2"/>
 	</TableRow>
 	<TableRow>
-		<TextView android:id="@+id/tvwComment" android:text="Ghi chu: " />
-		<EditText android:id="@+id/edtComment" />
+		<TextView android:id="@+id/tvwComment" android:text="Ghi chu: " android:paddingLeft="10dip" />
+		<EditText android:id="@+id/edtComment" android:layout_span="2"/>
 	</TableRow>
 	<TableRow>
 		<Button android:id="@+id/btnSave" android:text="Luu"

@@ -9,12 +9,15 @@
 			<TextView android:text="Tìm kiếm" android:layout_height="40dip"
 				android:layout_span="4" android:gravity="center" android:textSize="22px" />
 		</TableRow>
-		<TableRow>			
-			<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="center_horizontal"
-				android:orientation="horizontal" android:layout_span="5" >
-				<RadioButton android:id="@+id/rdIncome" android:text="Thu" android:paddingRight="5dip" />
-				<RadioButton android:id="@+id/rdPayment" android:text="Chi" android:paddingRight="5dip"/>
-				<RadioButton android:id="@+id/rdAll" android:text="Tat ca"/>
+		<TableRow>
+			<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+				android:gravity="center_horizontal" android:orientation="horizontal"
+				android:layout_span="5">
+				<RadioButton android:id="@+id/rdIncome" android:text="Thu"
+					android:paddingRight="5dip" />
+				<RadioButton android:id="@+id/rdPayment" android:text="Chi"
+					android:paddingRight="5dip" />
+				<RadioButton android:id="@+id/rdAll" android:text="Tat ca" android:checked="true" />
 			</RadioGroup>
 		</TableRow>
 		<TableRow>
@@ -54,12 +57,13 @@
 		<TableRow>
 			<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 				android:layout_span="4" android:layout_width="wrap_content"
-				android:gravity="right" android:layout_height="wrap_content">
+				android:layout_height="wrap_content" android:gravity="right">
 				<Button android:id="@+id/btnSearch" android:text="Tim"
-					android:paddingRight="40dp" android:gravity="center"
+					android:paddingRight="20dp" android:paddingLeft="20dp" 
+					android:gravity="center"
 					android:layout_width="wrap_content" android:layout_height="wrap_content" />
 				<Button android:id="@+id/btnCancel" android:text="Huy"
-					android:layout_centerVertical="true" android:paddingRight="40dp"
+					android:layout_centerVertical="true" android:paddingRight="20dp" android:paddingLeft="20dp"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
 					android:layout_toRightOf="@+id/btnSearch" />
 			</RelativeLayout>
