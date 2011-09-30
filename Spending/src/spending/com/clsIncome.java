@@ -85,15 +85,19 @@ public class clsIncome extends Activity {
 				reason = edtOther.getText().toString();
 			else
 				reason = spnReason.getSelectedItem().toString();
-			//db = new SpendingDbAdapter(this);
-			//db.open();
 			insert = mDbHelper.insert(Integer.parseInt(edtAmount.getText().toString()), edtDate.getText().toString(), 1, reason,
 					edtComment.getText().toString());
-			//db.close();
+			clearData();
 			Log.i(TAG, "***** saveData() Da luu xuong db, id=" + insert);
 		} catch (Exception ex) {
 			Log.i(TAG, "***** saveData() Error: " + ex.getMessage());
 		}
+	}
+	
+	private void clearData(){
+		edtAmount.setText("");
+		edtDate.setText("");
+		edtOther.setText("");
 	}
 	
 	@Override
