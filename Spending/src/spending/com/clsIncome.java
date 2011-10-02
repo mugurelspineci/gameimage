@@ -6,12 +6,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.util.Log;
 
 public class clsIncome extends Activity {
 
 	private static final String TAG = clsIncome.class.getSimpleName();
+	RadioButton rdIncome;
+	RadioButton rdPayment;
 	EditText edtAmount;
 	EditText edtDate;
 	Spinner spnReason;
@@ -35,6 +38,8 @@ public class clsIncome extends Activity {
 			mDbHelper = new SpendingDbAdapter(this);
 			mDbHelper.open();
 			
+			rdIncome = (RadioButton) findViewById(R.id.rdIncome);
+			rdPayment = (RadioButton) findViewById(R.id.rdPayment);
 			edtAmount = (EditText) findViewById(R.id.edtAmount);
 			edtDate = (EditText) findViewById(R.id.edtDate);
 			spnReason = (Spinner) findViewById(R.id.spnReason);
@@ -79,13 +84,20 @@ public class clsIncome extends Activity {
 	private void saveData() {
 		//SpendingDbAdapter db;
 		String reason;
+		int income=0;
 		long insert;
 		try {
 			if (edtOther.getText().toString().length() != 0)
 				reason = edtOther.getText().toString();
 			else
 				reason = spnReason.getSelectedItem().toString();
-			insert = mDbHelper.insert(Integer.parseInt(edtAmount.getText().toString()), edtDate.getText().toString(), 1, reason,
+			
+			if (rdIncome.isChecked() == true) {
+				income =1;
+			} else if (rdPayment.isChecked() == true) {
+				income = 0;
+			}
+			insert = mDbHelper.insert(Integer.parseInt(edtAmount.getText().toString()), edtDate.getText().toString(), income, reason,
 					edtComment.getText().toString());
 			clearData();
 			Log.i(TAG, "***** saveData() Da luu xuong db, id=" + insert);
