@@ -6,10 +6,11 @@
 	<!-- title -->
 	<TableRow android:layout_height="wrap_content"
 		android:layout_width="fill_parent" android:gravity="center">
-		<TextView android:layout_width="match_parent" android:textStyle="bold"
-			android:gravity="center" android:layout_height="wrap_content"
-			android:textSize="12dp" android:text="Chương trình quản lý thu chi"
-			android:layout_span="3" android:padding="8dip" />
+		<TextView android:layout_width="match_parent"
+			android:textStyle="bold" android:gravity="center"
+			android:layout_height="wrap_content" android:textSize="12dp"
+			android:text="Chương trình quản lý thu chi" android:layout_span="3"
+			android:padding="8dip" />
 	</TableRow>
 
 	<TableRow android:gravity="center">

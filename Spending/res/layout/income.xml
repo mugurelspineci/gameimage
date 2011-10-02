@@ -5,10 +5,14 @@
 	<!-- title -->
 	<TableRow android:layout_height="wrap_content"
 		android:layout_width="fill_parent" android:gravity="center_horizontal">
-		<TextView android:layout_width="match_parent"
-			android:layout_height="wrap_content" android:textSize="18dp"
-			android:text="Số tiền nhận được" android:layout_span="3"
-			android:padding="12dip" android:gravity="center_horizontal" />
+		<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+				android:gravity="center_horizontal" android:orientation="horizontal"
+				android:layout_span="2">
+				<RadioButton android:id="@+id/rdIncome" android:text="Thu" 
+					android:paddingRight="5dip" />
+				<RadioButton android:id="@+id/rdPayment" android:text="Chi"
+					android:paddingRight="5dip" />				
+			</RadioGroup>
 	</TableRow>
 	<TableRow>
 		<TextView android:id="@+id/tvwAmount" android:text="Số tiền:" 
