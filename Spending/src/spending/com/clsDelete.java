@@ -10,8 +10,6 @@ import android.widget.RadioButton;
 
 public class clsDelete extends Activity {
 	private static final String TAG = clsDelete.class.getSimpleName();
-	RadioButton rdIncome;
-	RadioButton rdPayment;
 	EditText edtDateFrom;
 	EditText edtDateTo;
 	Button btnDelete;
@@ -30,8 +28,6 @@ public class clsDelete extends Activity {
 
 			btnDelete = (Button) findViewById(R.id.btnDelete);
 			btnCancel = (Button) findViewById(R.id.btnCancel);
-			rdIncome = (RadioButton) findViewById(R.id.rdIncome);
-			rdPayment = (RadioButton) findViewById(R.id.rdPayment);
 
 			btnDelete.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View view) {
@@ -47,6 +43,35 @@ public class clsDelete extends Activity {
 		} catch (Exception ex) {
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
-
+	}
+	
+	private void deleteData(){
+		try{
+			if(mDbHelper.deleteDate("","")){
+				clearData();
+				Log.i(TAG, "***** deleteData() Da xoa");
+			}else
+				Log.i(TAG, "***** deleteData() Bi loi trong qua trinh xoa");
+			
+			
+		} catch (Exception ex) {
+			Log.i(TAG, "***** deleteData() Error: " + ex.getMessage());
+		}
+	}
+	
+	private void clearData(){
+		edtDateFrom.setText("");
+		edtDateTo.setText("");
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		try {
+			if (mDbHelper != null)
+				mDbHelper.close();
+		} catch (Exception ex) {
+			Log.i(TAG, "***** onDestroy() Error: " + ex.getMessage());
+		}
 	}
 }
