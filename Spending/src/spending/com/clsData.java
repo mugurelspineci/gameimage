@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 class clsData implements Parcelable {
 	
+	private int rowid;
 	private int	pay;
 	private String amount;
 	private String datePay;
@@ -14,13 +15,20 @@ class clsData implements Parcelable {
 	
 	}
 	
-	public clsData(int pay, String amount, String datePay, String reason){
+	public clsData(int rowid, String amount, String datePay, int pay, String reason){
+		this.rowid = rowid;
 		this.pay = pay;
 		this.amount = amount;
 		this.datePay = datePay;
 		this.reason = reason;
 	}
+	public int getId(){
+		return rowid;
+	}
 	
+	public void setId(int rowid){
+		this.rowid = rowid;
+	}
 	public int getPay() {
 		return pay;
 	}

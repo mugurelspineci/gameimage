@@ -104,13 +104,6 @@ public class clsSearch extends Activity {
 				return;
 
 			//Log.i(TAG, "***** searchData() loaded data ");
-
-			// Intent i = new Intent(this, clsShow.class);
-			// i.putExtra("SPENDING", arrList);
-			// startActivityForResult(i, REQUEST_CODE);
-			// startActivity(i);
-			// startActivityForResult(i, 0);
-
 			Intent intent = new Intent().setClass(this, clsShow.class);
 			intent.putParcelableArrayListExtra("DATA", arrList);
 			startActivity(intent);

@@ -1,12 +1,14 @@
 package spending.com;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
+
 
 public class clsDelete extends Activity {
 	private static final String TAG = clsDelete.class.getSimpleName();
@@ -19,7 +21,7 @@ public class clsDelete extends Activity {
 	@Override
 	public void onCreate(Bundle saved) {
 		super.onCreate(saved);
-		setContentView(R.layout.search);
+		setContentView(R.layout.delete);
 		try {
 
 			mDbHelper = new SpendingDbAdapter(this);
@@ -31,7 +33,7 @@ public class clsDelete extends Activity {
 
 			btnDelete.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View view) {
-
+					dialogMsgImage("Ban co muon xoa khong?");
 				}
 			});
 
@@ -45,13 +47,35 @@ public class clsDelete extends Activity {
 		}
 	}
 	
+	public void dialogMsgImage(String dg){
+		AlertDialog.Builder alt_bld = new AlertDialog.Builder(this);
+		alt_bld.setMessage(dg).setCancelable(false)
+				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						// Action for 'Yes' Button	
+						deleteData();
+					}
+				}).setNegativeButton("No", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						// Action for 'NO' Button
+						dialog.cancel();
+					}
+				});
+		AlertDialog alert = alt_bld.create();
+		// Title for AlertDialog
+		alert.setTitle("Spending...");
+		// Icon for AlertDialog
+		alert.setIcon(R.drawable.icon);
+		alert.show();
+	}
+	
 	private void deleteData(){
 		try{
-			if(mDbHelper.deleteDate("","")){
+			if(mDbHelper.deleteData("","")==true){
 				clearData();
 				Log.i(TAG, "***** deleteData() Da xoa");
 			}else
-				Log.i(TAG, "***** deleteData() Bi loi trong qua trinh xoa");
+				Log.i(TAG, "***** deleteData(): Loi trong qua trinh xoa");
 			
 			
 		} catch (Exception ex) {
@@ -69,7 +93,7 @@ public class clsDelete extends Activity {
 		super.onDestroy();
 		try {
 			if (mDbHelper != null)
-				mDbHelper.close();
+				mDbHelper= null;
 		} catch (Exception ex) {
 			Log.i(TAG, "***** onDestroy() Error: " + ex.getMessage());
 		}

@@ -27,11 +27,11 @@ public class spendingActivity extends Activity {
 				}
 			});
 
-			ImageView imgPayment = (ImageView) findViewById(R.id.imgPayment);
-			imgPayment.setOnClickListener(new OnClickListener() {
+			ImageView imgDelete = (ImageView) findViewById(R.id.imgDelete);
+			imgDelete.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					Intent payment = new Intent(v.getContext(), clsPayment.class);
-					startActivity(payment);
+					Intent delete = new Intent(v.getContext(), clsDelete.class);
+					startActivity(delete);
 				}
 			});
 

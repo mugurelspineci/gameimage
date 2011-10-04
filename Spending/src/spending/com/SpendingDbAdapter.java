@@ -112,10 +112,10 @@ public class SpendingDbAdapter {
 			// query (table, String[] columns, selection, String[] selectionArgs, groupBy, having, orderBy)
 			Cursor cursor = database.query(clsContant.TBL_SPENDING, new String[] { clsContant.KEY_ROWID,
 					clsContant.KEY_AMOUNT, clsContant.KEY_DATE_PAY, clsContant.KEY_PAY, clsContant.KEY_REASON,
-					clsContant.KEY_COMMENT }, null, null, null, null, clsContant.KEY_ROWID);
+					clsContant.KEY_COMMENT }, null, null, null, null, clsContant.KEY_DATE_PAY +  " DESC" );
 
 			while (cursor.moveToNext()) {
-				data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+				data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
 				arrList.add(data);
 			}
 			if (cursor != null && !cursor.isClosed()) {
@@ -143,7 +143,7 @@ public class SpendingDbAdapter {
 					clsContant.KEY_DATE_PAY);
 
 			while (cursor.moveToNext()) {
-				data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+				data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
 				arrList.add(data);
 			}
 			// if (cursor.moveToFirst()) {
