@@ -58,11 +58,11 @@ public class SpendingDbAdapter {
 	 * Deletes
 	 */
 	public boolean deleteData(String dateFrom, String dateTo) {
-		String cond =" WHERE 1=1 ";
-		cond+= getConditionDate(dateFrom, dateTo);		
+		String cond = " WHERE 1=1 ";
+		cond += getConditionDate(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
 		return database.delete(clsContant.TBL_SPENDING, cond, null) > 0;
 	}
-	
+
 	/**
 	 * Return a Cursor over the list of all Spending in the database
 	 * 
@@ -105,10 +105,11 @@ public class SpendingDbAdapter {
 			// query (table, String[] columns, selection, String[] selectionArgs, groupBy, having, orderBy)
 			Cursor cursor = database.query(clsContant.TBL_SPENDING, new String[] { clsContant.KEY_ROWID,
 					clsContant.KEY_AMOUNT, clsContant.KEY_DATE_PAY, clsContant.KEY_PAY, clsContant.KEY_REASON,
-					clsContant.KEY_COMMENT }, null, null, null, null, clsContant.KEY_DATE_PAY +  " DESC" );
+					clsContant.KEY_COMMENT }, null, null, null, null, clsContant.KEY_DATE_PAY + " DESC");
 
 			while (cursor.moveToNext()) {
-				data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
+				data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
+						cursor.getString(4));
 				arrList.add(data);
 			}
 			if (cursor != null && !cursor.isClosed()) {
@@ -121,39 +122,36 @@ public class SpendingDbAdapter {
 		}
 	}
 
-	public ArrayList<clsData> SelectData(String cond) {
-
+	public ArrayList<clsData> SelectData(String dateFrom, String dateTo, String amountFrom, String amountTo,
+			String reason, int pay) {
+		String cond;
 		String[] column_name;
 		clsData data;
 		ArrayList<clsData> arrList = new ArrayList<clsData>();
 		try {
+			cond = " WHERE 1=1 ";
+			cond = getCondition(dateFrom, dateTo, amountFrom, amountTo, reason, pay);
 			column_name = new String[] { clsContant.KEY_PAY, clsContant.KEY_AMOUNT, clsContant.KEY_DATE_PAY,
 					clsContant.KEY_REASON };
 
-			// selection = clsContant.KEY_AMOUNT + "=? AND " + clsContant.KEY_PAY + "=?";
 			// query (table_name, String[] columns, selection, String[] selectionArgs, groupBy, having, orderBy)
 			Cursor cursor = database.query(clsContant.TBL_SPENDING, column_name, cond, null, null, null,
 					clsContant.KEY_DATE_PAY);
 
 			while (cursor.moveToNext()) {
-				data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
+				data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
+						cursor.getString(4));
 				arrList.add(data);
-			}
-			// if (cursor.moveToFirst()) {
-			// do {
-			// data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
-			// arrList.add(data);
-			// } while (cursor.moveToNext());
+			}			
 			if (cursor != null && !cursor.isClosed()) {
 				cursor.close();
 			}
-			// }
 			return arrList;
 		} catch (Exception ex) {
 			Log.i(TAG, "***** SelectData() Error: " + ex.getMessage());
 			return null;
 		}
-	}	
+	}
 
 	/**
 	 * Return condition
@@ -161,7 +159,7 @@ public class SpendingDbAdapter {
 	private String getConditionDate(String dateFrom, String dateTo, String keySearch) {
 		String cond = " ";
 		if (dateFrom.length() != 0 && dateTo.length() != 0) {
-			cond += " AND " + keySearch + ">" + dateFrom + " AND " +keySearch + "<" + dateTo;
+			cond += " AND " + keySearch + ">" + dateFrom + " AND " + keySearch + "<" + dateTo;
 		} else if (dateFrom.length() != 0 && dateTo.length() == 0) {
 			cond += " AND " + keySearch + ">" + dateFrom;
 		} else if (dateFrom.length() == 0 && dateTo.length() != 0) {
@@ -169,16 +167,17 @@ public class SpendingDbAdapter {
 		}
 		return cond;
 	}
-	
+
 	/**
 	 * Return condition
 	 */
-	private String getCondition(String dateFrom, String dateTo, String amountFrom, String amountTo, String reason, int pay) {
+	private String getCondition(String dateFrom, String dateTo, String amountFrom, String amountTo, String reason,
+			int pay) {
 		String cond = " ";
-		
+
 		cond += getConditionDate(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
 		cond += getConditionDate(amountFrom, amountTo, clsContant.KEY_AMOUNT);
-		
+
 		if (reason.length() != 0) {
 			cond += " AND " + clsContant.KEY_REASON + " like %" + reason + "%";
 		}
@@ -186,7 +185,7 @@ public class SpendingDbAdapter {
 			cond += " AND " + clsContant.KEY_PAY + "=1 ";
 		} else if (pay == 0) {
 			cond += " AND " + clsContant.KEY_PAY + "=0";
-		} 
+		}
 		return cond;
 	}
 }

@@ -34,7 +34,7 @@ public class clsSearch extends Activity {
 		super.onCreate(saved);
 		setContentView(R.layout.search);
 		try {
-			String arrReason[] = { "AA", "BB", "CC" };
+			String arrReason[] = { "Lương", "Ăn sáng", "Xăng", "Thay nhớt", "Đi siêu thị" };
 			ArrayAdapter<String> adapter;
 
 			mDbHelper = new SpendingDbAdapter(this);
@@ -91,73 +91,41 @@ public class clsSearch extends Activity {
 	}
 
 	private void searchData() {
-		//String cond;
+		// String cond;
+		int pay;
+		String reason;
 		ArrayList<clsData> arrList;
 		// ArrayList<clsData> arrListData;
 		try {
-			//cond = getCondition();
+			// cond = getCondition();
 
 			mDbHelper.open();
-			// arrList = dba.SelectData(edtDateFrom.getText().toString().trim()
-			//, edtDateTo.getText().toString()
-			//,);
+
+			if (edtOther.getText().toString().length() != 0)
+				reason = edtOther.getText().toString();
+			else
+				reason = spnReason.getSelectedItem().toString();
+
+			if (rdIncome.isChecked())
+				pay = 1;
+			else if (rdPayment.isChecked())
+				pay = 2;
+			else
+				pay = 3;
+			
+			arrList = mDbHelper.SelectData(edtDateFrom.getText().toString().trim(), edtDateTo.getText().toString(),
+					edtAmountFrom.getText().toString(), edtAmountTo.getText().toString(), reason, pay);
 			arrList = mDbHelper.SelectAll();
 			if (arrList == null)
 				return;
 
-			//Log.i(TAG, "***** searchData() loaded data ");
+			// Log.i(TAG, "***** searchData() loaded data ");
 			Intent intent = new Intent().setClass(this, clsShow.class);
 			intent.putParcelableArrayListExtra("DATA", arrList);
 			startActivity(intent);
 		} catch (Exception ex) {
 			Log.i(TAG, "***** searchData() Error: " + ex.getMessage());
 		}
-	}
-
-	private String getCondition() {
-		String cond = " WHERE 1=1 ";
-		if (edtDateFrom.getText().toString().trim().length() != 0
-
-		&& edtDateTo.getText().toString().trim().length() != 0) {
-			cond += " AND " + clsContant.KEY_DATE_PAY + ">" + edtDateFrom.getText().toString().trim() + " AND "
-					+ clsContant.KEY_DATE_PAY + "<" + edtDateTo.getText().toString().trim();
-		} else if (edtDateFrom.getText().toString().trim().length() != 0
-
-		&& edtDateTo.getText().toString().trim().length() == 0) {
-			cond += " AND " + clsContant.KEY_DATE_PAY + ">" + edtDateFrom.getText().toString().trim();
-		} else if (edtDateFrom.getText().toString().trim().length() == 0
-				&& edtDateTo.getText().toString().trim().length() != 0) {
-			cond += " AND " + clsContant.KEY_DATE_PAY + "<" + edtDateTo.getText().toString().trim();
-		}
-
-		if (edtAmountFrom.getText().toString().trim().length() != 0
-				&& edtAmountTo.getText().toString().trim().length() != 0) {
-			cond += " AND " + clsContant.KEY_AMOUNT + ">" + edtAmountFrom.getText().toString().trim() + " AND "
-					+ clsContant.KEY_AMOUNT + "<" + edtAmountTo.getText().toString().trim();
-		} else if (edtAmountFrom.getText().toString().trim().length() != 0
-				&& edtAmountTo.getText().toString().trim().length() == 0) {
-			cond += " AND " + clsContant.KEY_AMOUNT + ">" + edtAmountFrom.getText().toString().trim();
-		} else if (edtAmountFrom.getText().toString().trim().length() == 0
-				&& edtAmountTo.getText().toString().trim().length() != 0) {
-			cond += " AND " + clsContant.KEY_AMOUNT + "<" + edtAmountTo.getText().toString().trim();
-		}
-
-		if (spnReason.getSelectedItem().toString().length() != 0) {
-			cond += " AND " + clsContant.KEY_REASON + " like %" + spnReason.getSelectedItem().toString() + "%";
-		}
-
-		if (edtOther.getText() != null && edtOther.getText().toString().length() != 0) {
-			cond += " AND " + clsContant.KEY_REASON + " like %" + edtOther.getText().toString() + "%";
-		}
-
-		if (rdIncome.isChecked() == true) {
-			cond += " AND " + clsContant.KEY_PAY + "=1 ";
-		} else if (rdPayment.isChecked() == true) {
-			cond += " AND " + clsContant.KEY_PAY + "=0";
-		} else {
-			cond += " AND " + clsContant.KEY_PAY + "=0 AND " + clsContant.KEY_PAY + "=1";
-		}
-		return cond;
 	}
 
 	@Override

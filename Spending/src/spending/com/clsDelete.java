@@ -82,21 +82,7 @@ public class clsDelete extends Activity {
 			Log.i(TAG, "***** deleteData() Error: " + ex.getMessage());
 		}
 	}
-	
-	private String getCondition() {
-		String cond = " WHERE 1=1 ";
-		if (edtDateFrom.getText().toString().trim().length() != 0&& edtDateTo.getText().toString().trim().length() != 0) {
-			cond += " AND " + clsContant.KEY_DATE_PAY + ">" + edtDateFrom.getText().toString().trim() + " AND "
-					+ clsContant.KEY_DATE_PAY + "<" + edtDateTo.getText().toString().trim();
-		} else if (edtDateFrom.getText().toString().trim().length() != 0	&& edtDateTo.getText().toString().trim().length() == 0) {
-			cond += " AND " + clsContant.KEY_DATE_PAY + ">" + edtDateFrom.getText().toString().trim();
-		} else if (edtDateFrom.getText().toString().trim().length() == 0
-				&& edtDateTo.getText().toString().trim().length() != 0) {
-			cond += " AND " + clsContant.KEY_DATE_PAY + "<" + edtDateTo.getText().toString().trim();
-		}		
-		return cond;
-	}
-	
+
 	private void clearData(){
 		edtDateFrom.setText("");
 		edtDateTo.setText("");

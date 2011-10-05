@@ -31,7 +31,7 @@ public class clsIncome extends Activity {
 		super.onCreate(saved);
 		setContentView(R.layout.income);
 		
-		String arrReason[] = { "AA", "BB", "CC" };
+		String arrReason[] = { "Lương", "Ăn sáng", "Xăng", "Thay nhớt", "Đi siêu thị" };
 		ArrayAdapter<String> adapter;
 		try {
 			
