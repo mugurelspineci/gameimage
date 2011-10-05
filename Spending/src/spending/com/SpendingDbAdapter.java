@@ -58,15 +58,8 @@ public class SpendingDbAdapter {
 	 * Deletes
 	 */
 	public boolean deleteData(String dateFrom, String dateTo) {
-		String cond;
-		if(dateFrom == null || dateFrom == ""){
-			cond = clsContant.KEY_DATE_PAY + "<" + dateTo;
-		}
-		else if(dateTo == null || dateTo == ""){
-			cond = clsContant.KEY_DATE_PAY + ">" + dateFrom;
-		}
-		else
-			cond = clsContant.KEY_DATE_PAY + ">" + dateFrom + " AND " + clsContant.KEY_DATE_PAY + "<" + dateTo;
+		String cond =" WHERE 1=1 ";
+		cond+= getConditionDate(dateFrom, dateTo);		
 		return database.delete(clsContant.TBL_SPENDING, cond, null) > 0;
 	}
 	
@@ -162,4 +155,38 @@ public class SpendingDbAdapter {
 		}
 	}	
 
+	/**
+	 * Return condition
+	 */
+	private String getConditionDate(String dateFrom, String dateTo, String keySearch) {
+		String cond = " ";
+		if (dateFrom.length() != 0 && dateTo.length() != 0) {
+			cond += " AND " + keySearch + ">" + dateFrom + " AND " +keySearch + "<" + dateTo;
+		} else if (dateFrom.length() != 0 && dateTo.length() == 0) {
+			cond += " AND " + keySearch + ">" + dateFrom;
+		} else if (dateFrom.length() == 0 && dateTo.length() != 0) {
+			cond += " AND " + keySearch + "<" + dateTo;
+		}
+		return cond;
+	}
+	
+	/**
+	 * Return condition
+	 */
+	private String getCondition(String dateFrom, String dateTo, String amountFrom, String amountTo, String reason, int pay) {
+		String cond = " ";
+		
+		cond += getConditionDate(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
+		cond += getConditionDate(amountFrom, amountTo, clsContant.KEY_AMOUNT);
+		
+		if (reason.length() != 0) {
+			cond += " AND " + clsContant.KEY_REASON + " like %" + reason + "%";
+		}
+		if (pay == 1) {
+			cond += " AND " + clsContant.KEY_PAY + "=1 ";
+		} else if (pay == 0) {
+			cond += " AND " + clsContant.KEY_PAY + "=0";
+		} 
+		return cond;
+	}
 }

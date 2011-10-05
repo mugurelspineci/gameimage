@@ -91,14 +91,16 @@ public class clsSearch extends Activity {
 	}
 
 	private void searchData() {
-		String cond;
+		//String cond;
 		ArrayList<clsData> arrList;
 		// ArrayList<clsData> arrListData;
 		try {
-			cond = getCondition();
+			//cond = getCondition();
 
 			mDbHelper.open();
-			// arrList = dba.SelectData(cond);
+			// arrList = dba.SelectData(edtDateFrom.getText().toString().trim()
+			//, edtDateTo.getText().toString()
+			//,);
 			arrList = mDbHelper.SelectAll();
 			if (arrList == null)
 				return;
