@@ -3,14 +3,22 @@
 	android:layout_width="match_parent" android:layout_height="match_parent"
 	android:shrinkColumns="*" android:stretchColumns="*">
 	<TableRow>
-		<TextView android:id="@+id/txtAmount" android:padding="3dip"
-			android:text="So Tien" android:textColor="#3cb371" />
-		<TextView android:id="@+id/txtDate" android:gravity="right" android:textColor="#3cb371"
-			android:padding="3dip" android:text="Ngay thang" />
+		<RelativeLayout android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:layout_span="2" android:paddingLeft="5dip">
+			<TextView android:gravity="center" android:layout_width="wrap_content"
+				android:id="@+id/txtPay" android:textColor="#3cb371" android:paddingRight="5dip"
+				android:layout_height="wrap_content" android:text="+"></TextView>
+			<TextView android:layout_width="wrap_content" android:id="@+id/txtAmount"
+				android:textColor="#3cb371" android:layout_height="wrap_content"
+				android:text="So Tien" android:layout_toRightOf="@+id/txtPay"></TextView>
+		</RelativeLayout>
+		<TextView android:id="@+id/txtDate" android:gravity="right"
+			android:textColor="#3cb371" android:text="Ngay thang" android:paddingRight="10dip" />
 	</TableRow>
 	<TableRow>
-		<TextView android:id="@+id/txtReason" android:text="Ly do" android:paddingLeft="15dip"
-			android:layout_span="2" android:textColor="#fafad2"/>
+		<TextView android:id="@+id/txtReason" android:text="Ly do"
+			android:paddingLeft="15dip" android:layout_span="3"
+			android:textColor="#fafad2" />
 	</TableRow>
 
 </TableLayout>
