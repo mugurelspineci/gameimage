@@ -18,22 +18,23 @@ public class DrawImage extends Activity {
 	ArrayList<clsImage> lstImgs;
 	ArrayList<clsImageCtrl> lstImgCtrl;
 	int[][] arrCoords;
-	int width = 80; // The width of the bitmap
-	int height = 80;// The height of the bitmap
+	int width; // The width of the bitmap
+	int height;// The height of the bitmap
 
 	int nX; // The number of rows
 	int nY; // The number of columns
 
-	int beginX = 10; // The X-coordinates of image start
+	int beginX; // The X-coordinates of image start
 	int beginY = 2; // The Y-coordinates of image start
 
-	int scaleWidth = 320; // The new bitmap's desired width.
-	int scaleHeight = 480; // The new bitmap's desired height
+	int scaleWidth; // The new bitmap's desired width.
+	int scaleHeight; // The new bitmap's desired height
 
 	int optImage; // opacity image
 	int nPos; // vi tri lay hình (tu mang arrBitmap)
-	int nImage=0; // so hinh trong ung dung
+	int nImage = 0; // so hinh trong ung dung
 	boolean bMove;
+	boolean monitor = false; // chieu rong nho hon chieu dai mang hinh (man hinh nam ngan)
 
 	Bitmap arrBitmap[]; // Luu cac hinh
 	Bitmap bitmap;
@@ -44,8 +45,8 @@ public class DrawImage extends Activity {
 	public DrawImage(SurfaceHolder surfaceHolder, MainGamePanel gamepanel) {
 		this.surfaceHolder = surfaceHolder;
 		this.gamepanel = gamepanel;
-		init();	
-	
+		init();
+
 	}
 
 	public void init() {
@@ -58,16 +59,31 @@ public class DrawImage extends Activity {
 		// int i;
 		try {
 
-			// chieu rong cua hinh cat nhỏ
-			width = ImageActivity.scnWidth / 6;
-			// width = 30;
-			height = width;
+			if (ImageActivity.scnWidth < ImageActivity.scnHeight) {
+				monitor = false;
+				// chieu rong cua hinh cat nhỏ
+				width = ImageActivity.scnWidth / 5;
+				height = width;
 
-			// chieu rong cua hinh lớn
-			scaleWidth = width * 4;
-			scaleHeight = height * 6;
+				// chieu rong cua hinh lớn
+				scaleWidth = width * 4;
+				scaleHeight = height * 6;
 
-			beginX = width / 2 + 10;
+				beginX = width / 2;
+			} else {
+				monitor = true;
+				// chieu rong cua hinh cat nhỏ
+				width = ImageActivity.scnHeight / 5;
+				// width = 30;
+				height = width;
+
+				// chieu rong cua hinh lớn
+				scaleWidth = width * 6;
+				scaleHeight = height * 4;
+
+				beginX = 3;
+			}
+
 			// beginY = ImageActivity.scnHeight / 20;
 
 			// random 0->4
@@ -87,6 +103,7 @@ public class DrawImage extends Activity {
 
 			// Tạo các hinh de dieu khien (xem hinh hien tai, trộn hinh, xem hinh ke)
 			loadImageCtrl();
+
 		} catch (Exception ex) {
 			Log.i(TAG, "*****init() Error: " + ex.getMessage());
 		}
@@ -221,18 +238,19 @@ public class DrawImage extends Activity {
 			// ve duong doc
 			x = beginX;
 			y = beginY;
+			// ve duong doc
 			for (int i = 0; i <= 4; i++) {
-				canvas.drawLine(x, y, x, height * 6, paint);
+				canvas.drawLine(x, y, x, height * 6 + beginY, paint);
 				x += width;
 			}
 
 			x = beginX;
 			// ve duong ngang
 			for (int i = 0; i <= 6; i++) {
-				//sua 2011/09/27
-				canvas.drawLine(x, y, (width * 5) - 5, y, paint); //
-				//canvas.drawLine(x, y, scaleWidth, y, paint);  // do phan giai 1028x1024
-				//end 2011/09/27
+				// sua 2011/09/27
+				canvas.drawLine(x, y, width * 4 + width / 2, y, paint); //
+				// canvas.drawLine(x, y, scaleWidth, y, paint); // do phan giai 1028x1024
+				// end 2011/09/27
 				y += height;
 			}
 
@@ -253,7 +271,11 @@ public class DrawImage extends Activity {
 
 				clsCtrl = (clsImageCtrl) lstImgCtrl.get(i);
 				// clsCtrl = (clsImageCtrl) lstImgCtrl.get(0);
-				clsCtrl.draw(canvas, null);
+				if (ImageActivity.scnWidth < ImageActivity.scnHeight)
+					clsCtrl.draw(canvas, null);
+				else
+					clsCtrl.draw_h(canvas, null);
+
 				// Log.i(TAG, "***** drawControl(): " + i + ",xy: " +
 				// clsCtrl.getX() + "," + clsCtrl.getY());
 			}
@@ -272,19 +294,97 @@ public class DrawImage extends Activity {
 		clsImageCtrl clsCtrl;
 		int i = 0;
 		int x, y;
+		int xh, yh;
 		Bitmap bitmapT;
 		int widthCtrl, heightCtrl;
 
-		widthCtrl = 10;
-		heightCtrl = 10;
+		// widthCtrl = 30;
+		widthCtrl = width * 4 / 6;
+		heightCtrl = widthCtrl;
 
 		try {
 			lstImgCtrl = new ArrayList<clsImageCtrl>();
 
 			// image View
-			x = 3;
-			// y = 70;
-			y = beginY + height;
+			// Load hinh theo chieu ngang
+			x = scaleWidth / 4;
+			y = scaleHeight + 6;// + heightCtrl/5;
+
+			// Load hinh theo chieu doc
+			xh = scaleWidth + 10;
+			yh = heightCtrl;// + heightCtrl/5;
+
+			// load theo chieu doc
+			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.view);
+			clsCtrl = new clsImageCtrl(i);
+			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
+			// toa do hinh theo chieo doc
+			clsCtrl.setXY(x, y);
+			// toa do hinh theo chieo ngang
+			clsCtrl.setXYH(xh, yh);
+			lstImgCtrl.add(clsCtrl);
+
+			// image mix
+			// x += bitmapT.getWidth() + 15;
+			x += widthCtrl + 25;
+			yh += heightCtrl + heightCtrl / 2;
+			// y += beginY + height / 2;
+			i++;
+			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.mix);
+			clsCtrl = new clsImageCtrl(i);
+			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
+
+			clsCtrl.setXY(x, y);
+			clsCtrl.setXYH(xh, yh);
+			lstImgCtrl.add(clsCtrl);
+
+			// image change
+			x += widthCtrl + 25;
+			yh += heightCtrl + heightCtrl / 2;
+
+			i++;
+			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.change);
+			clsCtrl = new clsImageCtrl(i);
+			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
+			// clsCtrl.setXY(x, ImageActivity.scnHeight - y);
+			clsCtrl.setXY(x, y);
+			clsCtrl.setXYH(xh, yh);
+			lstImgCtrl.add(clsCtrl);
+
+			// image Close
+			i++;
+			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.close);
+			clsCtrl = new clsImageCtrl(i);
+			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
+			clsCtrl.setXY(scaleWidth - 7, beginY);
+			clsCtrl.setXYH(scaleWidth - 7, beginY);
+			lstImgCtrl.add(clsCtrl);
+
+		} catch (Exception ex) {
+			Log.i(TAG, "***** loadImageCtrl() Error: " + ex.getMessage());
+		}
+	}
+
+	// Function: tao hinh de dieu khien (xem hinh hien tai, trộn hinh, xem hinh ke)
+	private void loadImageCtrl_h() {
+		clsImageCtrl clsCtrl;
+		int i = 0;
+		int x, y;
+		Bitmap bitmapT;
+		int widthCtrl, heightCtrl;
+
+		// widthCtrl = 30;
+		widthCtrl = width * 4 / 6;
+		heightCtrl = widthCtrl;
+
+		try {
+			lstImgCtrl = new ArrayList<clsImageCtrl>();
+
+			// image View
+			// Load hinh theo chieu ngang
+			x = scaleWidth + 10;
+			y = heightCtrl;// + heightCtrl/5;
+			// load theo chieu doc
 			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.view);
 			clsCtrl = new clsImageCtrl(i);
 			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
@@ -294,8 +394,8 @@ public class DrawImage extends Activity {
 			lstImgCtrl.add(clsCtrl);
 
 			// image mix
-			// x += bitmapT.getWidth() + 15;
-			y += beginY + height / 2;
+			// load theo chieu doc
+			y += heightCtrl + heightCtrl / 2;
 			i++;
 			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.mix);
 			clsCtrl = new clsImageCtrl(i);
@@ -305,8 +405,7 @@ public class DrawImage extends Activity {
 			lstImgCtrl.add(clsCtrl);
 
 			// image change
-			// x += bitmapT.getWidth() + 5;
-			y += beginY + height / 2;
+			y += heightCtrl + heightCtrl / 2;
 			i++;
 			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.change);
 			clsCtrl = new clsImageCtrl(i);
@@ -320,7 +419,7 @@ public class DrawImage extends Activity {
 			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.close);
 			clsCtrl = new clsImageCtrl(i);
 			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
-			clsCtrl.setXY(scaleWidth + width - 10, beginY);
+			clsCtrl.setXY(scaleWidth - 7, beginY);
 			lstImgCtrl.add(clsCtrl);
 
 		} catch (Exception ex) {
@@ -523,13 +622,12 @@ public class DrawImage extends Activity {
 				if (clsImgT.getNum() != i)
 					return;
 			}
-			//dialogMsgImage
+			// dialogMsgImage
 			gamepanel.dialogMsgImg("Congratulation!!!, Are you want to next game?");
-			
-			//gamepanel.nextImage();
-			//Log.i(TAG, "***** checkFinish(): Next game" );
 
-			
+			// gamepanel.nextImage();
+			// Log.i(TAG, "***** checkFinish(): Next game" );
+
 		} catch (Exception ex) {
 			Log.i(TAG, "***** checkFinish() Error: " + ex.getMessage());
 		}
@@ -632,14 +730,14 @@ public class DrawImage extends Activity {
 			clsT = searchCoord(x, y);
 			// search not found
 			if (clsT == null) {
-				//Log.i(TAG, "***** handleActionDown() khong co toa do: " + x + "," + y);
+				// Log.i(TAG, "***** handleActionDown() khong co toa do: " + x + "," + y);
 				return;
 			}
 
 			// di chuyen hinh
 			if (moveImage(clsT) == false) {
-				//Log.i(TAG, "***** handleActionDown() khong co hinh: " + clsT.getCode() + "L" + clsT.getImgL() + ", R"
-				//		+ clsT.getImgR() + ", T" + clsT.getImgT() + ", B" + clsT.getImgB());
+				// Log.i(TAG, "***** handleActionDown() khong co hinh: " + clsT.getCode() + "L" + clsT.getImgL() + ", R"
+				// + clsT.getImgR() + ", T" + clsT.getImgT() + ", B" + clsT.getImgB());
 				return;
 			}
 

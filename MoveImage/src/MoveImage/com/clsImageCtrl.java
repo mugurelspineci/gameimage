@@ -11,7 +11,9 @@ public class clsImageCtrl {
 	private Bitmap bitmap;
 	private int x; //x field to maintain the x coordinate to draw the image
 	private int y; //y field to maintain the y coordinate to draw the image
-
+	private int xh; //x field to maintain the x coordinate to draw the image
+	private int yh; //y field to maintain the y coordinate to draw the image
+	 
 
 	//Function: Construct
 	//para:		code
@@ -34,6 +36,14 @@ public class clsImageCtrl {
 			//Log.i(TAG, "***** draw(): " + code);
 		}catch(Exception ex){
 			Log.i(TAG, "***** draw() Error: " + ex.getMessage());
+		}
+	}
+	
+	public void draw_h(Canvas canvas, Paint paint){
+		try {
+			canvas.drawBitmap(bitmap, xh, yh, paint);
+		}catch(Exception ex){
+			Log.i(TAG, "***** draw_h() Error: " + ex.getMessage());
 		}
 	}
 
@@ -72,5 +82,26 @@ public class clsImageCtrl {
 	public void setXY(int x, int y){
 		this.x = x;
 		this.y = y;
+	}
+	
+	public int getXH() {
+		return xh;
+	}
+
+	public void setXH(int xh) {
+		this.xh = xh;
+	}
+
+	public int getYH() {
+		return yh;
+	}
+
+	public void setYH(int yh) {
+		this.yh = yh;
+	}
+	
+	public void setXYH(int xh, int yh){
+		this.xh = xh;
+		this.yh = yh;
 	}
 }
