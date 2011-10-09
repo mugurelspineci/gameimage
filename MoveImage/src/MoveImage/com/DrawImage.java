@@ -130,7 +130,6 @@ public class DrawImage extends Activity {
 			for (int r = 0; r < nY; r++) {
 				for (int c = 0; c < nX; c++) {
 					// lay ma so ngau nhien trong mang
-					// clsImg = new clsImage(l);
 					clsImg = new clsImage(l, arrRandNum[l]);
 					// luu hinh ngau nhien
 					clsImg.setBitmap(arrBitmap[arrRandNum[l]]);
@@ -138,16 +137,16 @@ public class DrawImage extends Activity {
 					clsImg.setX(arrCoords[l][0]);
 					clsImg.setY(arrCoords[l][1]);
 					clsImg.setShow(true);
+
 					// save code
 					if (l >= nX)
-						clsImg.setImgT(l - 4); // luu code cua hinh o tren
-					if (l < (nY * nX) - 4)
-						clsImg.setImgB(l + 4); // luu code cua hinh o duoi
+						clsImg.setImgT(l - nX); // luu code cua hinh o tren
+					if (l < (nY * nX) - nX)
+						clsImg.setImgB(l + nX); // luu code cua hinh o duoi
 					if (c > 0)
 						clsImg.setImgL(l - 1); // luu code cua hinh o trai
 					if (c < nX - 1)
 						clsImg.setImgR(l + 1); // luu code cua hinh o phai
-
 					lstImgs.add(clsImg);
 					l++;
 				}
@@ -196,6 +195,10 @@ public class DrawImage extends Activity {
 		Paint paint;
 
 		try {
+			// if (ImageActivity.scnWidth < ImageActivity.scnHeight)
+			// monitor = false;
+			// else
+			// monitor = true;
 			canvas = this.surfaceHolder.lockCanvas();
 			canvas.drawColor(Color.BLACK);
 			paint = new Paint();
@@ -239,16 +242,18 @@ public class DrawImage extends Activity {
 			x = beginX;
 			y = beginY;
 			// ve duong doc
-			for (int i = 0; i <= 4; i++) {
-				canvas.drawLine(x, y, x, height * 6 + beginY, paint);
+			for (int i = 0; i <= nX; i++) {
+				canvas.drawLine(x, y, x, height * nY + beginY, paint);
 				x += width;
 			}
 
 			x = beginX;
 			// ve duong ngang
-			for (int i = 0; i <= 6; i++) {
-				// sua 2011/09/27
-				canvas.drawLine(x, y, width * 4 + width / 2, y, paint); //
+			for (int i = 0; i <= nY; i++) {
+				if (monitor == false)
+					canvas.drawLine(x, y, width * nX + width / 2, y, paint);
+				else
+					canvas.drawLine(x, y, width * nX + beginX, y, paint); //
 				// canvas.drawLine(x, y, scaleWidth, y, paint); // do phan giai 1028x1024
 				// end 2011/09/27
 				y += height;
@@ -271,7 +276,7 @@ public class DrawImage extends Activity {
 
 				clsCtrl = (clsImageCtrl) lstImgCtrl.get(i);
 				// clsCtrl = (clsImageCtrl) lstImgCtrl.get(0);
-				if (ImageActivity.scnWidth < ImageActivity.scnHeight)
+				if (monitor == false)
 					clsCtrl.draw(canvas, null);
 				else
 					clsCtrl.draw_h(canvas, null);
@@ -279,9 +284,12 @@ public class DrawImage extends Activity {
 				// Log.i(TAG, "***** drawControl(): " + i + ",xy: " +
 				// clsCtrl.getX() + "," + clsCtrl.getY());
 			}
-			if (i == lstImgCtrl.size() - 1 && bMove == false) {
+			if (bMove == false) {
 				clsCtrl = (clsImageCtrl) lstImgCtrl.get(i);
-				clsCtrl.draw(canvas, null);
+				if (monitor == false)
+					clsCtrl.draw(canvas, null);
+				else
+					clsCtrl.draw_h(canvas, null);
 			}
 
 		} catch (Exception ex) {
@@ -307,12 +315,13 @@ public class DrawImage extends Activity {
 
 			// image View
 			// Load hinh theo chieu ngang
-			x = scaleWidth / 4;
+			// x = scaleWidth / 4;
+			x = width * 3 / 4;
 			y = scaleHeight + 6;// + heightCtrl/5;
 
 			// Load hinh theo chieu doc
-			xh = scaleWidth + 10;
-			yh = heightCtrl;// + heightCtrl/5;
+			xh = scaleWidth + 15;
+			yh = heightCtrl / 2;// + heightCtrl/5;
 
 			// load theo chieu doc
 			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.view);
@@ -326,7 +335,7 @@ public class DrawImage extends Activity {
 
 			// image mix
 			// x += bitmapT.getWidth() + 15;
-			x += widthCtrl + 25;
+			x += width;
 			yh += heightCtrl + heightCtrl / 2;
 			// y += beginY + height / 2;
 			i++;
@@ -339,11 +348,24 @@ public class DrawImage extends Activity {
 			lstImgCtrl.add(clsCtrl);
 
 			// image change
-			x += widthCtrl + 25;
+			x += width;
 			yh += heightCtrl + heightCtrl / 2;
 
 			i++;
 			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.change);
+			clsCtrl = new clsImageCtrl(i);
+			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
+			// clsCtrl.setXY(x, ImageActivity.scnHeight - y);
+			clsCtrl.setXY(x, y);
+			clsCtrl.setXYH(xh, yh);
+			lstImgCtrl.add(clsCtrl);
+
+			// image abount
+			x += width;
+			yh += heightCtrl + heightCtrl / 2;
+
+			i++;
+			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.about);
 			clsCtrl = new clsImageCtrl(i);
 			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
 			// clsCtrl.setXY(x, ImageActivity.scnHeight - y);
@@ -357,69 +379,7 @@ public class DrawImage extends Activity {
 			clsCtrl = new clsImageCtrl(i);
 			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
 			clsCtrl.setXY(scaleWidth - 7, beginY);
-			clsCtrl.setXYH(scaleWidth - 7, beginY);
-			lstImgCtrl.add(clsCtrl);
-
-		} catch (Exception ex) {
-			Log.i(TAG, "***** loadImageCtrl() Error: " + ex.getMessage());
-		}
-	}
-
-	// Function: tao hinh de dieu khien (xem hinh hien tai, trộn hinh, xem hinh ke)
-	private void loadImageCtrl_h() {
-		clsImageCtrl clsCtrl;
-		int i = 0;
-		int x, y;
-		Bitmap bitmapT;
-		int widthCtrl, heightCtrl;
-
-		// widthCtrl = 30;
-		widthCtrl = width * 4 / 6;
-		heightCtrl = widthCtrl;
-
-		try {
-			lstImgCtrl = new ArrayList<clsImageCtrl>();
-
-			// image View
-			// Load hinh theo chieu ngang
-			x = scaleWidth + 10;
-			y = heightCtrl;// + heightCtrl/5;
-			// load theo chieu doc
-			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.view);
-			clsCtrl = new clsImageCtrl(i);
-			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
-			// clsCtrl.setXY(x, ImageActivity.scnHeight - y);
-			clsCtrl.setXY(x, y);
-			// clsCtrl.setXY(x, y);
-			lstImgCtrl.add(clsCtrl);
-
-			// image mix
-			// load theo chieu doc
-			y += heightCtrl + heightCtrl / 2;
-			i++;
-			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.mix);
-			clsCtrl = new clsImageCtrl(i);
-			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
-			// clsCtrl.setXY(x, ImageActivity.scnHeight - y);
-			clsCtrl.setXY(x, y);
-			lstImgCtrl.add(clsCtrl);
-
-			// image change
-			y += heightCtrl + heightCtrl / 2;
-			i++;
-			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.change);
-			clsCtrl = new clsImageCtrl(i);
-			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
-			// clsCtrl.setXY(x, ImageActivity.scnHeight - y);
-			clsCtrl.setXY(x, y);
-			lstImgCtrl.add(clsCtrl);
-
-			// image Close
-			i++;
-			bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.close);
-			clsCtrl = new clsImageCtrl(i);
-			clsCtrl.setBitmap(Bitmap.createScaledBitmap(bitmapT, widthCtrl, heightCtrl, true));
-			clsCtrl.setXY(scaleWidth - 7, beginY);
+			clsCtrl.setXYH(scaleWidth - widthCtrl, beginY);
 			lstImgCtrl.add(clsCtrl);
 
 		} catch (Exception ex) {
@@ -482,20 +442,37 @@ public class DrawImage extends Activity {
 	private Bitmap loadImage(int num) {
 		Bitmap bitmapT = null;
 		try {
-			switch (num) {
-			case 0:
-				bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img1);
-				break;
-			case 1:
-				bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img2);
-				break;
-			case 2:
-				bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img3);
-				break;
-			case 3:
-				bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img4);
-				break;
-			// default: return null;
+			if (monitor == false) {
+				switch (num) {
+				case 0:
+					bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img1);
+					break;
+				case 1:
+					bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img2);
+					break;
+				case 2:
+					bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img3);
+					break;
+				case 3:
+					bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img4);
+					break;
+				// default: return null;
+				}
+			} else {
+				switch (num) {
+				case 0:
+					bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img_n1);
+					break;
+				case 1:
+					bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img_n2);
+					break;
+				case 2:
+					bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img_n3);
+					break;
+				case 3:
+					bitmapT = BitmapFactory.decodeResource(gamepanel.getResources(), R.drawable.img_n4);
+					break;
+				}
 			}
 			return Bitmap.createScaledBitmap(bitmapT, scaleWidth, scaleHeight, true);
 		} catch (Exception ex) {
@@ -533,10 +510,16 @@ public class DrawImage extends Activity {
 		try {
 			for (int i = 0; i < lstImgCtrl.size(); i++) {
 				clsImgT = lstImgCtrl.get(i);
-
-				if ((clsImgT.getX() <= x && clsImgT.getX() + clsImgT.getBitmap().getWidth() >= x)
-						&& (clsImgT.getY() <= y && clsImgT.getY() + clsImgT.getBitmap().getHeight() >= y)) {
-					return clsImgT;
+				if (monitor == false) {
+					if ((clsImgT.getX() <= x && clsImgT.getX() + clsImgT.getBitmap().getWidth() >= x)
+							&& (clsImgT.getY() <= y && clsImgT.getY() + clsImgT.getBitmap().getHeight() >= y)) {
+						return clsImgT;
+					}
+				} else {
+					if ((clsImgT.getXH() <= x && clsImgT.getXH() + clsImgT.getBitmap().getWidth() >= x)
+							&& (clsImgT.getYH() <= y && clsImgT.getYH() + clsImgT.getBitmap().getHeight() >= y)) {
+						return clsImgT;
+					}
 				}
 			}
 
@@ -640,14 +623,21 @@ public class DrawImage extends Activity {
 		// Random r = new Random();
 
 		int[][] arr = new int[num][16];
-		arr[0] = new int[] { 18, 15, 10, 2, 5, 4, 14, 0, 17, 9, 1, 21, 16, 19, 13, 8, 6, 22, 3, 11, 7, 12, 20, 23 }; // ok
-		arr[1] = new int[] { 14, 4, 22, 17, 8, 21, 2, 20, 13, 9, 12, 7, 1, 10, 11, 6, 0, 15, 18, 19, 3, 5, 16, 23 }; // ok
-		arr[2] = new int[] { 7, 11, 16, 3, 22, 19, 10, 21, 20, 9, 0, 6, 14, 2, 17, 5, 13, 18, 15, 12, 8, 1, 4, 23 }; // ok
-		arr[3] = new int[] { 8, 13, 22, 15, 2, 20, 6, 9, 16, 0, 18, 4, 11, 19, 5, 21, 1, 14, 17, 10, 12, 3, 7, 23 }; // ok
-		arr[4] = new int[] { 17, 21, 12, 0, 11, 2, 7, 22, 5, 20, 13, 16, 8, 19, 4, 3, 15, 9, 14, 18, 10, 6, 1, 23 }; // ok
-
+		if (monitor == false) {
+			arr[0] = new int[] { 18, 15, 10, 2, 5, 4, 14, 0, 17, 9, 1, 21, 16, 19, 13, 8, 6, 22, 3, 11, 7, 12, 20, 23 }; // ok
+			arr[1] = new int[] { 14, 4, 22, 17, 8, 21, 2, 20, 13, 7, 12, 9, 1, 10, 11, 6, 0, 15, 18, 19, 3, 5, 16, 23 }; // ok
+			arr[2] = new int[] { 7, 11, 16, 3, 22, 19, 10, 21, 20, 2, 0, 6, 14, 17, 9, 5, 13, 18, 15, 12, 8, 1, 4, 23 }; // ok
+			arr[3] = new int[] { 8, 13, 22, 15, 2, 20, 6, 9, 16, 0, 18, 4, 11, 19, 5, 21, 1, 14, 17, 10, 12, 3, 7, 23 }; // ok
+			arr[4] = new int[] { 17, 21, 12, 0, 11, 2, 7, 22, 5, 20, 13, 16, 8, 19, 4, 3, 15, 9, 14, 18, 10, 6, 1, 23 }; // ok
+		} else {
+			arr[0] = new int[] { 18, 15, 10, 2, 5, 4, 14, 0, 9, 17, 1, 21, 16, 19, 13, 8, 6, 22, 3, 11, 7, 12, 20, 23 }; // ok
+			arr[1] = new int[] { 14, 4, 22, 17, 8, 21, 2, 20, 13, 12, 9, 7, 1, 10, 11, 6, 0, 15, 18, 19, 3, 5, 16, 23 }; // ok
+			arr[2] = new int[] { 7, 11, 16, 3, 22, 19, 10, 21, 20, 6, 0, 9, 14, 2, 17, 5, 13, 18, 15, 12, 8, 1, 4, 23 }; // ng
+			arr[3] = new int[] { 8, 13, 22, 15, 2, 20, 6, 9, 16, 0, 18, 4, 11, 19, 5, 21, 1, 14, 17, 10, 12, 3, 7, 23 }; // ng
+			arr[4] = new int[] { 17, 21, 12, 0, 11, 2, 7, 22, 5, 20, 13, 16, 8, 19, 4, 3, 15, 9, 14, 18, 10, 6, 1, 23 }; // ng
+		}
 		rnd = randInt(num);
-		// rnd = 2;
+		//rnd = 2;
 		Log.i(TAG, "*****randCoord() rand=: " + rnd);
 		return arr[rnd];
 	}
@@ -713,6 +703,9 @@ public class DrawImage extends Activity {
 					// Log.i(TAG, "***** handleActionDown() hinh ke " + nPos);
 					break;
 				case 3:
+					gamepanel.dialogMsgImg("About", "Copyright by Tran Dao Huynh");
+					break;
+				case 4:
 					// 3: chon hinh close
 					// duoc di chuyen hinh
 					bMove = true;

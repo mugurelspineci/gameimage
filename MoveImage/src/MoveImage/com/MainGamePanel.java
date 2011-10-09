@@ -87,6 +87,10 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 	public void dialogMsgImg(String dg){
 		imgActivity.dialogMsgImage(dg);
 	}
+	
+	public void dialogMsgImg(String title, String dg){
+		imgActivity.dialogMsgImage(title,dg);
+	}
 
 	public void nextImage(){
 		drawImage.nextImage();

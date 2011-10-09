@@ -48,4 +48,21 @@ public class ImageActivity extends Activity {
 		alert.setIcon(R.drawable.icon);
 		alert.show();
 	}
+	
+	public void dialogMsgImage(String title,String dg){
+		AlertDialog.Builder alt_bld = new AlertDialog.Builder(this);
+		alt_bld.setMessage(dg).setCancelable(false)
+				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						// Action for 'Ok' Button
+						
+					}
+				});
+		AlertDialog alert = alt_bld.create();
+		// Title for AlertDialog
+		alert.setTitle(title);
+		// Icon for AlertDialog
+		alert.setIcon(R.drawable.icon);
+		alert.show();
+	}
 }
