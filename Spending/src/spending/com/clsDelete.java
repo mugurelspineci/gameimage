@@ -71,12 +71,13 @@ public class clsDelete extends Activity {
 	
 	private void deleteData(){
 		try{
-			if(mDbHelper.deleteData("","")==true){
-				clearData();
-				Log.i(TAG, "***** deleteData() Da xoa");
-			}else
-				Log.i(TAG, "***** deleteData(): Loi trong qua trinh xoa");
-			
+			//Xoa dang bi loi
+//			if(mDbHelper.deleteData(edtDateFrom.getText().toString(),edtDateTo.getText().toString())==true){
+//				clearData();
+//				Log.i(TAG, "***** deleteData() Da xoa");
+//			}else
+//				Log.i(TAG, "***** deleteData(): Loi trong qua trinh xoa");
+			clearData();
 			
 		} catch (Exception ex) {
 			Log.i(TAG, "***** deleteData() Error: " + ex.getMessage());

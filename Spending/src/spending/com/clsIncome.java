@@ -95,7 +95,7 @@ public class clsIncome extends Activity {
 			if (rdIncome.isChecked() == true) {
 				income =1;
 			} else if (rdPayment.isChecked() == true) {
-				income = 0;
+				income = 2;
 			}
 			insert = mDbHelper.insert(Integer.parseInt(edtAmount.getText().toString()), edtDate.getText().toString(), income, reason,
 					edtComment.getText().toString());
@@ -110,6 +110,7 @@ public class clsIncome extends Activity {
 		edtAmount.setText("");
 		edtDate.setText("");
 		edtOther.setText("");
+		edtComment.setText("");
 	}
 	
 	@Override

@@ -115,7 +115,7 @@ public class clsSearch extends Activity {
 			
 			arrList = mDbHelper.SelectData(edtDateFrom.getText().toString().trim(), edtDateTo.getText().toString(),
 					edtAmountFrom.getText().toString(), edtAmountTo.getText().toString(), reason, pay);
-			arrList = mDbHelper.SelectAll();
+			//arrList = mDbHelper.SelectAll();
 			if (arrList == null)
 				return;
 

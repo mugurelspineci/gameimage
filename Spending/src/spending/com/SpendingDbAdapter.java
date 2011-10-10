@@ -129,20 +129,22 @@ public class SpendingDbAdapter {
 		clsData data;
 		ArrayList<clsData> arrList = new ArrayList<clsData>();
 		try {
-			cond = " WHERE 1=1 ";
-			cond = getCondition(dateFrom, dateTo, amountFrom, amountTo, reason, pay);
-			column_name = new String[] { clsContant.KEY_PAY, clsContant.KEY_AMOUNT, clsContant.KEY_DATE_PAY,
-					clsContant.KEY_REASON };
-
+			cond = "SELECT * FROM " + clsContant.TBL_SPENDING + " WHERE 1=1 ";
+			cond += getCondition(dateFrom, dateTo, amountFrom, amountTo, reason, pay);
+			column_name = new String[] { clsContant.KEY_ROWID, clsContant.KEY_AMOUNT, clsContant.KEY_DATE_PAY,
+					clsContant.KEY_PAY, clsContant.KEY_REASON };
+			database = dbHelper.getReadableDatabase();
 			// query (table_name, String[] columns, selection, String[] selectionArgs, groupBy, having, orderBy)
 			Cursor cursor = database.query(clsContant.TBL_SPENDING, column_name, cond, null, null, null,
 					clsContant.KEY_DATE_PAY);
-
+			// Cursor cursor = database.query(clsContant.TBL_SPENDING, column_name, "amount = 10000", null, null, null,
+			// clsContant.KEY_DATE_PAY);
 			while (cursor.moveToNext()) {
+				// (int rowid, String amount, String datePay, int pay, String reason){
 				data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
 						cursor.getString(4));
 				arrList.add(data);
-			}			
+			}
 			if (cursor != null && !cursor.isClosed()) {
 				cursor.close();
 			}
@@ -159,11 +161,11 @@ public class SpendingDbAdapter {
 	private String getConditionDate(String dateFrom, String dateTo, String keySearch) {
 		String cond = " ";
 		if (dateFrom.length() != 0 && dateTo.length() != 0) {
-			cond += " AND " + keySearch + ">" + dateFrom + " AND " + keySearch + "<" + dateTo;
+			cond += " AND " + keySearch + " > '" + dateFrom + "' AND " + keySearch + " < '" + dateTo + "'";
 		} else if (dateFrom.length() != 0 && dateTo.length() == 0) {
-			cond += " AND " + keySearch + ">" + dateFrom;
+			cond += " AND " + keySearch + " > '" + dateFrom + "'";
 		} else if (dateFrom.length() == 0 && dateTo.length() != 0) {
-			cond += " AND " + keySearch + "<" + dateTo;
+			cond += " AND " + keySearch + "<'" + dateTo + "'";
 		}
 		return cond;
 	}
@@ -179,7 +181,7 @@ public class SpendingDbAdapter {
 		cond += getConditionDate(amountFrom, amountTo, clsContant.KEY_AMOUNT);
 
 		if (reason.length() != 0) {
-			cond += " AND " + clsContant.KEY_REASON + " like %" + reason + "%";
+			cond += " AND " + clsContant.KEY_REASON + " like '%" + reason + "%'";
 		}
 		if (pay == 1) {
 			cond += " AND " + clsContant.KEY_PAY + "=1 ";

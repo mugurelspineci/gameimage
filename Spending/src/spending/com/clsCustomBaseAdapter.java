@@ -34,16 +34,20 @@ public class clsCustomBaseAdapter extends BaseAdapter {
 		TextView txtAmount;
 		TextView txtDate;
 		TextView txtReason;
+		TextView txtPay;
 	}
-		
+
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
+		int pay;
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.list_result, null);
 			holder = new ViewHolder();
 			holder.txtAmount = (TextView) convertView.findViewById(R.id.txtAmount);
+			holder.txtPay = (TextView) convertView.findViewById(R.id.txtPay);
 			holder.txtDate = (TextView) convertView.findViewById(R.id.txtDate);
 			holder.txtReason = (TextView) convertView.findViewById(R.id.txtReason);
+
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -52,10 +56,13 @@ public class clsCustomBaseAdapter extends BaseAdapter {
 		holder.txtAmount.setText(searchArrayList.get(position).getAmount());
 		holder.txtDate.setText(searchArrayList.get(position).getDatePay());
 		holder.txtReason.setText(searchArrayList.get(position).getReason());
+		pay = searchArrayList.get(position).getPay();
+		if (pay == 1)
+			holder.txtPay.setText("+");
+		else
+			holder.txtPay.setText("-");
 
 		return convertView;
 	}
-	 
 
-
- }
+}
