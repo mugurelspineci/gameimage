@@ -129,7 +129,8 @@ public class SpendingDbAdapter {
 		clsData data;
 		ArrayList<clsData> arrList = new ArrayList<clsData>();
 		try {
-			cond = "SELECT * FROM " + clsContant.TBL_SPENDING + " WHERE 1=1 ";
+			//cond = "SELECT * FROM " + clsContant.TBL_SPENDING + " WHERE 1=1 ";
+			cond = " 1=1 ";
 			cond += getCondition(dateFrom, dateTo, amountFrom, amountTo, reason, pay);
 			column_name = new String[] { clsContant.KEY_ROWID, clsContant.KEY_AMOUNT, clsContant.KEY_DATE_PAY,
 					clsContant.KEY_PAY, clsContant.KEY_REASON };

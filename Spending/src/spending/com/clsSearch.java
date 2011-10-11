@@ -34,7 +34,7 @@ public class clsSearch extends Activity {
 		super.onCreate(saved);
 		setContentView(R.layout.search);
 		try {
-			String arrReason[] = { "Lương", "Ăn sáng", "Xăng", "Thay nhớt", "Đi siêu thị" };
+			String arrReason[] = { "", "Lương", "Ăn sáng", "Xăng", "Thay nhớt", "Đi siêu thị" };
 			ArrayAdapter<String> adapter;
 
 			mDbHelper = new SpendingDbAdapter(this);
@@ -98,7 +98,6 @@ public class clsSearch extends Activity {
 		// ArrayList<clsData> arrListData;
 		try {
 			// cond = getCondition();
-
 			mDbHelper.open();
 
 			if (edtOther.getText().toString().length() != 0)
