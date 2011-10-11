@@ -15,16 +15,16 @@
 			</RadioGroup>
 	</TableRow>
 	<TableRow>
-		<TextView android:id="@+id/tvwAmount" android:text="Số tiền:" 
+		<TextView android:id="@+id/tvwAmount" android:text="Số tiền:" android:inputType="numberSigned|numberDecimal"
 			android:width="15dip" android:paddingLeft="10dip" />
-		<EditText android:id="@+id/edtAmount" android:layout_width="wrap_content"
+		<EditText android:id="@+id/edtAmount" android:layout_width="wrap_content" android:singleLine="True"
 			android:layout_height="wrap_content" android:layout_span="2"/>
 		<TextView android:id="@+id/tvwVND" android:text="VND" android:paddingLeft="5dip" />
 		<TextView android:paddingLeft="20px"/>
 	</TableRow>
 	<TableRow>
 		<TextView android:id="@+id/tvwDate" android:text="Ngay:" android:paddingLeft="10dip" />
-		<EditText android:id="@+id/edtDate" android:layout_span="2"/>
+		<EditText android:id="@+id/edtDate" android:layout_span="2" android:singleLine="True"/>
 	</TableRow>
 	<TableRow>
 		<TextView android:id="@+id/tvwReason" android:text="Ly do:" android:paddingLeft="10dip" />
@@ -32,11 +32,11 @@
 	</TableRow>
 	<TableRow>
 		<TextView android:id="@+id/tvwOther" android:text="Khac:" android:paddingLeft="10dip" />
-		<EditText android:id="@+id/edtOther" android:layout_span="2"/>
+		<EditText android:id="@+id/edtOther" android:layout_span="2" android:singleLine="True"/>
 	</TableRow>
 	<TableRow>
 		<TextView android:id="@+id/tvwComment" android:text="Ghi chu: " android:paddingLeft="10dip" />
-		<EditText android:id="@+id/edtComment" android:layout_span="2"/>
+		<EditText android:id="@+id/edtComment" android:layout_span="2" android:singleLine="True"/>
 	</TableRow>
 	<TableRow>
 		<Button android:id="@+id/btnSave" android:text="Luu"
