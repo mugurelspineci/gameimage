@@ -11,25 +11,25 @@
 		</TableRow>
 		<TableRow>
 			<TextView layout_column="1" android:text="Ngay:" />
-			<EditText android:id="@+id/edtDateFrom" android:paddingLeft="50dp"
-				android:paddingRight="40dp" android:layout_height="40dip"
-				android:gravity="center" />
+			<EditText android:id="@+id/edtDateFrom"
+				android:layout_width="120sp" android:layout_height="40dip"
+				android:singleLine="True" android:gravity="center" />
 			<TextView android:text=" - " />
-			<EditText android:id="@+id/edtDateTo" android:paddingLeft="50dp"
-				android:paddingRight="40dp" android:layout_height="40dip" />
+			<EditText android:id="@+id/edtDateTo" android:layout_width="120sp"
+				android:singleLine="True" android:layout_height="40dip" />
 		</TableRow>
 		<TableRow>
 			<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 				android:layout_span="4" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:gravity="right">
 				<Button android:id="@+id/btnDelete" android:text="Xóa"
-					android:paddingRight="20dp" android:paddingLeft="20dp" 
-					android:gravity="center"
-					android:layout_width="wrap_content" android:layout_height="wrap_content" />
+					android:paddingRight="20dp" android:paddingLeft="20dp"
+					android:gravity="center" android:layout_width="wrap_content"
+					android:layout_height="wrap_content" />
 				<Button android:id="@+id/btnCancel" android:text="Hủy"
-					android:layout_centerVertical="true" android:paddingRight="20dp" android:paddingLeft="20dp"
-					android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/btnDelete" />
+					android:layout_centerVertical="true" android:paddingRight="20dp"
+					android:paddingLeft="20dp" android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_toRightOf="@+id/btnDelete" />
 			</RelativeLayout>
 		</TableRow>
 	</TableLayout>
