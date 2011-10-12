@@ -58,33 +58,17 @@ public class SpendingDbAdapter {
 	 * Deletes
 	 */
 	public boolean deleteData(String dateFrom, String dateTo) {
-		String cond = " WHERE 1=1 ";
-		cond += getConditionDate(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
-		return database.delete(clsContant.TBL_SPENDING, cond, null) > 0;
-	}
-
-	/**
-	 * Return a Cursor over the list of all Spending in the database
-	 * 
-	 * @return Cursor over all notes
-	 */
-	public Cursor fetchAll() {
-		return database.query(clsContant.TBL_SPENDING, new String[] { clsContant.KEY_ROWID, clsContant.KEY_AMOUNT,
-				clsContant.KEY_DATE_PAY, clsContant.KEY_PAY, clsContant.KEY_REASON, clsContant.KEY_COMMENT }, null,
-				null, null, null, null);
-	}
-
-	/**
-	 * Return a Cursor positioned at the defined Spending
-	 */
-	public Cursor fetchData(long rowId) throws SQLException {
-		Cursor mCursor = database.query(true, clsContant.TBL_SPENDING, new String[] { clsContant.KEY_ROWID,
-				clsContant.KEY_AMOUNT, clsContant.KEY_DATE_PAY, clsContant.KEY_PAY, clsContant.KEY_REASON,
-				clsContant.KEY_COMMENT }, clsContant.KEY_ROWID + "=" + rowId, null, null, null, null, null);
-		if (mCursor != null) {
-			mCursor.moveToFirst();
+		String cond = " 1=1 ";
+		int del;
+		try {
+			cond += getConditionDate(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
+			database = dbHelper.getReadableDatabase();
+			del = database.delete(clsContant.TBL_SPENDING, cond, null);
+			return del > 0;
+		} catch (Exception ex) {
+			Log.i(TAG, "***** deleteData() Error: " + ex.getMessage());
+			return false;
 		}
-		return mCursor;
 	}
 
 	private ContentValues createContentValues(int amount, String date_pay, int pay, String reason, String comment) {
@@ -129,7 +113,7 @@ public class SpendingDbAdapter {
 		clsData data;
 		ArrayList<clsData> arrList = new ArrayList<clsData>();
 		try {
-			//cond = "SELECT * FROM " + clsContant.TBL_SPENDING + " WHERE 1=1 ";
+			// cond = "SELECT * FROM " + clsContant.TBL_SPENDING + " WHERE 1=1 ";
 			cond = " 1=1 ";
 			cond += getCondition(dateFrom, dateTo, amountFrom, amountTo, reason, pay);
 			column_name = new String[] { clsContant.KEY_ROWID, clsContant.KEY_AMOUNT, clsContant.KEY_DATE_PAY,
@@ -162,11 +146,11 @@ public class SpendingDbAdapter {
 	private String getConditionDate(String dateFrom, String dateTo, String keySearch) {
 		String cond = " ";
 		if (dateFrom.length() != 0 && dateTo.length() != 0) {
-			cond += " AND " + keySearch + " > '" + dateFrom + "' AND " + keySearch + " < '" + dateTo + "'";
+			cond += " AND " + keySearch + " => '" + dateFrom + "' AND " + keySearch + " <= '" + dateTo + "'";
 		} else if (dateFrom.length() != 0 && dateTo.length() == 0) {
-			cond += " AND " + keySearch + " > '" + dateFrom + "'";
+			cond += " AND " + keySearch + " >= '" + dateFrom + "'";
 		} else if (dateFrom.length() == 0 && dateTo.length() != 0) {
-			cond += " AND " + keySearch + "<'" + dateTo + "'";
+			cond += " AND " + keySearch + "<='" + dateTo + "'";
 		}
 		return cond;
 	}
@@ -186,7 +170,7 @@ public class SpendingDbAdapter {
 		}
 		if (pay == 1) {
 			cond += " AND " + clsContant.KEY_PAY + "=1 ";
-		} else if (pay == 0) {
+		} else if (pay == 2) {
 			cond += " AND " + clsContant.KEY_PAY + "=0";
 		}
 		return cond;
