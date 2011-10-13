@@ -64,7 +64,10 @@ public class SpendingDbAdapter {
 			cond += getConditionDate(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
 			database = dbHelper.getReadableDatabase();
 			del = database.delete(clsContant.TBL_SPENDING, cond, null);
-			return del > 0;
+			if(del >=  0)
+				return true;
+			else 
+				return false;
 		} catch (Exception ex) {
 			Log.i(TAG, "***** deleteData() Error: " + ex.getMessage());
 			return false;
@@ -122,8 +125,6 @@ public class SpendingDbAdapter {
 			// query (table_name, String[] columns, selection, String[] selectionArgs, groupBy, having, orderBy)
 			Cursor cursor = database.query(clsContant.TBL_SPENDING, column_name, cond, null, null, null,
 					clsContant.KEY_DATE_PAY);
-			// Cursor cursor = database.query(clsContant.TBL_SPENDING, column_name, "amount = 10000", null, null, null,
-			// clsContant.KEY_DATE_PAY);
 			while (cursor.moveToNext()) {
 				// (int rowid, String amount, String datePay, int pay, String reason){
 				data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
@@ -146,7 +147,7 @@ public class SpendingDbAdapter {
 	private String getConditionDate(String dateFrom, String dateTo, String keySearch) {
 		String cond = " ";
 		if (dateFrom.length() != 0 && dateTo.length() != 0) {
-			cond += " AND " + keySearch + " => '" + dateFrom + "' AND " + keySearch + " <= '" + dateTo + "'";
+			cond += " AND " + keySearch + " > '" + dateFrom + "' AND " + keySearch + " < '" + dateTo + "'";
 		} else if (dateFrom.length() != 0 && dateTo.length() == 0) {
 			cond += " AND " + keySearch + " >= '" + dateFrom + "'";
 		} else if (dateFrom.length() == 0 && dateTo.length() != 0) {

@@ -38,7 +38,7 @@ public class clsDelete extends Activity {
 
 			btnCancel.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View view) {
-					//finish();
+					finish();
 				}
 			});
 		} catch (Exception ex) {
