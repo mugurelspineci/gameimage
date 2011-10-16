@@ -33,7 +33,7 @@ public class SpendingDbAdapter {
 	 * Create a new Spending If the Spending is successfully created return the new rowId for that note, otherwise
 	 * return a -1 to indicate failure.
 	 */
-	public long insert(int amount, String date_pay, int pay, String reason, String comment) {
+	public long insert(float amount, String date_pay, int pay, String reason, String comment) {
 		database = dbHelper.getWritableDatabase();
 		ContentValues initialValues = createContentValues(amount, date_pay, pay, reason, comment);
 		return database.insert(clsContant.TBL_SPENDING, null, initialValues);
@@ -74,7 +74,7 @@ public class SpendingDbAdapter {
 		}
 	}
 
-	private ContentValues createContentValues(int amount, String date_pay, int pay, String reason, String comment) {
+	private ContentValues createContentValues(float amount, String date_pay, int pay, String reason, String comment) {
 		ContentValues values = new ContentValues();
 		values.put(clsContant.KEY_AMOUNT, amount);
 		values.put(clsContant.KEY_DATE_PAY, date_pay);
@@ -172,7 +172,7 @@ public class SpendingDbAdapter {
 		if (pay == 1) {
 			cond += " AND " + clsContant.KEY_PAY + "=1 ";
 		} else if (pay == 2) {
-			cond += " AND " + clsContant.KEY_PAY + "=0";
+			cond += " AND " + clsContant.KEY_PAY + "=2";
 		}
 		return cond;
 	}

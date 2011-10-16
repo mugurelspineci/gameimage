@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.text.format.DateFormat;
 import android.util.Log;
 
 public class clsIncome extends Activity {
@@ -28,8 +27,9 @@ public class clsIncome extends Activity {
 	Button btnCancel;
 
 	SpendingDbAdapter mDbHelper;
+	String currTime; // luu ngay thang hien tai
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked", "rawtypes", "static-access" })
 	@Override
 	public void onCreate(Bundle saved) {
 		super.onCreate(saved);
@@ -52,10 +52,10 @@ public class clsIncome extends Activity {
 			btnSave = (Button) findViewById(R.id.btnSave);
 			btnCancel = (Button) findViewById(R.id.btnCancel);
 
-			String currentDateTimeString = DateFormat.getDateFormat(this).format(new Date());
-
-			// textView is the TextView view that should display it
-			edtDate.setText(currentDateTimeString);
+			// currTime = DateFormat.getDateFormat(this).format(new Date());
+			android.text.format.DateFormat datetime = new android.text.format.DateFormat();
+			currTime = "" + datetime.format("dd/MM/yyyy", new Date());
+			edtDate.setText(currTime);
 
 			adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
 			spnReason.setAdapter(adapter);
@@ -79,27 +79,27 @@ public class clsIncome extends Activity {
 
 	private boolean checkValid() {
 		if (rdIncome.isChecked() == false && rdPayment.isChecked() == false) {
-			new AlertDialog.Builder(clsIncome.this).setTitle("Nhap thieu").setMessage("Chua chon Thu hay Chi")
+			new AlertDialog.Builder(clsIncome.this).setTitle("Nhập thiếu").setMessage("Chưa chọn Thu hay Chi")
 					.setPositiveButton("OK", null).show();
 			return false;
 		}
 		if (edtAmount.getText().length() == 0) {
-			new AlertDialog.Builder(clsIncome.this).setTitle("Nhap thieu").setMessage("Chua nhap so tien")
+			new AlertDialog.Builder(clsIncome.this).setTitle("Nhập thiếu").setMessage("Chưa nhập số tiền")
 					.setPositiveButton("OK", null).show();
 			return false;
 		}
 		if (edtDate.getText().length() == 0) {
 			return false;
-		}
-		if (spnReason.getSelectedItem().toString().length() == 0) {
+		} 
+		else if (!CommonUtil.isValidDate(edtDate.getText().toString())) {
+			new AlertDialog.Builder(clsIncome.this).setTitle("Lỗi Nhập")
+					.setMessage("Ngày tháng không đúng (dd/mm/yyyy)").setPositiveButton("OK", null).show();
 			return false;
-		}		
-		try {
-			Double.parseDouble(edtAmount.getText().toString());
-
-		} catch (NumberFormatException e) {
-			new AlertDialog.Builder(clsIncome.this).setTitle("Loi").setMessage("Vui long nhap so")
+		}
+		if (!CommonUtil.checkFloat(edtAmount.getText().toString())) {
+			new AlertDialog.Builder(clsIncome.this).setTitle("Lỗi").setMessage("Vui lòng nhập số")
 					.setPositiveButton("OK", null).show();
+			return false;
 		}
 		return true;
 	}
@@ -117,21 +117,28 @@ public class clsIncome extends Activity {
 
 			if (rdIncome.isChecked() == true) {
 				income = 1;
-			} else if (rdPayment.isChecked() == true) {
+			} else {
 				income = 2;
 			}
-			insert = mDbHelper.insert(Integer.parseInt(edtAmount.getText().toString()), edtDate.getText().toString(),
+			insert = mDbHelper.insert(Float.parseFloat(edtAmount.getText().toString()), edtDate.getText().toString(),
 					income, reason, edtComment.getText().toString());
-			clearData();
-			Log.i(TAG, "***** saveData() Da luu xuong db, id=" + insert);
+			if (insert > 0) {
+				new AlertDialog.Builder(clsIncome.this).setTitle("Lưu").setMessage("Đã lưu thành công")
+						.setPositiveButton("OK", null).show();
+				clearData();
+			}
+			//Log.i(TAG, "***** saveData() Da luu xuong db, id=" + insert);
 		} catch (Exception ex) {
+			new AlertDialog.Builder(clsIncome.this).setTitle("Lưu").setMessage("Không thể lưu")
+			.setPositiveButton("OK", null).show();
 			Log.i(TAG, "***** saveData() Error: " + ex.getMessage());
 		}
 	}
 
 	private void clearData() {
 		edtAmount.setText("");
-		edtDate.setText("");
+		// edtDate.setText("");
+		edtDate.setText(currTime);
 		edtOther.setText("");
 		edtComment.setText("");
 	}

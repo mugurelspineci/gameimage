@@ -3,6 +3,7 @@ package spending.com;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -55,7 +56,8 @@ public class clsSearch extends Activity {
 
 			btnSearch.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View view) {
-					searchData();
+					if (checkValid())
+						searchData();
 				}
 			});
 
@@ -111,10 +113,10 @@ public class clsSearch extends Activity {
 				pay = 2;
 			else
 				pay = 3;
-			
+
 			arrList = mDbHelper.SelectData(edtDateFrom.getText().toString().trim(), edtDateTo.getText().toString(),
 					edtAmountFrom.getText().toString(), edtAmountTo.getText().toString(), reason, pay);
-			//arrList = mDbHelper.SelectAll();
+			// arrList = mDbHelper.SelectAll();
 			if (arrList == null)
 				return;
 
@@ -125,6 +127,34 @@ public class clsSearch extends Activity {
 		} catch (Exception ex) {
 			Log.i(TAG, "***** searchData() Error: " + ex.getMessage());
 		}
+	}
+
+	private boolean checkValid() {
+		if (!CommonUtil.isValidDate(edtDateFrom.getText().toString())) {
+			new AlertDialog.Builder(clsSearch.this).setTitle("Lỗi Nhập")
+					.setMessage("Ngày tháng không đúng (dd/mm/yyyy)").setPositiveButton("OK", null).show();
+			return false;
+		}
+
+		if (!CommonUtil.isValidDate(edtDateTo.getText().toString())) {
+			new AlertDialog.Builder(clsSearch.this).setTitle("Lỗi Nhập")
+					.setMessage("Ngày tháng không đúng (dd/mm/yyyy)").setPositiveButton("OK", null).show();
+			return false;
+		}
+
+		if (!CommonUtil.checkFloat(edtAmountFrom.getText().toString())) {
+			new AlertDialog.Builder(clsSearch.this).setTitle("Lỗi").setMessage("Vui lòng nhập số")
+					.setPositiveButton("OK", null).show();
+			return false;
+		}
+
+		if (!CommonUtil.checkFloat(edtAmountTo.getText().toString())) {
+			new AlertDialog.Builder(clsSearch.this).setTitle("Lỗi").setMessage("Vui lòng nhập số")
+					.setPositiveButton("OK", null).show();
+			return false;
+		}
+		return true;
+
 	}
 
 	@Override
