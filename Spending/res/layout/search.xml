@@ -17,12 +17,12 @@
 					android:paddingRight="5dip" />
 				<RadioButton android:id="@+id/rdPayment" android:text="Chi"
 					android:paddingRight="5dip" />
-				<RadioButton android:id="@+id/rdAll" android:text="Tat ca"
+				<RadioButton android:id="@+id/rdAll" android:text="Tất cả"
 					android:checked="true" />
 			</RadioGroup>
 		</TableRow>
 		<TableRow>
-			<TextView layout_column="1" android:text="Ngay:" />
+			<TextView layout_column="1" android:text="Ngày:" />
 			<EditText android:id="@+id/edtDateFrom"
 				android:layout_height="40dip" android:layout_width="120sp"
 				android:gravity="center" android:singleLine="True" />
@@ -32,7 +32,7 @@
 		</TableRow>
 
 		<TableRow>
-			<TextView layout_column="1" android:text="So tien:" />
+			<TextView layout_column="1" android:text="Số tiền:" />
 			<EditText android:id="@+id/edtAmountFrom"
 				android:layout_width="120sp" android:singleLine="True"
 				android:layout_height="40dip" android:gravity="center" />
@@ -43,14 +43,14 @@
 		</TableRow>
 
 		<TableRow>
-			<TextView layout_column="1" android:text="So tien:" />
+			<TextView layout_column="1" android:text="Lý do:" />
 			<Spinner android:id="@+id/spnReason" android:paddingLeft="70dp"
 				android:paddingRight="70dp" android:layout_span="3"
 				android:layout_height="40dip" android:gravity="center" />
 		</TableRow>
 
 		<TableRow>
-			<TextView layout_column="1" android:text="Khac:" />
+			<TextView layout_column="1" android:text="Khác:" />
 			<EditText android:id="@+id/edtOther" android:layout_width="100sp"
 				android:singleLine="True" android:layout_height="40dip"
 				android:gravity="left" android:layout_span="3" />
@@ -60,11 +60,11 @@
 			<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 				android:layout_span="4" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:gravity="right">
-				<Button android:id="@+id/btnSearch" android:text="Tim"
+				<Button android:id="@+id/btnSearch" android:text="Tìm"
 					android:paddingRight="20dp" android:paddingLeft="20dp"
 					android:gravity="center" android:layout_width="wrap_content"
 					android:layout_height="wrap_content" />
-				<Button android:id="@+id/btnCancel" android:text="Huy"
+				<Button android:id="@+id/btnCancel" android:text="Trở lại"
 					android:layout_centerVertical="true" android:paddingRight="20dp"
 					android:paddingLeft="20dp" android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:layout_toRightOf="@+id/btnSearch" />

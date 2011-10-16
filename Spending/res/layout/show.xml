@@ -5,14 +5,22 @@
 	<TextView android:layout_height="wrap_content" android:text="Quản lý thu chi"
 		android:gravity="center_vertical|center_horizontal" android:textSize="18dip"
 		android:layout_width="fill_parent" android:textStyle="bold" />
-	<CheckBox android:id="@+id/chkDelete" android:text=" Cho phép click vào để xóa"
+<!--
+  	<CheckBox android:id="@+id/chkDelete" android:text=" Cho phép click vào để xóa"
 		android:layout_width="wrap_content" android:layout_height="wrap_content" />
+-->		
 	<TableLayout android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:stretchColumns="*">
 		<TableRow>
 			<TextView android:paddingLeft="5dip" 
+				android:text="Số tiền còn lại: " android:textStyle="bold" android:gravity="left" />
+			<TextView android:id="@+id/txtSum" android:gravity="right" android:paddingRight="10dip"
+				android:textStyle="bold" android:text="00" />
+		</TableRow>
+		<TableRow>
+			<TextView android:paddingLeft="5dip" android:textColor="#4682b4"
 				android:text="Số Tiền" android:textStyle="bold" android:gravity="left" />
-			<TextView android:gravity="right" android:paddingRight="10dip"
+			<TextView android:gravity="right" android:paddingRight="10dip" android:textColor="#4682b4"
 				android:textStyle="bold" android:text="Ngày tháng" />
 		</TableRow>
 	</TableLayout>

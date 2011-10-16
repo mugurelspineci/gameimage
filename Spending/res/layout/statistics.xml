@@ -2,5 +2,36 @@
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent">  
+  <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:stretchColumns="4">
+		<TableRow android:gravity="center_horizontal">
+			<TextView android:text="Thống kê dữ liệu" android:layout_height="40dip"
+				android:layout_span="4" android:gravity="center" android:textSize="22px" />
+		</TableRow>
+		<TableRow>
+			<TextView layout_column="1" android:text="Ngay:" />
+			<EditText android:id="@+id/edtDateFrom"
+				android:layout_width="120sp" android:layout_height="40dip"
+				android:singleLine="True" android:gravity="center" />
+			<TextView android:text=" - " />
+			<EditText android:id="@+id/edtDateTo" android:layout_width="120sp"
+				android:singleLine="True" android:layout_height="40dip" />
+		</TableRow>
+		<TableRow>
+			<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_span="4" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:gravity="right">
+				<Button android:id="@+id/btnStatistics" android:text="Thống kê"
+					android:paddingRight="20dp" android:paddingLeft="20dp"
+					android:gravity="center" android:layout_width="wrap_content"
+					android:layout_height="wrap_content" />
+				<Button android:id="@+id/btnCancel" android:text="Hủy"
+					android:layout_centerVertical="true" android:paddingRight="20dp"
+					android:paddingLeft="20dp" android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_toRightOf="@+id/btnDelete" />
+			</RelativeLayout>
+		</TableRow>
+	</TableLayout>
 </LinearLayout>
