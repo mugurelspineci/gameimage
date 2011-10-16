@@ -61,7 +61,7 @@ public class SpendingDbAdapter {
 		String cond = " 1=1 ";
 		int del;
 		try {
-			cond += getConditionDate(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
+			cond += getConditionData(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
 			database = dbHelper.getReadableDatabase();
 			del = database.delete(clsContant.TBL_SPENDING, cond, null);
 			if(del >=  0)
@@ -124,7 +124,7 @@ public class SpendingDbAdapter {
 			database = dbHelper.getReadableDatabase();
 			// query (table_name, String[] columns, selection, String[] selectionArgs, groupBy, having, orderBy)
 			Cursor cursor = database.query(clsContant.TBL_SPENDING, column_name, cond, null, null, null,
-					clsContant.KEY_DATE_PAY);
+					clsContant.KEY_DATE_PAY + " DESC");
 			while (cursor.moveToNext()) {
 				// (int rowid, String amount, String datePay, int pay, String reason){
 				data = new clsData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
@@ -140,14 +140,15 @@ public class SpendingDbAdapter {
 			return null;
 		}
 	}
+	
 
 	/**
 	 * Return condition
 	 */
-	private String getConditionDate(String dateFrom, String dateTo, String keySearch) {
+	private String getConditionData(String dateFrom, String dateTo, String keySearch) {
 		String cond = " ";
 		if (dateFrom.length() != 0 && dateTo.length() != 0) {
-			cond += " AND " + keySearch + " > '" + dateFrom + "' AND " + keySearch + " < '" + dateTo + "'";
+			cond += " AND " + keySearch + " >= '" + dateFrom + "' AND " + keySearch + " <= '" + dateTo + "'";
 		} else if (dateFrom.length() != 0 && dateTo.length() == 0) {
 			cond += " AND " + keySearch + " >= '" + dateFrom + "'";
 		} else if (dateFrom.length() == 0 && dateTo.length() != 0) {
@@ -163,8 +164,8 @@ public class SpendingDbAdapter {
 			int pay) {
 		String cond = " ";
 
-		cond += getConditionDate(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
-		cond += getConditionDate(amountFrom, amountTo, clsContant.KEY_AMOUNT);
+		cond += getConditionData(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
+		cond += getConditionData(amountFrom, amountTo, clsContant.KEY_AMOUNT);
 
 		if (reason.length() != 0) {
 			cond += " AND " + clsContant.KEY_REASON + " like '%" + reason + "%'";

@@ -1,6 +1,7 @@
 package spending.com;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -28,8 +29,9 @@ public class clsSearch extends Activity {
 	Button btnSearch;
 	Button btnCancel;
 	SpendingDbAdapter mDbHelper;
+	String currTime; // luu ngay thang hien tai
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked", "rawtypes", "static-access" })
 	@Override
 	public void onCreate(Bundle saved) {
 		super.onCreate(saved);
@@ -38,6 +40,9 @@ public class clsSearch extends Activity {
 			String arrReason[] = { "", "Lương", "Ăn sáng", "Xăng", "Thay nhớt", "Đi siêu thị" };
 			ArrayAdapter<String> adapter;
 
+			android.text.format.DateFormat datetime = new android.text.format.DateFormat();
+			currTime = "" + datetime.format("dd/MM/yyyy", new Date());
+			
 			mDbHelper = new SpendingDbAdapter(this);
 
 			edtAmountFrom = (EditText) findViewById(R.id.edtAmountFrom);
@@ -51,6 +56,8 @@ public class clsSearch extends Activity {
 			rdIncome = (RadioButton) findViewById(R.id.rdIncome);
 			rdPayment = (RadioButton) findViewById(R.id.rdPayment);
 
+			edtDateTo.setText(currTime);
+			
 			adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
 			spnReason.setAdapter(adapter);
 
@@ -103,7 +110,7 @@ public class clsSearch extends Activity {
 			mDbHelper.open();
 
 			if (edtOther.getText().toString().length() != 0)
-				reason = edtOther.getText().toString();
+				reason = edtOther.getText().toString().trim();
 			else
 				reason = spnReason.getSelectedItem().toString();
 
@@ -114,8 +121,8 @@ public class clsSearch extends Activity {
 			else
 				pay = 3;
 
-			arrList = mDbHelper.SelectData(edtDateFrom.getText().toString().trim(), edtDateTo.getText().toString(),
-					edtAmountFrom.getText().toString(), edtAmountTo.getText().toString(), reason, pay);
+			arrList = mDbHelper.SelectData(edtDateFrom.getText().toString().trim(), edtDateTo.getText().toString().trim(),
+					edtAmountFrom.getText().toString().trim(), edtAmountTo.getText().toString().trim(), reason, pay);
 			// arrList = mDbHelper.SelectAll();
 			if (arrList == null)
 				return;
@@ -130,25 +137,25 @@ public class clsSearch extends Activity {
 	}
 
 	private boolean checkValid() {
-		if (!CommonUtil.isValidDate(edtDateFrom.getText().toString())) {
+		if (edtDateFrom.getText().toString().trim().length() != 0 && !CommonUtil.isValidDate(edtDateFrom.getText().toString())) {
 			new AlertDialog.Builder(clsSearch.this).setTitle("Lỗi Nhập")
 					.setMessage("Ngày tháng không đúng (dd/mm/yyyy)").setPositiveButton("OK", null).show();
 			return false;
 		}
 
-		if (!CommonUtil.isValidDate(edtDateTo.getText().toString())) {
+		if (edtDateTo.getText().toString().trim().length() != 0 && !CommonUtil.isValidDate(edtDateTo.getText().toString())) {
 			new AlertDialog.Builder(clsSearch.this).setTitle("Lỗi Nhập")
 					.setMessage("Ngày tháng không đúng (dd/mm/yyyy)").setPositiveButton("OK", null).show();
 			return false;
 		}
 
-		if (!CommonUtil.checkFloat(edtAmountFrom.getText().toString())) {
+		if (edtAmountFrom.getText().toString().trim().length() != 0 && !CommonUtil.checkFloat(edtAmountFrom.getText().toString())) {
 			new AlertDialog.Builder(clsSearch.this).setTitle("Lỗi").setMessage("Vui lòng nhập số")
 					.setPositiveButton("OK", null).show();
 			return false;
 		}
 
-		if (!CommonUtil.checkFloat(edtAmountTo.getText().toString())) {
+		if (edtAmountTo.getText().toString().trim().length() != 0 && !CommonUtil.checkFloat(edtAmountTo.getText().toString().trim())) {
 			new AlertDialog.Builder(clsSearch.this).setTitle("Lỗi").setMessage("Vui lòng nhập số")
 					.setPositiveButton("OK", null).show();
 			return false;

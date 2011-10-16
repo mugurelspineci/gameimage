@@ -1,5 +1,7 @@
 package spending.com;
 
+import java.util.Date;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,7 +18,9 @@ public class clsDelete extends Activity {
 	Button btnDelete;
 	Button btnCancel;
 	SpendingDbAdapter mDbHelper;
+	String currTime; // luu ngay thang hien tai
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void onCreate(Bundle saved) {
 		super.onCreate(saved);
@@ -30,9 +34,14 @@ public class clsDelete extends Activity {
 			btnDelete = (Button) findViewById(R.id.btnDelete);
 			btnCancel = (Button) findViewById(R.id.btnCancel);
 
+			android.text.format.DateFormat datetime = new android.text.format.DateFormat();
+			currTime = "" + datetime.format("dd/MM/yyyy", new Date());
+			edtDateTo.setText(currTime);
+
 			btnDelete.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View view) {
-					dialogMsgImage("Bạn có muốn xóa không?");
+					if (checkValid())
+						dialogMsgImage("Bạn có muốn xóa không?");
 				}
 			});
 
@@ -51,6 +60,7 @@ public class clsDelete extends Activity {
 		alt_bld.setMessage(dg).setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				// Action for 'Yes' Button
+
 				deleteData();
 			}
 		}).setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -77,7 +87,7 @@ public class clsDelete extends Activity {
 						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								// Action for 'Yes' Button
-								//deleteData();
+								// deleteData();
 							}
 						});
 				Log.i(TAG, "***** deleteData() Da xoa");
@@ -86,7 +96,7 @@ public class clsDelete extends Activity {
 						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								// Action for 'Yes' Button
-								//deleteData();
+								// deleteData();
 							}
 						});
 				Log.i(TAG, "***** deleteData(): Loi trong qua trinh xoa");
@@ -96,9 +106,27 @@ public class clsDelete extends Activity {
 		}
 	}
 
+	private boolean checkValid() {
+		if(edtDateFrom.getText().toString().length()==0 && edtDateTo.getText().toString().length()!=0)
+			return true;
+		if (edtDateFrom.getText().toString().length()!=0 && !CommonUtil.isValidDate(edtDateFrom.getText().toString())) {
+			new AlertDialog.Builder(clsDelete.this).setTitle("Lỗi Nhập")
+					.setMessage("Ngày tháng không đúng (dd/mm/yyyy)").setPositiveButton("OK", null).show();
+			return false;
+		}
+
+		if (edtDateTo.getText().toString().length()!=0 &&!CommonUtil.isValidDate(edtDateTo.getText().toString())) {
+			new AlertDialog.Builder(clsDelete.this).setTitle("Lỗi Nhập")
+					.setMessage("Ngày tháng không đúng (dd/mm/yyyy)").setPositiveButton("OK", null).show();
+			return false;
+		}
+		
+		return true;
+	}
+
 	private void clearData() {
 		edtDateFrom.setText("");
-		edtDateTo.setText("");
+		edtDateTo.setText(currTime);
 	}
 
 	@Override
