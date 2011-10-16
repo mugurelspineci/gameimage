@@ -18,7 +18,7 @@
 				<RadioButton android:id="@+id/rdPayment" android:text="Chi"
 					android:paddingRight="5dip" />
 				<RadioButton android:id="@+id/rdAll" android:text="Tất cả"
-					android:checked="true" />
+					android:layout_width="100sp" android:checked="true" />
 			</RadioGroup>
 		</TableRow>
 		<TableRow>
@@ -32,7 +32,7 @@
 		</TableRow>
 
 		<TableRow>
-			<TextView layout_column="1" android:text="Số tiền:" />
+			<TextView layout_column="1" android:text="Số tiền:" android:layout_width="55sp"/>
 			<EditText android:id="@+id/edtAmountFrom"
 				android:layout_width="120sp" android:singleLine="True"
 				android:layout_height="40dip" android:gravity="center" />
