@@ -22,11 +22,16 @@ public class SpendingDatabaseHelper extends SQLiteOpenHelper {
 	private final Context myContext;
 
 	// Database creation sql statement
-	private static final String DATABASE_CREATE = "CREATE TABLE "
+	private static final String CREATE_SPENDING = "CREATE TABLE "
 			+ clsContant.TBL_SPENDING
 			+ " ( "
 			+ " _id INTEGER PRIMARY KEY autoincrement, amount NUMERIC not null, date_pay TEXT not null, pay integer not null"
 			+ ", reason TEXT, comment TEXT);";
+	
+	private static final String CREATE_REASON = "CREATE TABLE "
+		+ clsContant.TBL_REASON
+		+ " ( "
+		+ " _id INTEGER PRIMARY KEY autoincrement, reason TEXT);";
 
 	/**
 	 * Constructor Takes and keeps a reference of the passed context in order to access to the application assets and
@@ -43,10 +48,11 @@ public class SpendingDatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		try {
-			database.execSQL(DATABASE_CREATE);
-			Log.i(TAG, "*****onCreate(): tao database" );
+			database.execSQL(CREATE_SPENDING);
+			database.execSQL(CREATE_REASON);
+			Log.i(TAG, "*****onCreate(): tao table" );
 		} catch (Exception ex) {
-			throw new Error("Error copying database: " + ex.getMessage());
+			throw new Error("Error create table: " + ex.getMessage());
 		}
 	}
 

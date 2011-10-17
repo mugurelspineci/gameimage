@@ -38,6 +38,13 @@ public class SpendingDbAdapter {
 		ContentValues initialValues = createContentValues(amount, date_pay, pay, reason, comment);
 		return database.insert(clsContant.TBL_SPENDING, null, initialValues);
 	}
+	
+	public long insertReason(String reason) {
+		database = dbHelper.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(clsContant.KEY_REASON, reason);
+		return database.insert(clsContant.TBL_REASON, null, values);
+	}
 
 	/**
 	 * Update the Spending
