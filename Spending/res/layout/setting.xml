@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<TextView android:layout_height="wrap_content" android:text="Quản lý thu chi"
+		android:gravity="center_vertical|center_horizontal" android:textSize="18dip"
+		android:layout_width="fill_parent" android:textStyle="bold" />
+	<TableLayout android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:stretchColumns="*">
+		<TableRow>
+			<TextView android:text="Lý do: " android:textStyle="bold"
+				android:gravity="left" />
+			<EditText android:id="@+id/edtReason" android:layout_width="200sp"
+				android:singleLine="True" />
+			<TextView />
+		</TableRow>
+		<TableRow>
+			<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_span="3" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:gravity="right">
+				<Button android:id="@+id/btnSave" android:text="Lưu"
+					android:layout_width="70sp" android:gravity="center"
+					android:layout_height="wrap_content" />
+				<Button android:id="@+id/btnCancel" android:text="Trở lại"
+					android:layout_centerVertical="true" android:layout_width="70sp"
+					android:layout_height="wrap_content" android:layout_toRightOf="@+id/btnSave" />
+			</RelativeLayout>
+		</TableRow>
+	</TableLayout>
+	<ListView android:id="@+id/lstReason" android:layout_height="wrap_content"
+		android:layout_width="fill_parent" />
 </LinearLayout>
