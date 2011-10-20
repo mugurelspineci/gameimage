@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -28,6 +29,8 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 
 	private SurfaceView mSurfaceView;
 	private SurfaceHolder mSurfaceHolder;
+	private int scnWidth;
+	private int scnHeight;
 
 	@SuppressWarnings("static-access")
 	@Override
@@ -60,10 +63,17 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 				}
 			});
 
+			// Lay do phan giai cua man hinh
+			DisplayMetrics dm = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+			scnWidth = dm.widthPixels;
+			scnHeight = dm.heightPixels;
+
 			mSurfaceView = (SurfaceView) this.findViewById(R.id.Paper);
 			mSurfaceHolder = mSurfaceView.getHolder();
 			mSurfaceHolder.addCallback(this);
-			//mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_NORMAL);
+			// mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_NORMAL);
 		} catch (Exception ex) {
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
@@ -82,9 +92,9 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 				return;
 			}
 
-			Intent intent = new Intent().setClass(this, clsChart.class);
-			intent.putParcelableArrayListExtra("DATA", arrList);
-			startActivity(intent);
+			// Intent intent = new Intent().setClass(this, clsChart.class);
+			// intent.putParcelableArrayListExtra("DATA", arrList);
+			// startActivity(intent);
 
 		} catch (Exception ex) {
 			Log.i(TAG, "***** getStatistics() Error: " + ex.getMessage());
@@ -95,13 +105,26 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 		// Rect rect;
 		Paint paint;
 		Canvas canvas;
+		float x, y;
+		float width = scnWidth/5;
+		float height = scnHeight/5;
 		try {
-			canvas = mSurfaceHolder.lockCanvas(null);			
-			canvas.drawColor(Color.BLUE);
+			canvas = mSurfaceHolder.lockCanvas();
+			canvas.drawColor(Color.WHITE);
 			paint = new Paint();
-			paint.setColor(Color.RED);
-			//canvas.drawLine(50, 50, 400, 400, paint);
-			canvas.drawRect(50, 50, 200, 200, paint);
+			
+			x = width;
+			y = height;
+			 paint.setColor(Color.MAGENTA);
+			canvas.drawRect(x, y, x+100, y+100, paint);
+			// paint.setColor(Color.GREEN);
+			// canvas.drawRect(50, 50, 100, 150, paint);
+			// paint.setColor(Color.CYAN);
+			// canvas.drawRect(100, 100, 150, 200, paint);
+			canvas.drawLine(0, 300, 200, 300, paint);
+
+			mSurfaceHolder.unlockCanvasAndPost(canvas);
+
 			Log.i(TAG, "***** drawLine() da ve ");
 		} catch (Exception ex) {
 			Log.i(TAG, "***** drawLine() Error: " + ex.getMessage());
@@ -109,6 +132,7 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 
 		}
 	}
+
 	private boolean checkValid() {
 		if (edtDateFrom.getText().toString().trim().length() != 0
 				&& !CommonUtil.isValidDate(edtDateFrom.getText().toString())) {
@@ -149,7 +173,7 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
-		//mSurfaceView.setBackgroundColor(Color.CYAN);		
+		// mSurfaceView.setBackgroundColor(Color.CYAN);
 		drawLine();
 	}
 

@@ -46,8 +46,8 @@ public class spendingActivity extends Activity {
 			ImageView imgStatistics = (ImageView) findViewById(R.id.imgStatistics);
 			imgStatistics.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					 //Intent statistics = new Intent(v.getContext(), clsStatistics.class);
-					 //startActivity(statistics);
+					 Intent statistics = new Intent(v.getContext(), clsStatistics.class);
+					 startActivity(statistics);
 				}
 			});
 			
