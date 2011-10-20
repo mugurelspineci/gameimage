@@ -33,5 +33,11 @@
 					android:layout_height="wrap_content" android:layout_toRightOf="@+id/btnStatistics" />
 			</RelativeLayout>
 		</TableRow>
+		<TableRow>
+		 <SurfaceView android:id="@+id/Paper" android:layout_span="5"
+            android:layout_height="fill_parent" 
+            android:layout_width="fill_parent">
+        </SurfaceView>
+		</TableRow>
 	</TableLayout>
 </LinearLayout>
