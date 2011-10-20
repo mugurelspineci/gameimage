@@ -11,8 +11,12 @@ class clsData implements Parcelable {
 	private String datePay;
 	private String reason;
 
-	public clsData(){
-	
+	public clsData(String reason){
+		this.reason = reason;
+		rowid = 0;
+		pay = 0;
+		amount ="";
+		datePay ="";		
 	}
 	
 	public clsData(int rowid, String amount, String datePay, int pay, String reason){

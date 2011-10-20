@@ -1,5 +1,6 @@
 package spending.com;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.app.Activity;
@@ -29,14 +30,14 @@ public class clsIncome extends Activity {
 	SpendingDbAdapter mDbHelper;
 	String currTime; // luu ngay thang hien tai
 
-	@SuppressWarnings({ "unchecked", "rawtypes", "static-access" })
+	@SuppressWarnings("static-access")
 	@Override
 	public void onCreate(Bundle saved) {
 		super.onCreate(saved);
 		setContentView(R.layout.income);
 
-		String arrReason[] = { "Lương", "Ăn sáng", "Xăng", "Thay nhớt", "Đi siêu thị" };
-		ArrayAdapter<String> adapter;
+//		String arrReason[] = { "Lương", "Ăn sáng", "Xăng", "Thay nhớt", "Đi siêu thị" };
+//		ArrayAdapter<String> adapter;
 		try {
 
 			mDbHelper = new SpendingDbAdapter(this);
@@ -57,8 +58,8 @@ public class clsIncome extends Activity {
 			currTime = "" + datetime.format("dd/MM/yyyy", new Date());
 			edtDate.setText(currTime);
 
-			adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
-			spnReason.setAdapter(adapter);
+//			adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
+//			spnReason.setAdapter(adapter);
 
 			btnSave.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View view) {
@@ -72,11 +73,24 @@ public class clsIncome extends Activity {
 					finish();
 				}
 			});
+			
+			loadData();
 		} catch (Exception ex) {
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
 	}
 
+	private void loadData(){
+		ArrayList<String> arrList = new ArrayList<String>();
+		ArrayAdapter<String> adapter;
+		arrList = mDbHelper.SelectReason();
+		if (arrList == null)
+			return;
+		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrList);
+		spnReason.setAdapter(adapter);
+		Log.i(TAG, "***** loadData() called");
+	}
+	
 	private boolean checkValid() {
 		if (rdIncome.isChecked() == false && rdPayment.isChecked() == false) {
 			new AlertDialog.Builder(clsIncome.this).setTitle("Nhập thiếu").setMessage("Chưa chọn Thu hay Chi")

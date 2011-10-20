@@ -38,7 +38,7 @@ public class SpendingDbAdapter {
 		ContentValues initialValues = createContentValues(amount, date_pay, pay, reason, comment);
 		return database.insert(clsContant.TBL_SPENDING, null, initialValues);
 	}
-	
+
 	public long insertReason(String reason) {
 		database = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -71,9 +71,9 @@ public class SpendingDbAdapter {
 			cond += getConditionData(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
 			database = dbHelper.getReadableDatabase();
 			del = database.delete(clsContant.TBL_SPENDING, cond, null);
-			if(del >=  0)
+			if (del >= 0)
 				return true;
-			else 
+			else
 				return false;
 		} catch (Exception ex) {
 			Log.i(TAG, "***** deleteData() Error: " + ex.getMessage());
@@ -89,6 +89,27 @@ public class SpendingDbAdapter {
 		values.put(clsContant.KEY_REASON, reason);
 		values.put(clsContant.KEY_COMMENT, comment);
 		return values;
+	}
+
+	public ArrayList<String> SelectReason() {
+		ArrayList<String> arrList = new ArrayList<String>();
+		try {
+			database = dbHelper.getReadableDatabase();
+			// query (table, String[] columns, selection, String[] selectionArgs, groupBy, having, orderBy)
+			Cursor cursor = database.query(clsContant.TBL_REASON, new String[] { clsContant.KEY_ROWID,
+					clsContant.KEY_REASON }, null, null, null, null, clsContant.KEY_REASON);
+
+			while (cursor.moveToNext()) {
+				arrList.add(cursor.getString(1));
+			}
+			if (cursor != null && !cursor.isClosed()) {
+				cursor.close();
+			}
+			return arrList;
+		} catch (Exception ex) {
+			Log.i(TAG, "***** SelectAll() Error: " + ex.getMessage());
+			return null;
+		}
 	}
 
 	public ArrayList<clsData> SelectAll() {
@@ -147,7 +168,45 @@ public class SpendingDbAdapter {
 			return null;
 		}
 	}
-	
+
+	public ArrayList<clsData> SelectStatistics(String dateFrom, String dateTo) {
+		String cond, cond1;
+		ArrayList<clsData> arrList = new ArrayList<clsData>();
+		clsData data;
+		try {
+			// cond = "SELECT * FROM " + clsContant.TBL_SPENDING + " WHERE 1=1 ";
+			// cond = " 1=1 ";
+			cond = "SELECT SUM(" + clsContant.KEY_AMOUNT + ") FROM " + clsContant.TBL_SPENDING
+					+ " WHERE 1=1 AND PAY = 1";
+			cond1 = getConditionData(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
+			cond += cond1;
+
+			database = dbHelper.getReadableDatabase();
+			Cursor cursor = database.rawQuery(cond, null);
+			while (cursor.moveToNext()) {
+				data = new clsData(0, cursor.getString(0), "", 0, "");
+				arrList.add(data);
+			}
+
+			cond = "SELECT SUM(" + clsContant.KEY_AMOUNT + ") FROM " + clsContant.TBL_SPENDING
+					+ " WHERE 1=1 AND PAY = 2";
+			cond += cond1;
+			database = dbHelper.getReadableDatabase();
+			cursor = database.rawQuery(cond, null);
+			while (cursor.moveToNext()) {
+				data = new clsData(0, cursor.getString(0), "", 0, "");
+				arrList.add(data);
+			}
+
+			if (cursor != null && !cursor.isClosed()) {
+				cursor.close();
+			}
+			return arrList;
+		} catch (Exception ex) {
+			Log.i(TAG, "***** SelectData() Error: " + ex.getMessage());
+			return null;
+		}
+	}
 
 	/**
 	 * Return condition

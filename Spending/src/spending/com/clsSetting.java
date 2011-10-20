@@ -1,13 +1,15 @@
 package spending.com;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 
 public class clsSetting extends Activity {
@@ -23,7 +25,6 @@ public class clsSetting extends Activity {
 		super.onCreate(saved);
 		setContentView(R.layout.setting);
 
-		ArrayAdapter<String> adapter;
 		try {
 
 			mDbHelper = new SpendingDbAdapter(this);
@@ -46,6 +47,8 @@ public class clsSetting extends Activity {
 					finish();
 				}
 			});
+			
+			loadData();
 		} catch (Exception ex) {
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
@@ -60,6 +63,7 @@ public class clsSetting extends Activity {
 				new AlertDialog.Builder(clsSetting.this).setTitle("Lưu").setMessage("Đã lưu thành công")
 						.setPositiveButton("OK", null).show();
 				clearData();
+				loadData();
 			}
 			//Log.i(TAG, "***** saveData() Da luu xuong db, id=" + insert);
 		} catch (Exception ex) {
@@ -69,6 +73,24 @@ public class clsSetting extends Activity {
 		}
 	}
 
+	private void loadData(){
+		ArrayList<String> arrList;
+		ArrayList<clsData> myArray =new ArrayList<clsData>();
+		clsData data;
+		arrList = mDbHelper.SelectReason();
+		if (arrList == null)
+			return;
+		
+		for (String reason : arrList) {
+			data = new clsData(reason);
+			myArray.add(data);
+		}
+
+		final ListView lv1 = (ListView) findViewById(R.id.lstReason);
+		lv1.setAdapter(new clsReasonBaseAdapter(this, myArray));
+		Log.i(TAG, "***** loadData() called");
+	}
+	
 	private void clearData() {
 		edtReason.setText("");		
 	}

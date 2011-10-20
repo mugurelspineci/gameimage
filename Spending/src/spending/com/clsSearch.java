@@ -31,20 +31,21 @@ public class clsSearch extends Activity {
 	SpendingDbAdapter mDbHelper;
 	String currTime; // luu ngay thang hien tai
 
-	@SuppressWarnings({ "unchecked", "rawtypes", "static-access" })
+	@SuppressWarnings({ "static-access" })
 	@Override
 	public void onCreate(Bundle saved) {
 		super.onCreate(saved);
 		setContentView(R.layout.search);
 		try {
-			String arrReason[] = { "", "Lương", "Ăn sáng", "Xăng", "Thay nhớt", "Đi siêu thị" };
-			ArrayAdapter<String> adapter;
+//			String arrReason[] = { "", "Lương", "Ăn sáng", "Xăng", "Thay nhớt", "Đi siêu thị" };
+//			ArrayAdapter<String> adapter;
 
 			android.text.format.DateFormat datetime = new android.text.format.DateFormat();
 			currTime = "" + datetime.format("dd/MM/yyyy", new Date());
 			
 			mDbHelper = new SpendingDbAdapter(this);
-
+			mDbHelper.open();
+			
 			edtAmountFrom = (EditText) findViewById(R.id.edtAmountFrom);
 			edtAmountTo = (EditText) findViewById(R.id.edtAmountTo);
 			edtDateFrom = (EditText) findViewById(R.id.edtDateFrom);
@@ -58,8 +59,8 @@ public class clsSearch extends Activity {
 
 			edtDateTo.setText(currTime);
 			
-			adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
-			spnReason.setAdapter(adapter);
+//			adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
+//			spnReason.setAdapter(adapter);
 
 			btnSearch.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View view) {
@@ -73,6 +74,8 @@ public class clsSearch extends Activity {
 					finish();
 				}
 			});
+			
+			loadData();
 		} catch (Exception ex) {
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
@@ -99,6 +102,19 @@ public class clsSearch extends Activity {
 		}
 	}
 
+	private void loadData(){
+		ArrayList<String> arrList = new ArrayList<String>();
+		ArrayAdapter<String> adapter;
+		arrList = mDbHelper.SelectReason();
+		if (arrList == null)
+			return;
+		arrList.add("");
+		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrList);		
+		spnReason.setAdapter(adapter);
+		spnReason.setSelection(adapter.getCount()-1);
+		Log.i(TAG, "***** loadData() called");
+	}
+	
 	private void searchData() {
 		// String cond;
 		int pay;
@@ -107,7 +123,7 @@ public class clsSearch extends Activity {
 		// ArrayList<clsData> arrListData;
 		try {
 			// cond = getCondition();
-			mDbHelper.open();
+			//mDbHelper.open();
 
 			if (edtOther.getText().toString().length() != 0)
 				reason = edtOther.getText().toString().trim();
