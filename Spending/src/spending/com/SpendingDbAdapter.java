@@ -176,8 +176,8 @@ public class SpendingDbAdapter {
 		try {
 			// cond = "SELECT * FROM " + clsContant.TBL_SPENDING + " WHERE 1=1 ";
 			// cond = " 1=1 ";
-			cond = "SELECT SUM(" + clsContant.KEY_AMOUNT + ") FROM " + clsContant.TBL_SPENDING
-					+ " WHERE 1=1 AND PAY = 1";
+			cond = "SELECT SUM( case when " + clsContant.KEY_AMOUNT + "= null then 0 else " + clsContant.KEY_AMOUNT
+					+ " end ) FROM " + clsContant.TBL_SPENDING + " WHERE 1=1 AND PAY = 1 ";
 			cond1 = getConditionData(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
 			cond += cond1;
 
@@ -188,8 +188,13 @@ public class SpendingDbAdapter {
 				arrList.add(data);
 			}
 
-			cond = "SELECT SUM(" + clsContant.KEY_AMOUNT + ") FROM " + clsContant.TBL_SPENDING
-					+ " WHERE 1=1 AND PAY = 2";
+			// if(arrList.size()<1){
+			// data = new clsData(0, "0", "", 0, "");
+			// arrList.add(data);
+			// }
+
+			cond = "SELECT SUM( case when " + clsContant.KEY_AMOUNT + "= null then 0 else " + clsContant.KEY_AMOUNT
+			+ " end ) FROM " + clsContant.TBL_SPENDING + " WHERE 1=1 AND PAY = 2 ";
 			cond += cond1;
 			database = dbHelper.getReadableDatabase();
 			cursor = database.rawQuery(cond, null);
@@ -197,6 +202,11 @@ public class SpendingDbAdapter {
 				data = new clsData(0, cursor.getString(0), "", 0, "");
 				arrList.add(data);
 			}
+
+			// if(arrList.size()<2){
+			// data = new clsData(0, "0", "", 0, "");
+			// arrList.add(data);
+			// }
 
 			if (cursor != null && !cursor.isClosed()) {
 				cursor.close();
