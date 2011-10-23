@@ -2,5 +2,6 @@
 <resources>
     <string name="hello">Hello World, spendingActivity!</string>
     <string name="app_name">spending</string>
-    <string name="income">Thu vao</string>
+    <string name="income">Thu</string>
+    <string name="payment">Chi</string>
 </resources>
