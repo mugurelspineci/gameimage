@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">  
-  <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="match_parent">
+	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:stretchColumns="4">
 		<TableRow android:gravity="center_horizontal">
-			<TextView android:text="Thống kê dữ liệu" android:layout_height="40dip"
-				android:layout_span="4" android:gravity="center" android:textSize="22px" />
+			<TextView android:text="Thống kê dữ liệu"
+				android:layout_height="40dip" android:layout_span="4"
+				android:gravity="center" android:textSize="22px" />
 		</TableRow>
 		<TableRow>
-			<TextView layout_column="1" android:text="Ngay:" />
+			<TextView layout_column="1" android:text="Ngày:" />
 			<EditText android:id="@+id/edtDateFrom"
 				android:layout_width="120sp" android:layout_height="40dip"
 				android:singleLine="True" android:gravity="center" />
-			<TextView android:text=" - " />
+			<TextView android:text=" - " android:gravity="center" />
 			<EditText android:id="@+id/edtDateTo" android:layout_width="120sp"
 				android:singleLine="True" android:layout_height="40dip" />
 		</TableRow>
@@ -34,10 +33,17 @@
 			</RelativeLayout>
 		</TableRow>
 		<TableRow>
-		 <SurfaceView android:id="@+id/Paper" android:layout_span="5"
-            android:layout_height="fill_parent" 
-            android:layout_width="fill_parent">
-        </SurfaceView>
+			<TextView android:id="@+id/txtIncome" android:text="@string/income"
+				android:layout_height="wrap_content" android:layout_width="30sp" />
+			<TextView android:id="@+id/txtIncomeA" android:text="0"
+				android:layout_height="wrap_content" android:layout_width="wrap_content" />
+			<TextView android:id="@+id/txtPayment" android:text="@string/payment"
+				android:layout_height="wrap_content" android:layout_width="30sp" />
+			<TextView android:id="@+id/txtPaymentA" android:text="0"
+				android:layout_height="wrap_content" android:layout_width="wrap_content" />
 		</TableRow>
+		<SurfaceView android:id="@+id/Paper" android:layout_span="4"
+			android:layout_height="fill_parent" android:layout_width="fill_parent">
+		</SurfaceView>
 	</TableLayout>
 </LinearLayout>
