@@ -176,7 +176,7 @@ public class SpendingDbAdapter {
 		try {
 			// cond = "SELECT * FROM " + clsContant.TBL_SPENDING + " WHERE 1=1 ";
 			// cond = " 1=1 ";
-			cond = "SELECT SUM( case when " + clsContant.KEY_AMOUNT + "= null then 0 else " + clsContant.KEY_AMOUNT
+			cond = "SELECT SUM( case " + clsContant.KEY_AMOUNT + " when " + clsContant.KEY_AMOUNT + "= null then 0 else " + clsContant.KEY_AMOUNT
 					+ " end ) FROM " + clsContant.TBL_SPENDING + " WHERE 1=1 AND PAY = 1 ";
 			cond1 = getConditionData(dateFrom, dateTo, clsContant.KEY_DATE_PAY);
 			cond += cond1;
