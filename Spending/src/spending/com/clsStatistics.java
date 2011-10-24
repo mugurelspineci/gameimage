@@ -27,7 +27,7 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 	Button btnCancel;
 	TextView txtIncome;
 	TextView txtPayment;
-	
+
 	SpendingDbAdapter mDbHelper;
 	String currTime; // luu ngay thang hien tai
 
@@ -47,8 +47,8 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 			mDbHelper = new SpendingDbAdapter(this);
 			edtDateFrom = (EditText) findViewById(R.id.edtDateFrom);
 			edtDateTo = (EditText) findViewById(R.id.edtDateTo);
-			txtIncome = (TextView)findViewById(R.id.txtIncomeA);
-			txtPayment = (TextView)findViewById(R.id.txtPaymentA);
+			txtIncome = (TextView) findViewById(R.id.txtIncomeA);
+			txtPayment = (TextView) findViewById(R.id.txtPaymentA);
 			btnStatistics = (Button) findViewById(R.id.btnStatistics);
 			btnCancel = (Button) findViewById(R.id.btnCancel);
 
@@ -91,16 +91,16 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 			mDbHelper.open();
 			arrList = mDbHelper.SelectStatistics(edtDateFrom.getText().toString().trim(), edtDateTo.getText()
 					.toString().trim());
-			if (arrList == null || arrList.size()<2) {
+			if (arrList == null || arrList.size() < 2) {
 				new AlertDialog.Builder(clsStatistics.this).setTitle("Lỗi Nhập").setMessage("Dữ liệu không có")
-						.setPositiveButton("OK", null).show();				
+						.setPositiveButton("OK", null).show();
 				return;
 			}
 			clearData();
-			
+
 			income = Float.parseFloat(arrList.get(0).getAmount());
 			payment = Float.parseFloat(arrList.get(1).getAmount());
-			
+
 			txtIncome.setText(arrList.get(0).getAmount());
 			txtPayment.setText(arrList.get(1).getAmount());
 			
@@ -114,40 +114,47 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 		// Rect rect;
 		Paint paint;
 		Canvas canvas;
-		float width;;
+		float width;
+		;
 		float height;
 		float startHeight;
-		//float income, payment;
+		// float income, payment;
 		float hIncome, hPayment;
-		int []location = new int[2];
+		int[] location = new int[2];
 		try {
 			canvas = mSurfaceHolder.lockCanvas();
-			canvas.drawColor(Color.WHITE);
-			paint = new Paint();		
-		
-			//lay toa do x, y cua control surfaceView
+			canvas.drawColor(Color.BLACK);
+			if (income == 0 && payment == 0){
+				mSurfaceHolder.unlockCanvasAndPost(canvas);
+				return;
+			}
+			paint = new Paint();
+
+			// lay toa do x, y cua control surfaceView
 			mSurfaceView.getLocationOnScreen(location);
 
 			height = scnHeight - location[1];
-			width = scnWidth/2;
+			width = scnWidth / 2;
 			startHeight = height - 80;
-
-			if(income >= payment){
-				hIncome = startHeight-20;
-				hPayment = hIncome*payment/ income;
+			if (income == payment) {
+				hPayment = startHeight/2;
+				hIncome = startHeight/2;
 			}
-			else{
-				hPayment = startHeight-20;
-				hIncome = hPayment*income/payment ;
+			if (income > payment) {
+				hIncome = startHeight - 20;
+				hPayment = hIncome * payment / income;
+			} else {
+				hPayment = startHeight - 20;
+				hIncome = hPayment * income / payment;
 			}
 
 			paint.setColor(Color.BLUE);
-			canvas.drawRect(width-50, startHeight-hIncome, width, startHeight, paint);
-			canvas.drawText("Thu", width-35, startHeight+15, paint);
+			canvas.drawRect(width - 50, startHeight - hIncome, width, startHeight, paint);
+			canvas.drawText("Thu", width - 35, startHeight + 15, paint);
 			paint.setColor(Color.RED);
 
-			canvas.drawRect(width, startHeight-hPayment, width+50, startHeight, paint);
-			canvas.drawText("Chi", width+10, startHeight+18, paint);
+			canvas.drawRect(width, startHeight - hPayment, width + 50, startHeight, paint);
+			canvas.drawText("Chi", width + 10, startHeight + 18, paint);
 			canvas.drawLine(0, startHeight, scnWidth, startHeight, paint);
 
 			mSurfaceHolder.unlockCanvasAndPost(canvas);
@@ -201,7 +208,7 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
 		// mSurfaceView.setBackgroundColor(Color.CYAN);
-		//drawLine();
+		// drawLine();
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {

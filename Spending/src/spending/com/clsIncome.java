@@ -1,14 +1,17 @@
 package spending.com;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -36,8 +39,8 @@ public class clsIncome extends Activity {
 		super.onCreate(saved);
 		setContentView(R.layout.income);
 
-//		String arrReason[] = { "Lương", "Ăn sáng", "Xăng", "Thay nhớt", "Đi siêu thị" };
-//		ArrayAdapter<String> adapter;
+		// String arrReason[] = { "Lương", "Ăn sáng", "Xăng", "Thay nhớt", "Đi siêu thị" };
+		// ArrayAdapter<String> adapter;
 		try {
 
 			mDbHelper = new SpendingDbAdapter(this);
@@ -58,8 +61,8 @@ public class clsIncome extends Activity {
 			currTime = "" + datetime.format("dd/MM/yyyy", new Date());
 			edtDate.setText(currTime);
 
-//			adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
-//			spnReason.setAdapter(adapter);
+			// adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
+			// spnReason.setAdapter(adapter);
 
 			btnSave.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View view) {
@@ -73,14 +76,36 @@ public class clsIncome extends Activity {
 					finish();
 				}
 			});
-			
+
+			edtDate.setOnClickListener(new View.OnClickListener() {
+				// @Override
+				public void onClick(View v) {
+					final Calendar c = Calendar.getInstance();
+					int y = c.get(Calendar.YEAR);
+					int m = c.get(Calendar.MONTH);
+					int d = c.get(Calendar.DAY_OF_MONTH);
+					DatePickerDialog dp = new DatePickerDialog(clsIncome.this,
+							new DatePickerDialog.OnDateSetListener() {
+								public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+									String erg = "";
+									erg = String.valueOf(dayOfMonth);
+									erg += "/" + String.valueOf(monthOfYear + 1);
+									erg += "/" + year;
+									edtDate.setText(erg);
+								}
+							}, y, m, d);
+					dp.setTitle("Ngay Thang Nam");
+					dp.show();
+				}
+			});
+
 			loadData();
 		} catch (Exception ex) {
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
 	}
 
-	private void loadData(){
+	private void loadData() {
 		ArrayList<String> arrList = new ArrayList<String>();
 		ArrayAdapter<String> adapter;
 		arrList = mDbHelper.SelectReason();
@@ -90,7 +115,7 @@ public class clsIncome extends Activity {
 		spnReason.setAdapter(adapter);
 		Log.i(TAG, "***** loadData() called");
 	}
-	
+
 	private boolean checkValid() {
 		if (rdIncome.isChecked() == false && rdPayment.isChecked() == false) {
 			new AlertDialog.Builder(clsIncome.this).setTitle("Nhập thiếu").setMessage("Chưa chọn Thu hay Chi")
@@ -104,8 +129,7 @@ public class clsIncome extends Activity {
 		}
 		if (edtDate.getText().length() == 0) {
 			return false;
-		} 
-		else if (!CommonUtil.isValidDate(edtDate.getText().toString())) {
+		} else if (!CommonUtil.isValidDate(edtDate.getText().toString())) {
 			new AlertDialog.Builder(clsIncome.this).setTitle("Lỗi Nhập")
 					.setMessage("Ngày tháng không đúng (dd/mm/yyyy)").setPositiveButton("OK", null).show();
 			return false;
@@ -141,10 +165,10 @@ public class clsIncome extends Activity {
 						.setPositiveButton("OK", null).show();
 				clearData();
 			}
-			//Log.i(TAG, "***** saveData() Da luu xuong db, id=" + insert);
+			// Log.i(TAG, "***** saveData() Da luu xuong db, id=" + insert);
 		} catch (Exception ex) {
 			new AlertDialog.Builder(clsIncome.this).setTitle("Lưu").setMessage("Không thể lưu")
-			.setPositiveButton("OK", null).show();
+					.setPositiveButton("OK", null).show();
 			Log.i(TAG, "***** saveData() Error: " + ex.getMessage());
 		}
 	}
