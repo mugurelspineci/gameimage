@@ -33,14 +33,22 @@
 			</RelativeLayout>
 		</TableRow>
 		<TableRow>
-			<TextView android:id="@+id/txtIncome" android:text="@string/income"
-				android:layout_height="wrap_content" android:layout_width="30sp" />
-			<TextView android:id="@+id/txtIncomeA" android:text="0"
-				android:layout_height="wrap_content" android:layout_width="wrap_content" />
-			<TextView android:id="@+id/txtPayment" android:text="@string/payment"
-				android:layout_height="wrap_content" android:layout_width="30sp" />
-			<TextView android:id="@+id/txtPaymentA" android:text="0"
-				android:layout_height="wrap_content" android:layout_width="wrap_content" />
+			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_span="5" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:gravity="center">
+				<TextView android:id="@+id/txtIncome" android:text="@string/income"
+					android:layout_height="wrap_content" android:layout_width="30sp" />
+				<TextView android:id="@+id/txtIncomeA" android:text="0"
+					android:layout_height="wrap_content" android:layout_width="50sp" />
+				<TextView android:id="@+id/txtPayment" android:text="@string/payment"
+					android:layout_height="wrap_content" android:layout_width="30sp" android:gravity="right"/>
+				<TextView android:id="@+id/txtPaymentA" android:text="0"
+					android:layout_height="wrap_content" android:layout_width="50sp" />
+				<TextView android:id="@+id/txtBalance" android:text="@string/balance"
+					android:layout_height="wrap_content" android:layout_width="50sp"/>
+				<TextView android:id="@+id/txtBalanceA" android:text="0"
+					android:layout_height="wrap_content" android:layout_width="wrap_content" />
+			</LinearLayout>
 		</TableRow>
 		<SurfaceView android:id="@+id/Paper" android:layout_span="4"
 			android:layout_height="fill_parent" android:layout_width="fill_parent">
