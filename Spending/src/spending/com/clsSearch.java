@@ -1,14 +1,17 @@
 package spending.com;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -76,6 +79,7 @@ public class clsSearch extends Activity {
 			});
 			
 			loadData();
+			loadEventText();
 		} catch (Exception ex) {
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
@@ -113,6 +117,52 @@ public class clsSearch extends Activity {
 		spnReason.setAdapter(adapter);
 		spnReason.setSelection(adapter.getCount()-1);
 		Log.i(TAG, "***** loadData() called");
+	}
+	
+	private void loadEventText(){
+		edtDateFrom.setOnClickListener(new View.OnClickListener() {
+			// @Override
+			public void onClick(View v) {
+				final Calendar c = Calendar.getInstance();
+				int y = c.get(Calendar.YEAR);
+				int m = c.get(Calendar.MONTH);
+				int d = c.get(Calendar.DAY_OF_MONTH);
+				DatePickerDialog dp = new DatePickerDialog(clsSearch.this,
+						new DatePickerDialog.OnDateSetListener() {
+							public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+								String erg = "";
+								erg = String.valueOf(dayOfMonth);
+								erg += "/" + String.valueOf(monthOfYear + 1);
+								erg += "/" + year;
+								edtDateFrom.setText(erg);
+							}
+						}, y, m, d);
+				dp.setTitle("Ngay Thang Nam");
+				dp.show();
+			}
+		});
+		
+		edtDateTo.setOnClickListener(new View.OnClickListener() {
+			// @Override
+			public void onClick(View v) {
+				final Calendar c = Calendar.getInstance();
+				int y = c.get(Calendar.YEAR);
+				int m = c.get(Calendar.MONTH);
+				int d = c.get(Calendar.DAY_OF_MONTH);
+				DatePickerDialog dp = new DatePickerDialog(clsSearch.this,
+						new DatePickerDialog.OnDateSetListener() {
+							public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+								String erg = "";
+								erg = String.valueOf(dayOfMonth);
+								erg += "/" + String.valueOf(monthOfYear + 1);
+								erg += "/" + year;
+								edtDateTo.setText(erg);
+							}
+						}, y, m, d);
+				dp.setTitle("Ngay Thang Nam");
+				dp.show();
+			}
+		});
 	}
 	
 	private void searchData() {

@@ -1,11 +1,12 @@
 package spending.com;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Intent;
+import android.app.DatePickerDialog;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,6 +17,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 	Button btnCancel;
 	TextView txtIncome;
 	TextView txtPayment;
+	TextView txtBalance;
 
 	SpendingDbAdapter mDbHelper;
 	String currTime; // luu ngay thang hien tai
@@ -49,6 +52,7 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 			edtDateTo = (EditText) findViewById(R.id.edtDateTo);
 			txtIncome = (TextView) findViewById(R.id.txtIncomeA);
 			txtPayment = (TextView) findViewById(R.id.txtPaymentA);
+			txtBalance = (TextView) findViewById(R.id.txtBalanceA);
 			btnStatistics = (Button) findViewById(R.id.btnStatistics);
 			btnCancel = (Button) findViewById(R.id.btnCancel);
 
@@ -79,12 +83,60 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 			mSurfaceView = (SurfaceView) this.findViewById(R.id.Paper);
 			mSurfaceHolder = mSurfaceView.getHolder();
 			mSurfaceHolder.addCallback(this);
+			
+			loadEventText();
 			// mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_NORMAL);
 		} catch (Exception ex) {
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
 	}
 
+	private void loadEventText(){
+		edtDateFrom.setOnClickListener(new View.OnClickListener() {
+			// @Override
+			public void onClick(View v) {
+				final Calendar c = Calendar.getInstance();
+				int y = c.get(Calendar.YEAR);
+				int m = c.get(Calendar.MONTH);
+				int d = c.get(Calendar.DAY_OF_MONTH);
+				DatePickerDialog dp = new DatePickerDialog(clsStatistics.this,
+						new DatePickerDialog.OnDateSetListener() {
+							public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+								String erg = "";
+								erg = String.valueOf(dayOfMonth);
+								erg += "/" + String.valueOf(monthOfYear + 1);
+								erg += "/" + year;
+								edtDateFrom.setText(erg);
+							}
+						}, y, m, d);
+				dp.setTitle("Ngay Thang Nam");
+				dp.show();
+			}
+		});
+		
+		edtDateTo.setOnClickListener(new View.OnClickListener() {
+			// @Override
+			public void onClick(View v) {
+				final Calendar c = Calendar.getInstance();
+				int y = c.get(Calendar.YEAR);
+				int m = c.get(Calendar.MONTH);
+				int d = c.get(Calendar.DAY_OF_MONTH);
+				DatePickerDialog dp = new DatePickerDialog(clsStatistics.this,
+						new DatePickerDialog.OnDateSetListener() {
+							public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+								String erg = "";
+								erg = String.valueOf(dayOfMonth);
+								erg += "/" + String.valueOf(monthOfYear + 1);
+								erg += "/" + year;
+								edtDateTo.setText(erg);
+							}
+						}, y, m, d);
+				dp.setTitle("Ngay Thang Nam");
+				dp.show();
+			}
+		});
+	}
+	
 	private void getStatistics() {
 		float income, payment;
 		try {
@@ -103,6 +155,7 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 
 			txtIncome.setText(arrList.get(0).getAmount());
 			txtPayment.setText(arrList.get(1).getAmount());
+			txtBalance.setText(Float.toString(income - payment));
 			
 			drawLine(income, payment);
 		} catch (Exception ex) {
@@ -115,7 +168,6 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 		Paint paint;
 		Canvas canvas;
 		float width;
-		;
 		float height;
 		float startHeight;
 		// float income, payment;
@@ -135,7 +187,7 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 
 			height = scnHeight - location[1];
 			width = scnWidth / 2;
-			startHeight = height - 80;
+			startHeight = height - 100;
 			if (income == payment) {
 				hPayment = startHeight/2;
 				hIncome = startHeight/2;
@@ -151,10 +203,12 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 			paint.setColor(Color.BLUE);
 			canvas.drawRect(width - 50, startHeight - hIncome, width, startHeight, paint);
 			canvas.drawText("Thu", width - 35, startHeight + 15, paint);
+			
 			paint.setColor(Color.RED);
-
 			canvas.drawRect(width, startHeight - hPayment, width + 50, startHeight, paint);
-			canvas.drawText("Chi", width + 10, startHeight + 18, paint);
+			canvas.drawText("Chi", width + 12, startHeight + 16, paint);
+			
+			paint.setColor(Color.GREEN);
 			canvas.drawLine(0, startHeight, scnWidth, startHeight, paint);
 
 			mSurfaceHolder.unlockCanvasAndPost(canvas);

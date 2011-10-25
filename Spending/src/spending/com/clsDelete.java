@@ -1,14 +1,17 @@
 package spending.com;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 public class clsDelete extends Activity {
@@ -50,6 +53,8 @@ public class clsDelete extends Activity {
 					finish();
 				}
 			});
+			
+			loadEventText();
 		} catch (Exception ex) {
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
@@ -106,21 +111,65 @@ public class clsDelete extends Activity {
 		}
 	}
 
+	private void loadEventText() {
+		edtDateFrom.setOnClickListener(new View.OnClickListener() {
+			// @Override
+			public void onClick(View v) {
+				final Calendar c = Calendar.getInstance();
+				int y = c.get(Calendar.YEAR);
+				int m = c.get(Calendar.MONTH);
+				int d = c.get(Calendar.DAY_OF_MONTH);
+				DatePickerDialog dp = new DatePickerDialog(clsDelete.this, new DatePickerDialog.OnDateSetListener() {
+					public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+						String erg = "";
+						erg = String.valueOf(dayOfMonth);
+						erg += "/" + String.valueOf(monthOfYear + 1);
+						erg += "/" + year;
+						edtDateFrom.setText(erg);
+					}
+				}, y, m, d);
+				dp.setTitle("Ngay Thang Nam");
+				dp.show();
+			}
+		});
+
+		edtDateTo.setOnClickListener(new View.OnClickListener() {
+			// @Override
+			public void onClick(View v) {
+				final Calendar c = Calendar.getInstance();
+				int y = c.get(Calendar.YEAR);
+				int m = c.get(Calendar.MONTH);
+				int d = c.get(Calendar.DAY_OF_MONTH);
+				DatePickerDialog dp = new DatePickerDialog(clsDelete.this, new DatePickerDialog.OnDateSetListener() {
+					public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+						String erg = "";
+						erg = String.valueOf(dayOfMonth);
+						erg += "/" + String.valueOf(monthOfYear + 1);
+						erg += "/" + year;
+						edtDateTo.setText(erg);
+					}
+				}, y, m, d);
+				dp.setTitle("Ngay Thang Nam");
+				dp.show();
+			}
+		});
+	}
+
 	private boolean checkValid() {
-		if(edtDateFrom.getText().toString().length()==0 && edtDateTo.getText().toString().length()!=0)
+		if (edtDateFrom.getText().toString().length() == 0 && edtDateTo.getText().toString().length() != 0)
 			return true;
-		if (edtDateFrom.getText().toString().length()!=0 && !CommonUtil.isValidDate(edtDateFrom.getText().toString())) {
+		if (edtDateFrom.getText().toString().length() != 0 && !CommonUtil.isValidDate(edtDateFrom.getText().toString())) {
 			new AlertDialog.Builder(clsDelete.this).setTitle("Lỗi Nhập")
 					.setMessage("Ngày tháng không đúng (dd/mm/yyyy)").setPositiveButton("OK", null).show();
 			return false;
 		}
 
-		if (edtDateTo.getText().toString().length()!=0 &&!CommonUtil.isValidDate(edtDateTo.getText().toString())) {
+		if (edtDateTo.getText().toString().length() != 0 && !CommonUtil.isValidDate(edtDateTo.getText().toString())) {
 			new AlertDialog.Builder(clsDelete.this).setTitle("Lỗi Nhập")
 					.setMessage("Ngày tháng không đúng (dd/mm/yyyy)").setPositiveButton("OK", null).show();
 			return false;
 		}
-		
+
 		return true;
 	}
 
