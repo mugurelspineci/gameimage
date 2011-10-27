@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<title>Untitled Document</title>
+<script type="text/javascript">
+		
+        function checkValue()
+		{
+	
+			var name = document.getElementById("txtName").value;
+			var phone = document.getElementById("txtPhone").value;			
+			var email = document.getElementById("txtEmail").value;
+			if( name==""){
+                document.getElementById("err_msg1").innerHTML="Please, enter your name";				
+		//		return false;
+			}
+			else
+			{
+				document.getElementById("err_msg1").innerHTML="*";
+			}
+			if(phone=="" || phone.length<8){
+				document.getElementById("err_msg2").innerHTML="Please, enter your phone";				
+			//	return false;
+			}
+			else
+				document.getElementById("err_msg2").innerHTML="*";		
+            emailRegExp = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.([a-z]){2,4})$/;
+			if(email!="")
+			{
+				if(!emailRegExp.test(email)){                	
+                	document.getElementById("err_msg3").innerHTML="Please, enter your email";
+            	}
+				else
+					document.getElementById("err_msg3").innerHTML="";	
+			}
+			else		
+				document.getElementById("err_msg3").innerHTML="";	
+		/**/
+			return false;
+        }
+		
+    </script>
+</head>
+
+<body>
+<?php
+echo md5(123);
+?>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#E7E7E7" >
+  <tr>
+    <th align="center" valign="top" scope="row">
+	<table width="800px" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" class="border_color" >
+	<tr><td>
+	<!-- header--></td>
+	</tr>
+      <tr>
+        <td>
+			<table width="800px" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="200px" scope="row" valign="top"><table width="100" border="0">
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2">&nbsp;</td>
+                </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+			 <!-- PageLeft --><!-- end Page Left -->			</td>
+            <td width="600px" valign="top">
+			<!-- Center -->
+			
+					
+			<table width="100%" border="0">
+			  <tr>
+			    <td align="left" valign="top"><table width="100%" border="0" cellspacing="4" cellpadding="0">
+				<tr>
+				<td bgcolor="#E7E7E7"><table width="100%" border="0" cellpadding="1">
+                    <tr>
+                      <td> </td>
+                    </tr>
+					
+                    <tr>
+                      <td><div align="center" class="style3">1380 W Howard Street - Elk Grove Village, IL 60007</div></td>
+                    </tr>
+					
+                    <tr>
+                      <td><div align="center" class="style3">USA</div></td>
+                    </tr>
+					
+
+
+                    <tr>
+                      <td><div align="center" class="style3">
+                        Phone: 847-439-4150    Fax: 847-439-4135    </div></td>
+                    </tr>
+                    <tr>
+                      <td><div align="center"><a href="mailto:kaleszczyk@wrighttechnologiesinc.com"><span class="style3">Email: </span>kaleszczyk@wrighttechnologiesinc.com</a></div></td>
+                    </tr>
+                   <tr>
+                      <td> </td>
+                    </tr>
+					
+                    <tr>
+                      <td> <div align="center">Click here for <a href="http://maps.yahoo.com/py/ddResults.py?Pyt=Tmap&tarname=&tardesc=&tarhash=&taraddr=6113+NE+ Minder+Rd.+NE&tarcsz=Poulsbo,+WA+98370&newtcountry=us&newcountry=us&doit=1" target="_blank">driving directions</a></div></td>
+                    </tr>
+					<tr>
+                      <td><div align="center">Click here for <a onmouseover="window.status='Click me!'; return true" href="javascript:mapCompany()">map</a></div></td>
+                    </tr>
+					<tr>
+                      <td> </td>
+                    </tr>
+					
+                  </table></td></tr>
+                    <tr class="border_color">
+					
+                      <td align="left" valign="top" class="border_color"><table width="100%" border="0" cellpadding="5">
+                          <tr bgcolor="#E7E7E7">
+                            <td align="center" valign="top">
+							
+							
+							
+							
+<div align="center">
+			<form action="contactUs.html" method="post" onsubmit="return checkValue();">
+			  <table width="550" border="0">
+				<tr>
+				  <td width="141"><span class="style5">Your Name: </span></td>
+				  <td width="161"><label>
+					<input name="txtName" type="text" id="txtName" size="30" />
+				  </label></td>
+				    <td width="234"><span id="err_msg1" style="color: red;">*</span></td>
+				</tr>
+				<tr>
+				  <td><span class="style5">Company Name:</span></td>
+				  <td><label>
+					<input name="txtCompanyName" type="text" id="txtCompanyName" size="30" />
+				  </label></td>
+				    <td>&nbsp;</td>
+				</tr>
+				<tr>
+				  <td><span class="style5">Fax Number:</span></td>
+				  <td><label>
+					<input name="txtFax" type="text" id="txtFax" />
+				  </label></td>
+				  <td>&nbsp;</td>
+				</tr>
+				<tr>
+				  <td><span class="style5">Phone Number:</span></td>
+				  <td><label>
+					<input name="txtPhone" type="text" id="txtPhone" value="d" />
+				  </label></td>
+				    <td><span id="err_msg2" style="color: red;">*</span></td>
+				</tr>
+				<tr>
+				  <td><span class="style5">E-mail Address:</span></td>
+				  <td><input name="txtEmail" type="text" id="txtEmail" value="dd" size="30" />  </td>
+				    <td><span id="err_msg3" style="color: red;"></span></td>
+				</tr>
+				<tr>
+				  <td><span class="style5">Address:</span></td>
+				  <td colspan="2"><label>
+					<textarea name="txtAddress" cols="45" rows="1" id="txtAddress" >dd</textarea>
+				  </label></td>
+				</tr>
+				
+				<tr>
+				  <td><span class="style5">Code</span></td>
+				  <td colspan="2"><table width="410" border="0">
+                      <tr>
+                        <td width="50"><input name="txtCode" type="text" id="txtCode" size="7" /></td>
+                        <td width="110"><label><img src="imageCode.html" width="105" height="30"/></label></td>
+						<td >&nbsp;</td>
+                      </tr>
+                    </table></td>
+				  
+				</tr>
+				
+				<tr>
+				  <td><span class="style5">Content:</span></td>
+				  <td colspan="2"><textarea name="txtContent" cols="45" rows="4" id="txtContent">dd</textarea></td>
+				</tr>
+				<tr>
+				  <td> </td>
+				  <td rowspan="2"><label>
+					<input type="submit" name="submit" value="Submit" />
+				    <input type="reset" name="Reset" value="Reset" />
+				  </label></td>
+				  <td></td>
+				</tr>
+				<tr>
+				  <td> </td>
+				</tr>
+			  </table>
+			</form>
+		</div>
+		
+		
+		
+		
+		
+		</td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="top"><div align="center"><img src="image_layout/Quality.jpg" alt="Quality is our business" width="180" height="20" /></div></td>
+                    </tr>
+                </table></td>
+			    </tr>
+              <tr>
+                <td> </td>
+              </tr>
+            </table>
+				<!--End Center -->
+			</td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td>
+		<!-- Footer --><!-- End Footer -->		</td>
+      </tr>
+    </table></th>
+  </tr>
+</table>
+</body>
+</html>
