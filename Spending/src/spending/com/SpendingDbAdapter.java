@@ -80,6 +80,46 @@ public class SpendingDbAdapter {
 			return false;
 		}
 	}
+	
+	/**
+	 * Deletes
+	 */
+	public boolean deleteData(String id) {
+		String cond;
+		int del;
+		try {
+			cond = clsContant.KEY_ROWID + "=" + id ;
+			database = dbHelper.getReadableDatabase();
+			del = database.delete(clsContant.TBL_SPENDING, cond, null);
+			if (del >= 0)
+				return true;
+			else
+				return false;
+		} catch (Exception ex) {
+			Log.i(TAG, "***** deleteData() Error: " + ex.getMessage());
+			return false;
+		}
+	}
+
+	/**
+	 * Deletes
+	 */
+	public boolean deleteReason(String reason) {
+		String cond;
+		int del;
+		try {
+			cond = clsContant.KEY_REASON + "='" + reason +"'" ;
+			database = dbHelper.getReadableDatabase();
+			del = database.delete(clsContant.TBL_REASON, cond, null);
+			if (del >= 0)
+				return true;
+			else
+				return false;
+		} catch (Exception ex) {
+			Log.i(TAG, "***** deleteData() Error: " + ex.getMessage());
+			return false;
+		}
+	}
 
 	private ContentValues createContentValues(float amount, String date_pay, int pay, String reason, String comment) {
 		ContentValues values = new ContentValues();

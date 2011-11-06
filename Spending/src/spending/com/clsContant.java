@@ -1,6 +1,6 @@
 package spending.com;
-	
-public class clsContant{
+
+public class clsContant {
 	// The Android's default system path of your application database.
 	public static String DB_PATH = "/data/data/YOUR_PACKAGE/databases/";
 	public static final String DATABASE_TABLE = "DB_SPENDING";
@@ -14,4 +14,12 @@ public class clsContant{
 	public static final String KEY_PAY = "pay";
 	public static final String KEY_REASON = "reason";
 	public static final String KEY_COMMENT = "comment";
+
+	// message
+	public static final String msgDelete = "Bạn muốn xóa số tiền %1$s, ngày %2$s?";
+	public static final String msgDelete2 = "Bạn muốn xóa lý do \"%1$s\" này không?";
+	public static final String msgDelFinish = "Đã xóa thành công";
+	
+	//Error
+	public static final String errDel = "Lỗi trong qua trình xóa";
 }

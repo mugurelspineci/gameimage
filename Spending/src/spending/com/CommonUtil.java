@@ -58,4 +58,13 @@ import java.util.Date;
 			return false;
 		}
 	}
+	
+	static public String trimZeros(String number) {
+	    if(!number.contains(".")) {
+	        return number;
+	    }
+
+	    return number.replaceAll(".?0*$", "");
+	}
+
 }

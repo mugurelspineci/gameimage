@@ -7,7 +7,11 @@ import java.util.Date;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -103,6 +107,51 @@ public class clsIncome extends Activity {
 		} catch (Exception ex) {
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
+	}
+	
+	 /* Initiating Menu XML file (menu.xml) */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.layout.menu, menu);
+        return true;
+    }
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){	
+		 switch (item.getItemId())
+	        {
+	        case R.id.mnIncome:
+	        	// Single menu item is selected do something
+	        	// Ex: launching new activity/screen or show alert message
+	            //Toast.makeText(spendingActivity.this, "Income is Selected", Toast.LENGTH_SHORT).show();
+	        	Intent income = new Intent(this, clsIncome.class);
+				startActivity(income);
+	            return true;
+	        case R.id.mnDelete:
+	        	//Toast.makeText(spendingActivity.this, "Payment is Selected", Toast.LENGTH_SHORT).show();
+	        	Intent delete = new Intent(this, clsDelete.class);
+				startActivity(delete);
+	            return true;
+	        case R.id.mnSearch:
+	        	//Toast.makeText(spendingActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
+	        	Intent search = new Intent(this, clsSearch.class);
+				startActivity(search);
+	            return true;
+	        case R.id.mnStatistics:
+	        	//Toast.makeText(spendingActivity.this, "Statistics is Selected", Toast.LENGTH_SHORT).show();
+	        	 Intent statistics = new Intent(this, clsStatistics.class);
+				 startActivity(statistics);
+	            return true;
+	        case R.id.mnSetting:
+	        	//Toast.makeText(spendingActivity.this, "Setting is Selected", Toast.LENGTH_SHORT).show();
+	        	Intent setting = new Intent(this, clsSetting.class);
+				 startActivity(setting);
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	        }
 	}
 
 	private void loadData() {

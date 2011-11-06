@@ -88,7 +88,7 @@ public class clsDelete extends Activity {
 			mDbHelper.open();
 			if (mDbHelper.deleteData(edtDateFrom.getText().toString(), edtDateTo.getText().toString()) == true) {
 				clearData();
-				alt_bld.setMessage("Đã xóa thành công").setCancelable(false)
+				alt_bld.setMessage(clsContant.msgDelFinish).setCancelable(false)
 						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								// Action for 'Yes' Button
@@ -97,7 +97,7 @@ public class clsDelete extends Activity {
 						});
 				Log.i(TAG, "***** deleteData() Da xoa");
 			} else {
-				alt_bld.setMessage("Lỗi trong qua trình xóa").setCancelable(false)
+				alt_bld.setMessage(clsContant.errDel).setCancelable(false)
 						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								// Action for 'Yes' Button

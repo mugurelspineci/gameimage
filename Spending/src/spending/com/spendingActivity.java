@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
+
 public class spendingActivity extends Activity {
 	/** Called when the activity is first created. */
 	private static final String TAG = spendingActivity.class.getSimpleName();
@@ -22,8 +23,6 @@ public class spendingActivity extends Activity {
 				public void onClick(View v) {
 					Intent income = new Intent(v.getContext(), clsIncome.class);
 					startActivity(income);
-					// Intent myIntent = new Intent(view.getContext(), Activity2.class);
-					// startActivityForResult(myIntent, 0);
 				}
 			});
 

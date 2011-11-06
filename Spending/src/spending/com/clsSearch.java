@@ -8,6 +8,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,8 +43,6 @@ public class clsSearch extends Activity {
 		super.onCreate(saved);
 		setContentView(R.layout.search);
 		try {
-//			String arrReason[] = { "", "Lương", "Ăn sáng", "Xăng", "Thay nhớt", "Đi siêu thị" };
-//			ArrayAdapter<String> adapter;
 
 			android.text.format.DateFormat datetime = new android.text.format.DateFormat();
 			currTime = "" + datetime.format("dd/MM/yyyy", new Date());
@@ -62,9 +63,6 @@ public class clsSearch extends Activity {
 
 			edtDateTo.setText(currTime);
 			
-//			adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrReason);
-//			spnReason.setAdapter(adapter);
-
 			btnSearch.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View view) {
 					if (checkValid())
@@ -106,6 +104,51 @@ public class clsSearch extends Activity {
 		}
 	}
 
+	 /* Initiating Menu XML file (menu.xml) */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.layout.menu, menu);
+        return true;
+    }
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){	
+		 switch (item.getItemId())
+	        {
+	        case R.id.mnIncome:
+	        	// Single menu item is selected do something
+	        	// Ex: launching new activity/screen or show alert message
+	            //Toast.makeText(spendingActivity.this, "Income is Selected", Toast.LENGTH_SHORT).show();
+	        	Intent income = new Intent(this, clsIncome.class);
+				startActivity(income);
+	            return true;
+	        case R.id.mnDelete:
+	        	//Toast.makeText(spendingActivity.this, "Payment is Selected", Toast.LENGTH_SHORT).show();
+	        	Intent delete = new Intent(this, clsDelete.class);
+				startActivity(delete);
+	            return true;
+	        case R.id.mnSearch:
+	        	//Toast.makeText(spendingActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
+	        	Intent search = new Intent(this, clsSearch.class);
+				startActivity(search);
+	            return true;
+	        case R.id.mnStatistics:
+	        	//Toast.makeText(spendingActivity.this, "Statistics is Selected", Toast.LENGTH_SHORT).show();
+	        	 Intent statistics = new Intent(this, clsStatistics.class);
+				 startActivity(statistics);
+	            return true;
+	        case R.id.mnSetting:
+	        	//Toast.makeText(spendingActivity.this, "Setting is Selected", Toast.LENGTH_SHORT).show();
+	        	Intent setting = new Intent(this, clsSetting.class);
+				 startActivity(setting);
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	        }
+	}
+	
 	private void loadData(){
 		ArrayList<String> arrList = new ArrayList<String>();
 		ArrayAdapter<String> adapter;

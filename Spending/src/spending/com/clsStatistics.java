@@ -1,5 +1,6 @@
 package spending.com;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -7,12 +8,16 @@ import java.util.Date;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -83,7 +88,7 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 			mSurfaceView = (SurfaceView) this.findViewById(R.id.Paper);
 			mSurfaceHolder = mSurfaceView.getHolder();
 			mSurfaceHolder.addCallback(this);
-			
+
 			loadEventText();
 			// mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_NORMAL);
 		} catch (Exception ex) {
@@ -91,7 +96,50 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 		}
 	}
 
-	private void loadEventText(){
+	/* Initiating Menu XML file (menu.xml) */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater menuInflater = getMenuInflater();
+		menuInflater.inflate(R.layout.menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.mnIncome:
+			// Single menu item is selected do something
+			// Ex: launching new activity/screen or show alert message
+			// Toast.makeText(spendingActivity.this, "Income is Selected", Toast.LENGTH_SHORT).show();
+			Intent income = new Intent(this, clsIncome.class);
+			startActivity(income);
+			return true;
+		case R.id.mnDelete:
+			// Toast.makeText(spendingActivity.this, "Payment is Selected", Toast.LENGTH_SHORT).show();
+			Intent delete = new Intent(this, clsDelete.class);
+			startActivity(delete);
+			return true;
+		case R.id.mnSearch:
+			// Toast.makeText(spendingActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
+			Intent search = new Intent(this, clsSearch.class);
+			startActivity(search);
+			return true;
+		case R.id.mnStatistics:
+			// Toast.makeText(spendingActivity.this, "Statistics is Selected", Toast.LENGTH_SHORT).show();
+			Intent statistics = new Intent(this, clsStatistics.class);
+			startActivity(statistics);
+			return true;
+		case R.id.mnSetting:
+			// Toast.makeText(spendingActivity.this, "Setting is Selected", Toast.LENGTH_SHORT).show();
+			Intent setting = new Intent(this, clsSetting.class);
+			startActivity(setting);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void loadEventText() {
 		edtDateFrom.setOnClickListener(new View.OnClickListener() {
 			// @Override
 			public void onClick(View v) {
@@ -113,7 +161,7 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 				dp.show();
 			}
 		});
-		
+
 		edtDateTo.setOnClickListener(new View.OnClickListener() {
 			// @Override
 			public void onClick(View v) {
@@ -136,9 +184,10 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 			}
 		});
 	}
-	
+
 	private void getStatistics() {
 		float income, payment;
+		String balance;
 		try {
 			mDbHelper.open();
 			arrList = mDbHelper.SelectStatistics(edtDateFrom.getText().toString().trim(), edtDateTo.getText()
@@ -155,8 +204,11 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 
 			txtIncome.setText(arrList.get(0).getAmount());
 			txtPayment.setText(arrList.get(1).getAmount());
-			txtBalance.setText(Float.toString(income - payment));
-			
+
+			DecimalFormat fmt = new DecimalFormat("0.00");
+			balance = CommonUtil.trimZeros(fmt.format(income - payment));
+			txtBalance.setText(balance);
+
 			drawLine(income, payment);
 		} catch (Exception ex) {
 			Log.i(TAG, "***** getStatistics() Error: " + ex.getMessage());
@@ -176,7 +228,7 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 		try {
 			canvas = mSurfaceHolder.lockCanvas();
 			canvas.drawColor(Color.BLACK);
-			if (income == 0 && payment == 0){
+			if (income == 0 && payment == 0) {
 				mSurfaceHolder.unlockCanvasAndPost(canvas);
 				return;
 			}
@@ -189,8 +241,8 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 			width = scnWidth / 2;
 			startHeight = height - 100;
 			if (income == payment) {
-				hPayment = startHeight/2;
-				hIncome = startHeight/2;
+				hPayment = startHeight / 2;
+				hIncome = startHeight / 2;
 			}
 			if (income > payment) {
 				hIncome = startHeight - 20;
@@ -203,11 +255,11 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 			paint.setColor(Color.BLUE);
 			canvas.drawRect(width - 50, startHeight - hIncome, width, startHeight, paint);
 			canvas.drawText("Thu", width - 35, startHeight + 15, paint);
-			
+
 			paint.setColor(Color.RED);
 			canvas.drawRect(width, startHeight - hPayment, width + 50, startHeight, paint);
 			canvas.drawText("Chi", width + 12, startHeight + 16, paint);
-			
+
 			paint.setColor(Color.GREEN);
 			canvas.drawLine(0, startHeight, scnWidth, startHeight, paint);
 
