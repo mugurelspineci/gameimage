@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Thu" android:id="@+id/mnIncome" android:icon="@drawable/icon_income"></item>
+    <item android:title="Xóa" android:id="@+id/mnDelete" android:icon="@drawable/icon_delete">></item>
+    <item android:title="Tìm kiếm" android:id="@+id/mnSearch" android:icon="@drawable/icon_search"></item>
+    <item android:title="Thống kê" android:id="@+id/mnStatistics" android:icon="@drawable/icon_statistics"></item>
+    <item android:title="Cài đặt" android:id="@+id/mnSetting" android:icon="@drawable/icon_setting"></item>
+</menu>
