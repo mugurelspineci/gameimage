@@ -58,7 +58,7 @@ public class clsShow extends Activity {
 					String msg;
 					if (ckDelete.isChecked()) {
 						clsData cls = (clsData) lv1.getItemAtPosition(position);
-						rowid = "" + cls.getId();
+						rowid = "" + cls.getDataId();
 						msg = String.format(clsContant.msgDelete, cls.getAmount(), cls.getDatePay());
 						 dialogMsgImage(msg);
 						 pos = position;
@@ -142,8 +142,7 @@ public class clsShow extends Activity {
 	public void deleteData() {
 		AlertDialog.Builder alt_bld = new AlertDialog.Builder(this);
 		try {
-			mDbHelper.open();
-			
+			mDbHelper.open();			
 			if (mDbHelper.deleteData(rowid) == true) {
 				removeData();
 				alt_bld.setMessage(clsContant.msgDelFinish).setCancelable(false)

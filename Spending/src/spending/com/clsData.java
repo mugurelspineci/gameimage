@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 class clsData implements Parcelable {
 	
-	private int rowid;
+	private int dataId;
 	private int	pay;
 	private String amount;
 	private String datePay;
@@ -13,25 +13,25 @@ class clsData implements Parcelable {
 
 	public clsData(String reason){
 		this.reason = reason;
-		rowid = 0;
+		dataId = 0;
 		pay = 0;
 		amount ="";
 		datePay ="";		
 	}
 	
 	public clsData(int rowid, String amount, String datePay, int pay, String reason){
-		this.rowid = rowid;
+		this.dataId = rowid;
 		this.pay = pay;
 		this.amount = amount;
 		this.datePay = datePay;
 		this.reason = reason;
 	}
-	public int getId(){
-		return rowid;
+	public int getDataId(){
+		return dataId;
 	}
 	
-	public void setId(int rowid){
-		this.rowid = rowid;
+	public void setDataId(int dataId){
+		this.dataId = dataId;
 	}
 	public int getPay() {
 		return pay;
@@ -68,6 +68,7 @@ class clsData implements Parcelable {
 
 	
 	public clsData(Parcel in){
+		this.dataId = in.readInt();
 		this.pay = in.readInt();
 		this.amount = in.readString();
 		this.datePay = in.readString();
@@ -82,6 +83,7 @@ class clsData implements Parcelable {
 
     public void writeToParcel(Parcel dest, int flags) {
         // TODO Auto-generated method stub
+    	dest.writeInt(dataId);
         dest.writeInt(pay);
 		dest.writeString(amount);
         dest.writeString(datePay);
