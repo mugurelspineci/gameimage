@@ -18,7 +18,7 @@
 		<TextView android:id="@+id/tvwAmount" android:text="Số tiền:" android:inputType="numberSigned|numberDecimal"
 			android:width="15dip" android:paddingLeft="10dip" />
 		<EditText android:id="@+id/edtAmount" android:layout_width="wrap_content" android:singleLine="True"
-			android:layout_height="wrap_content" android:layout_span="2"/>
+			android:layout_height="wrap_content" android:layout_span="2" android:inputType="number"/>
 		<TextView android:id="@+id/tvwVND" android:text="VND" android:paddingLeft="5dip" />
 		<TextView android:paddingLeft="20px"/>
 	</TableRow>
