@@ -1,5 +1,6 @@
 package spending.com;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -16,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +36,7 @@ public class clsShow extends Activity {
 	public void onCreate(Bundle saved) {
 		super.onCreate(saved);
 		double sum = 0;
+		String strSum="";
 		setContentView(R.layout.show);
 		txtSum = (TextView) findViewById(R.id.txtSum);
 		ckDelete = (CheckBox) findViewById(R.id.chkDelete);
@@ -78,9 +79,12 @@ public class clsShow extends Activity {
 				else if (data.getPay() == 2)
 					sum -= Double.parseDouble(data.getAmount());
 			}
-			txtSum.setText(sum + "");
+			
+			DecimalFormat fmt = new DecimalFormat("0.00");
+			strSum = CommonUtil.trimZeros(fmt.format(sum));
+			txtSum.setText(strSum);
 
-			Log.i(TAG, "***** onCreate() Called");
+//			Log.i(TAG, "***** onCreate() Called");
 		} catch (Exception ex) {
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}

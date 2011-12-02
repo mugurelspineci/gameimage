@@ -46,10 +46,10 @@ public class clsSearch extends Activity {
 
 			android.text.format.DateFormat datetime = new android.text.format.DateFormat();
 			currTime = "" + datetime.format("dd/MM/yyyy", new Date());
-			
+
 			mDbHelper = new SpendingDbAdapter(this);
 			mDbHelper.open();
-			
+
 			edtAmountFrom = (EditText) findViewById(R.id.edtAmountFrom);
 			edtAmountTo = (EditText) findViewById(R.id.edtAmountTo);
 			edtDateFrom = (EditText) findViewById(R.id.edtDateFrom);
@@ -62,7 +62,7 @@ public class clsSearch extends Activity {
 			rdPayment = (RadioButton) findViewById(R.id.rdPayment);
 
 			edtDateTo.setText(currTime);
-			
+
 			btnSearch.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View view) {
 					if (checkValid())
@@ -75,7 +75,7 @@ public class clsSearch extends Activity {
 					finish();
 				}
 			});
-			
+
 			loadData();
 			loadEventText();
 		} catch (Exception ex) {
@@ -104,65 +104,63 @@ public class clsSearch extends Activity {
 		}
 	}
 
-	 /* Initiating Menu XML file (menu.xml) */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.layout.menu, menu);
-        return true;
-    }
+	/* Initiating Menu XML file (menu.xml) */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater menuInflater = getMenuInflater();
+		menuInflater.inflate(R.layout.menu, menu);
+		return true;
+	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){	
-		 switch (item.getItemId())
-	        {
-	        case R.id.mnIncome:
-	        	// Single menu item is selected do something
-	        	// Ex: launching new activity/screen or show alert message
-	            //Toast.makeText(spendingActivity.this, "Income is Selected", Toast.LENGTH_SHORT).show();
-	        	Intent income = new Intent(this, clsIncome.class);
-				startActivity(income);
-	            return true;
-	        case R.id.mnDelete:
-	        	//Toast.makeText(spendingActivity.this, "Payment is Selected", Toast.LENGTH_SHORT).show();
-	        	Intent delete = new Intent(this, clsDelete.class);
-				startActivity(delete);
-	            return true;
-	        case R.id.mnSearch:
-	        	//Toast.makeText(spendingActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
-	        	Intent search = new Intent(this, clsSearch.class);
-				startActivity(search);
-	            return true;
-	        case R.id.mnStatistics:
-	        	//Toast.makeText(spendingActivity.this, "Statistics is Selected", Toast.LENGTH_SHORT).show();
-	        	 Intent statistics = new Intent(this, clsStatistics.class);
-				 startActivity(statistics);
-	            return true;
-	        case R.id.mnSetting:
-	        	//Toast.makeText(spendingActivity.this, "Setting is Selected", Toast.LENGTH_SHORT).show();
-	        	Intent setting = new Intent(this, clsSetting.class);
-				 startActivity(setting);
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	        }
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.mnIncome:
+			// Single menu item is selected do something
+			// Ex: launching new activity/screen or show alert message
+			// Toast.makeText(spendingActivity.this, "Income is Selected", Toast.LENGTH_SHORT).show();
+			Intent income = new Intent(this, clsIncome.class);
+			startActivity(income);
+			return true;
+		case R.id.mnDelete:
+			// Toast.makeText(spendingActivity.this, "Payment is Selected", Toast.LENGTH_SHORT).show();
+			Intent delete = new Intent(this, clsDelete.class);
+			startActivity(delete);
+			return true;
+		case R.id.mnSearch:
+			// Toast.makeText(spendingActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
+			Intent search = new Intent(this, clsSearch.class);
+			startActivity(search);
+			return true;
+		case R.id.mnStatistics:
+			// Toast.makeText(spendingActivity.this, "Statistics is Selected", Toast.LENGTH_SHORT).show();
+			Intent statistics = new Intent(this, clsStatistics.class);
+			startActivity(statistics);
+			return true;
+		case R.id.mnSetting:
+			// Toast.makeText(spendingActivity.this, "Setting is Selected", Toast.LENGTH_SHORT).show();
+			Intent setting = new Intent(this, clsSetting.class);
+			startActivity(setting);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
-	
-	private void loadData(){
+
+	private void loadData() {
 		ArrayList<String> arrList = new ArrayList<String>();
 		ArrayAdapter<String> adapter;
 		arrList = mDbHelper.SelectReason();
 		if (arrList == null)
 			return;
 		arrList.add("");
-		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrList);		
+		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrList);
 		spnReason.setAdapter(adapter);
-		spnReason.setSelection(adapter.getCount()-1);
+		spnReason.setSelection(adapter.getCount() - 1);
 		Log.i(TAG, "***** loadData() called");
 	}
-	
-	private void loadEventText(){
+
+	private void loadEventText() {
 		edtDateFrom.setOnClickListener(new View.OnClickListener() {
 			// @Override
 			public void onClick(View v) {
@@ -170,21 +168,20 @@ public class clsSearch extends Activity {
 				int y = c.get(Calendar.YEAR);
 				int m = c.get(Calendar.MONTH);
 				int d = c.get(Calendar.DAY_OF_MONTH);
-				DatePickerDialog dp = new DatePickerDialog(clsSearch.this,
-						new DatePickerDialog.OnDateSetListener() {
-							public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-								String erg = "";
-								erg = String.valueOf(dayOfMonth);
-								erg += "/" + String.valueOf(monthOfYear + 1);
-								erg += "/" + year;
-								edtDateFrom.setText(erg);
-							}
-						}, y, m, d);
+				DatePickerDialog dp = new DatePickerDialog(clsSearch.this, new DatePickerDialog.OnDateSetListener() {
+					public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+						String erg = "";
+						erg = String.valueOf(dayOfMonth);
+						erg += "/" + String.valueOf(monthOfYear + 1);
+						erg += "/" + year;
+						edtDateFrom.setText(erg);
+					}
+				}, y, m, d);
 				dp.setTitle("Ngay Thang Nam");
 				dp.show();
 			}
 		});
-		
+
 		edtDateTo.setOnClickListener(new View.OnClickListener() {
 			// @Override
 			public void onClick(View v) {
@@ -192,31 +189,32 @@ public class clsSearch extends Activity {
 				int y = c.get(Calendar.YEAR);
 				int m = c.get(Calendar.MONTH);
 				int d = c.get(Calendar.DAY_OF_MONTH);
-				DatePickerDialog dp = new DatePickerDialog(clsSearch.this,
-						new DatePickerDialog.OnDateSetListener() {
-							public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-								String erg = "";
-								erg = String.valueOf(dayOfMonth);
-								erg += "/" + String.valueOf(monthOfYear + 1);
-								erg += "/" + year;
-								edtDateTo.setText(erg);
-							}
-						}, y, m, d);
+				DatePickerDialog dp = new DatePickerDialog(clsSearch.this, new DatePickerDialog.OnDateSetListener() {
+					public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+						String erg = "";
+						erg = String.valueOf(dayOfMonth);
+						erg += "/" + String.valueOf(monthOfYear + 1);
+						erg += "/" + year;
+						edtDateTo.setText(erg);
+					}
+				}, y, m, d);
 				dp.setTitle("Ngay Thang Nam");
 				dp.show();
 			}
 		});
 	}
-	
+
 	private void searchData() {
 		// String cond;
 		int pay;
 		String reason;
+		String strDate1, strDate2;
+		String[] arrDate;
 		ArrayList<clsData> arrList;
 		// ArrayList<clsData> arrListData;
 		try {
 			// cond = getCondition();
-			//mDbHelper.open();
+			// mDbHelper.open();
 
 			if (edtOther.getText().toString().length() != 0)
 				reason = edtOther.getText().toString().trim();
@@ -230,8 +228,20 @@ public class clsSearch extends Activity {
 			else
 				pay = 3;
 
-			arrList = mDbHelper.SelectData(edtDateFrom.getText().toString().trim(), edtDateTo.getText().toString().trim(),
-					edtAmountFrom.getText().toString().trim(), edtAmountTo.getText().toString().trim(), reason, pay);
+			arrDate = edtDateFrom.getText().toString().trim().split("/");
+			if (arrDate.length != 3)
+				strDate1 = "";
+			else
+				strDate1 = arrDate[2] + "/" + arrDate[1] + "/" + arrDate[0];
+
+			arrDate = edtDateTo.getText().toString().trim().split("/");
+			if (arrDate.length != 3)
+				strDate2 = "";
+			else
+				strDate2 = arrDate[2] + "/" + arrDate[1] + "/" + arrDate[0];
+
+			arrList = mDbHelper.SelectData(strDate1, strDate2, edtAmountFrom.getText().toString().trim(), edtAmountTo
+					.getText().toString().trim(), reason, pay);
 			// arrList = mDbHelper.SelectAll();
 			if (arrList == null)
 				return;
@@ -246,25 +256,29 @@ public class clsSearch extends Activity {
 	}
 
 	private boolean checkValid() {
-		if (edtDateFrom.getText().toString().trim().length() != 0 && !CommonUtil.isValidDate(edtDateFrom.getText().toString())) {
+		if (edtDateFrom.getText().toString().trim().length() != 0
+				&& !CommonUtil.isValidDate(edtDateFrom.getText().toString())) {
 			new AlertDialog.Builder(clsSearch.this).setTitle("Lỗi Nhập")
 					.setMessage("Ngày tháng không đúng (dd/mm/yyyy)").setPositiveButton("OK", null).show();
 			return false;
 		}
 
-		if (edtDateTo.getText().toString().trim().length() != 0 && !CommonUtil.isValidDate(edtDateTo.getText().toString())) {
+		if (edtDateTo.getText().toString().trim().length() != 0
+				&& !CommonUtil.isValidDate(edtDateTo.getText().toString())) {
 			new AlertDialog.Builder(clsSearch.this).setTitle("Lỗi Nhập")
 					.setMessage("Ngày tháng không đúng (dd/mm/yyyy)").setPositiveButton("OK", null).show();
 			return false;
 		}
 
-		if (edtAmountFrom.getText().toString().trim().length() != 0 && !CommonUtil.checkFloat(edtAmountFrom.getText().toString())) {
+		if (edtAmountFrom.getText().toString().trim().length() != 0
+				&& !CommonUtil.checkFloat(edtAmountFrom.getText().toString())) {
 			new AlertDialog.Builder(clsSearch.this).setTitle("Lỗi").setMessage("Vui lòng nhập số")
 					.setPositiveButton("OK", null).show();
 			return false;
 		}
 
-		if (edtAmountTo.getText().toString().trim().length() != 0 && !CommonUtil.checkFloat(edtAmountTo.getText().toString().trim())) {
+		if (edtAmountTo.getText().toString().trim().length() != 0
+				&& !CommonUtil.checkFloat(edtAmountTo.getText().toString().trim())) {
 			new AlertDialog.Builder(clsSearch.this).setTitle("Lỗi").setMessage("Vui lòng nhập số")
 					.setPositiveButton("OK", null).show();
 			return false;

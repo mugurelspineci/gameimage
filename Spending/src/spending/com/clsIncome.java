@@ -108,50 +108,48 @@ public class clsIncome extends Activity {
 			Log.i(TAG, "***** onCreate() Error: " + ex.getMessage());
 		}
 	}
-	
-	 /* Initiating Menu XML file (menu.xml) */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.layout.menu, menu);
-        return true;
-    }
+
+	/* Initiating Menu XML file (menu.xml) */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater menuInflater = getMenuInflater();
+		menuInflater.inflate(R.layout.menu, menu);
+		return true;
+	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){	
-		 switch (item.getItemId())
-	        {
-	        case R.id.mnIncome:
-	        	// Single menu item is selected do something
-	        	// Ex: launching new activity/screen or show alert message
-	            //Toast.makeText(spendingActivity.this, "Income is Selected", Toast.LENGTH_SHORT).show();
-	        	Intent income = new Intent(this, clsIncome.class);
-				startActivity(income);
-	            return true;
-	        case R.id.mnDelete:
-	        	//Toast.makeText(spendingActivity.this, "Payment is Selected", Toast.LENGTH_SHORT).show();
-	        	Intent delete = new Intent(this, clsDelete.class);
-				startActivity(delete);
-	            return true;
-	        case R.id.mnSearch:
-	        	//Toast.makeText(spendingActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
-	        	Intent search = new Intent(this, clsSearch.class);
-				startActivity(search);
-	            return true;
-	        case R.id.mnStatistics:
-	        	//Toast.makeText(spendingActivity.this, "Statistics is Selected", Toast.LENGTH_SHORT).show();
-	        	 Intent statistics = new Intent(this, clsStatistics.class);
-				 startActivity(statistics);
-	            return true;
-	        case R.id.mnSetting:
-	        	//Toast.makeText(spendingActivity.this, "Setting is Selected", Toast.LENGTH_SHORT).show();
-	        	Intent setting = new Intent(this, clsSetting.class);
-				 startActivity(setting);
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	        }
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.mnIncome:
+			// Single menu item is selected do something
+			// Ex: launching new activity/screen or show alert message
+			// Toast.makeText(spendingActivity.this, "Income is Selected", Toast.LENGTH_SHORT).show();
+			Intent income = new Intent(this, clsIncome.class);
+			startActivity(income);
+			return true;
+		case R.id.mnDelete:
+			// Toast.makeText(spendingActivity.this, "Payment is Selected", Toast.LENGTH_SHORT).show();
+			Intent delete = new Intent(this, clsDelete.class);
+			startActivity(delete);
+			return true;
+		case R.id.mnSearch:
+			// Toast.makeText(spendingActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
+			Intent search = new Intent(this, clsSearch.class);
+			startActivity(search);
+			return true;
+		case R.id.mnStatistics:
+			// Toast.makeText(spendingActivity.this, "Statistics is Selected", Toast.LENGTH_SHORT).show();
+			Intent statistics = new Intent(this, clsStatistics.class);
+			startActivity(statistics);
+			return true;
+		case R.id.mnSetting:
+			// Toast.makeText(spendingActivity.this, "Setting is Selected", Toast.LENGTH_SHORT).show();
+			Intent setting = new Intent(this, clsSetting.class);
+			startActivity(setting);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	private void loadData() {
@@ -196,6 +194,8 @@ public class clsIncome extends Activity {
 		String reason;
 		int income = 0;
 		long insert;
+		String[] arrDate;
+		String strDate;
 		try {
 			if (edtOther.getText().toString().length() != 0)
 				reason = edtOther.getText().toString();
@@ -207,8 +207,13 @@ public class clsIncome extends Activity {
 			} else {
 				income = 2;
 			}
-			insert = mDbHelper.insert(Float.parseFloat(edtAmount.getText().toString()), edtDate.getText().toString(),
-					income, reason, edtComment.getText().toString());
+			arrDate = edtDate.getText().toString().split("/");
+			if (arrDate.length != 3)
+				strDate = "";
+			else
+				strDate = arrDate[2] + "/" + arrDate[1] + "/" + arrDate[0];
+			insert = mDbHelper.insert(Float.parseFloat(edtAmount.getText().toString()), strDate, income, reason,
+					edtComment.getText().toString());
 			if (insert > 0) {
 				new AlertDialog.Builder(clsIncome.this).setTitle("Lưu").setMessage("Đã lưu thành công")
 						.setPositiveButton("OK", null).show();
@@ -224,7 +229,6 @@ public class clsIncome extends Activity {
 
 	private void clearData() {
 		edtAmount.setText("");
-		// edtDate.setText("");
 		edtDate.setText(currTime);
 		edtOther.setText("");
 		edtComment.setText("");

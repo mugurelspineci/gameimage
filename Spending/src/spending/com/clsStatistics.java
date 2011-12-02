@@ -187,11 +187,25 @@ public class clsStatistics extends Activity implements SurfaceHolder.Callback {
 
 	private void getStatistics() {
 		float income, payment;
+		String strDate1, strDate2;
+		String[] arrDate;
 		String balance;
 		try {
+			
+			arrDate = edtDateFrom.getText().toString().trim().split("/");
+			if (arrDate.length != 3)
+				strDate1 = "";
+			else			
+				strDate1 = arrDate[2] + "/" + arrDate[1] + "/" + arrDate[0];
+
+			arrDate = edtDateTo.getText().toString().trim() .split("/");
+			if (arrDate.length != 3)
+				strDate2 = "";
+			else
+				strDate2 = arrDate[2] + "/" + arrDate[1] + "/" + arrDate[0];
+			
 			mDbHelper.open();
-			arrList = mDbHelper.SelectStatistics(edtDateFrom.getText().toString().trim(), edtDateTo.getText()
-					.toString().trim());
+			arrList = mDbHelper.SelectStatistics(strDate1, strDate2);
 			if (arrList == null || arrList.size() < 2) {
 				new AlertDialog.Builder(clsStatistics.this).setTitle("Lỗi Nhập").setMessage("Dữ liệu không có")
 						.setPositiveButton("OK", null).show();
